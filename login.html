@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EvalY — Login</title>
+  <!-- Only Poppins font as requested, no Libre Baskerville -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'eval-blue': '#004b8d',
+            'eval-dark': '#00305a',
+            'eval-teal': '#005299',
+            'eval-yellow': '#ffde59',
+          },
+          fontFamily: {
+            // Poppins used for all text (including headings)
+            'serif': ['Poppins', 'sans-serif'],
+            'sans': ['Poppins', 'sans-serif'],
+          },
+          animation: {
+            'card-in': 'cardIn 0.5s cubic-bezier(0.22,1,0.36,1) both',
+            'slide-q': 'slideQ 0.35s cubic-bezier(0.22,1,0.36,1) both',
+          },
+          keyframes: {
+            cardIn: { from: { opacity: 0, transform: 'translateY(20px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
+            slideQ: { from: { opacity: 0, transform: 'translateX(20px)' }, to: { opacity: 1, transform: 'translateX(0)' } }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body,
+    button,
+    input,
+    select,
+    textarea {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Animated gradient left panel */
+    .left-panel {
+      background: linear-gradient(135deg, #001a3a 0%, #004b8d 40%, #005299 70%, #002f5e 100%);
+      background-size: 300% 300%;
+      animation: gradientShift 8s ease infinite;
+    }
+
+    @keyframes gradientShift {
+
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    /* Floating shapes */
+    .float-shape {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 0;
+        transform: translateY(100px) scale(0.5) rotate(0deg);
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      90% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-600px) scale(1.2) rotate(360deg);
+      }
+    }
+
+    /* Glassmorphism card */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 8px 32px rgba(0, 75, 141, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+      transition: box-shadow 0.4s, transform 0.4s;
+    }
+
+    .glass-card:hover {
+      box-shadow: 0 16px 48px rgba(0, 75, 141, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+
+    /* Animated gradient border */
+    .glow-bar {
+      height: 3px;
+      background: linear-gradient(90deg, #004b8d, #ffde59, #005299, #ffde59, #004b8d);
+      background-size: 400% 100%;
+      animation: glowSlide 3s linear infinite;
+    }
+
+    @keyframes glowSlide {
+      0% {
+        background-position: 0% 0;
+      }
+
+      100% {
+        background-position: 400% 0;
+      }
+    }
+
+    /* Input glow on focus */
+    .input-glow {
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .input-glow:focus {
+      border-color: #004b8d;
+      box-shadow: 0 0 0 4px rgba(0, 75, 141, 0.1), 0 0 20px rgba(0, 75, 141, 0.06);
+      background: #fff;
+    }
+
+    /* Submit button gradient */
+    .btn-glow {
+      background: linear-gradient(135deg, #ffde59 0%, #ffc107 100%);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-glow::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+
+    .btn-glow:hover::before {
+      transform: translateX(100%);
+    }
+
+    .btn-glow:hover {
+      box-shadow: 0 6px 24px rgba(255, 222, 89, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .btn-glow:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    /* Ripple */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.07);
+      transform: scale(0);
+      animation: rippleAnim 0.5s linear;
+      pointer-events: none;
+    }
+
+    @keyframes rippleAnim {
+      to {
+        transform: scale(5);
+        opacity: 0;
+      }
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2.5px solid rgba(0, 0, 0, 0.18);
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: spin 0.65s linear infinite;
+      display: none;
+    }
+
+    .btn-submit.loading .spinner {
+      display: block;
+    }
+
+    .btn-submit.loading .btn-txt {
+      opacity: 0.7;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Msg */
+    @keyframes fadeMsg {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* Stat counter animation */
+    .stat-item {
+      transition: transform 0.3s;
+    }
+
+    .stat-item:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Feature row hover */
+    .feature-row {
+      transition: transform 0.25s, background 0.25s;
+      border-radius: 10px;
+      padding: 6px 8px;
+      margin: -6px -8px;
+    }
+
+    .feature-row:hover {
+      transform: translateX(6px);
+      background: rgba(255, 222, 89, 0.08);
+    }
+
+    /* Right panel mesh */
+    .mesh-bg {
+      background-image:
+        radial-gradient(at 20% 80%, rgba(0, 75, 141, 0.06) 0%, transparent 50%),
+        radial-gradient(at 80% 20%, rgba(255, 222, 89, 0.06) 0%, transparent 50%),
+        radial-gradient(circle, rgba(0, 75, 141, 0.08) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 24px 24px;
+    }
+  </style>
+</head>
+
+<body class="font-sans bg-[#f0f1f5] antialiased min-h-screen flex">
+
+  <!-- ══════════════ LEFT PANEL ══════════════ -->
+  <aside class="left-panel hidden md:flex w-1/2 relative flex-col p-12 overflow-hidden min-h-screen">
+    <!-- Floating animated shapes -->
+    <div id="float-container" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+    <!-- Decorative circles -->
+    <div
+      class="absolute -top-[120px] -right-[140px] w-[420px] h-[420px] rounded-full bg-eval-yellow/10 pointer-events-none">
+    </div>
+    <div
+      class="absolute -bottom-[70px] -left-[80px] w-[260px] h-[260px] rounded-full bg-eval-yellow/[0.08] pointer-events-none">
+    </div>
+    <div
+      class="absolute -top-[140px] -right-[200px] w-[560px] h-[560px] rounded-full border-[1.5px] border-eval-yellow/[0.12] pointer-events-none">
+    </div>
+    <div
+      class="absolute bottom-[180px] right-[50px] w-[160px] h-[160px] rounded-full border-[1.5px] border-eval-yellow/[0.12] pointer-events-none">
+    </div>
+
+    <!-- Logo -->
+    <a href="index.html" class="flex items-center hover:opacity-80 transition relative z-10">
+      <svg height="48" viewBox="0 0 160 52" fill="none">
+        <text x="0" y="42" font-family="'Poppins', sans-serif" font-size="46" font-weight="700" fill="#ffffff">E</text>
+        <g transform="translate(32,6)">
+          <path d="M4 10 L16 36 L28 10" stroke="#ffde59" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"
+            fill="none" />
+        </g>
+        <text x="64" y="42" font-family="'Poppins', sans-serif" font-size="46" font-weight="700"
+          fill="#ffffff">aly</text>
+      </svg>
+    </a>
+
+    <!-- Hero -->
+    <div class="flex-1 flex flex-col justify-center relative z-10 py-10">
+      <span
+        class="inline-flex items-center gap-2 bg-eval-yellow/[0.14] border border-eval-yellow/[0.32] rounded-full px-3.5 py-1.5 text-[0.68rem] font-bold text-eval-yellow uppercase tracking-wider w-fit mb-7">
+        <span class="w-[7px] h-[7px] rounded-full bg-eval-yellow"></span>
+        Secured Platform
+      </span>
+
+      <h1 class="font-serif text-[clamp(1.8rem,2.8vw,2.7rem)] font-bold text-white leading-tight mb-5">
+        Evaluate.<br />
+        Progress.<br />
+        <em class="italic text-eval-yellow">Succeed.</em>
+      </h1>
+
+      <p class="text-sm text-white/60 leading-relaxed font-light max-w-[370px]">
+        EvalY allows teachers to create interactive tests and students to take them with instant and secure evaluation.
+      </p>
+
+      <div class="flex flex-col gap-3 mt-9">
+        <div class="feature-row flex items-center gap-2.5 text-sm text-white/70">
+          <span class="w-8 h-8 bg-eval-yellow/[0.18] rounded-lg flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4 text-eval-yellow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+          </span>
+          Secure &amp; anti-cheat exams
+        </div>
+        <div class="feature-row flex items-center gap-2.5 text-sm text-white/70">
+          <span class="w-8 h-8 bg-eval-yellow/[0.18] rounded-lg flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4 text-eval-yellow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </svg>
+          </span>
+          Automatic instant evaluation
+        </div>
+        <div class="feature-row flex items-center gap-2.5 text-sm text-white/70">
+          <span class="w-8 h-8 bg-eval-yellow/[0.18] rounded-lg flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4 text-eval-yellow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <path d="M18 20V10" />
+              <path d="M12 20V4" />
+              <path d="M6 20v-6" />
+            </svg>
+          </span>
+          Complete analytical dashboard
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="flex gap-10 relative z-10">
+      <div class="stat-item cursor-default">
+        <div class="font-serif text-3xl font-bold text-eval-yellow leading-none">2k+</div>
+        <div class="text-[0.68rem] text-white/[0.45] uppercase tracking-wide mt-1">Students</div>
+      </div>
+      <div class="stat-item cursor-default">
+        <div class="font-serif text-3xl font-bold text-eval-yellow leading-none">150+</div>
+        <div class="text-[0.68rem] text-white/[0.45] uppercase tracking-wide mt-1">Teachers</div>
+      </div>
+      <div class="stat-item cursor-default">
+        <div class="font-serif text-3xl font-bold text-eval-yellow leading-none">98%</div>
+        <div class="text-[0.68rem] text-white/[0.45] uppercase tracking-wide mt-1">Satisfaction</div>
+      </div>
+    </div>
+
+    <p class="text-[0.68rem] text-white/[0.28] mt-6 relative z-10">© 2025 EvalY · Evaluate Yourself</p>
+  </aside>
+
+
+  <!-- ══════════════ RIGHT PANEL ══════════════ -->
+  <section class="w-full md:w-1/2 flex flex-col items-center justify-center p-8 md:p-10 relative bg-[#f0f1f5]">
+    <div class="mesh-bg absolute inset-0 pointer-events-none"></div>
+
+    <div class="glass-card rounded-2xl w-full max-w-[500px] overflow-hidden relative z-10 animate-card-in">
+      <!-- Animated gradient bar -->
+      <div class="glow-bar"></div>
+
+      <div class="p-10 md:p-12 pb-8">
+        <p class="text-[0.68rem] font-bold tracking-[0.13em] uppercase text-eval-blue mb-1">Administrator Space</p>
+
+        <h1 class="font-serif text-2xl font-bold text-black mb-0.5">Login</h1>
+        <p class="text-sm text-gray-500 font-light mb-8">Enter your credentials to access the dashboard</p>
+
+        <form id="login-form" novalidate autocomplete="on">
+
+          <!-- Email -->
+          <div class="mb-5">
+            <label for="email"
+              class="block text-[0.72rem] font-semibold text-gray-900 tracking-wide uppercase mb-1.5">Email
+              Address</label>
+            <div class="relative">
+              <input type="email" id="email" name="email" placeholder="admin@evaly.dz" autocomplete="email" required
+                class="input-glow w-full py-3.5 px-4 bg-gray-50/80 border-2 border-gray-200 rounded-xl text-sm text-gray-900 placeholder:text-gray-400 placeholder:font-light focus:outline-none transition" />
+            </div>
+            <p class="text-[0.71rem] text-red-600 font-medium mt-1 hidden" id="err-email"></p>
+          </div>
+
+          <!-- Password -->
+          <div class="mb-5">
+            <label for="password"
+              class="block text-[0.72rem] font-semibold text-gray-900 tracking-wide uppercase mb-1.5">Password</label>
+            <div class="relative">
+              <input type="password" id="password" name="password" placeholder="••••••••"
+                autocomplete="current-password" required
+                class="input-glow w-full py-3.5 px-4 bg-gray-50/80 border-2 border-gray-200 rounded-xl text-sm text-gray-900 placeholder:text-gray-400 placeholder:font-light focus:outline-none transition" />
+              <button type="button"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-eval-blue transition p-0 bg-transparent border-none cursor-pointer flex items-center"
+                id="pwd-toggle" aria-label=" Afficher/masquer">
+                <svg id="eye-open" class="w-[17px] h-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                <svg id="eye-closed" class="w-[17px] h-[17px] hidden" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                  <line x1="1" y1="1" x2="23" y2="23" />
+                </svg>
+              </button>
+            </div>
+            <p class="text-[0.71rem] text-red-600 font-medium mt-1 hidden" id="err-pwd"></p>
+          </div>
+
+          <!-- Meta row -->
+          <div class="flex items-center justify-between mb-6">
+            <label class="flex items-center gap-1.5 cursor-pointer select-none">
+              <input type="checkbox" id="remember" class="w-3.5 h-3.5 accent-eval-blue cursor-pointer" />
+              <span class="text-[0.77rem] text-gray-500">Remember me</span>
+            </label>
+            <a href="#"
+              class="text-[0.77rem] text-eval-blue font-medium hover:text-eval-dark hover:underline transition">Forgot
+              password ?</a>
+          </div>
+
+          <!-- Submit button -->
+          <button type="submit"
+            class="btn-submit btn-glow w-full py-3.5 text-black border-none rounded-xl font-bold text-[0.95rem] tracking-wide flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed disabled:translate-y-0 shadow-md"
+            id="btn">
+            <div class="spinner"></div>
+            <span class="btn-txt">Login</span>
+          </button>
+
+          <!-- Message -->
+          <div id="msgbox" class="mt-4 rounded-xl px-4 py-3 text-sm font-medium hidden"
+            style="animation: fadeMsg 0.3s ease;"></div>
+
+        </form>
+      </div>
+
+      <div class="border-t border-gray-100 py-4 px-10 text-center">
+        <a href="index.html"
+          class="text-[0.77rem] text-eval-blue font-medium hover:text-eval-dark hover:underline transition">← Back to
+          the main site</a>
+      </div>
+    </div>
+
+    <p class="mt-5 text-[0.71rem] text-gray-400 text-center relative z-10">
+      <strong class="text-eval-blue font-semibold">EvalY</strong> &nbsp;·&nbsp; Evaluate Yourself &nbsp;·&nbsp; Secure
+      &amp; Instant
+    </p>
+  </section>
+
+
+  <!-- ══════════════ JS ══════════════ -->
+  <script>
+      (function () {
+        'use strict';
+
+        /* refs */
+        const form = document.getElementById('login-form');
+        const emailEl = document.getElementById('email');
+        const pwdEl = document.getElementById('password');
+        const pwdToggle = document.getElementById('pwd-toggle');
+        const eyeOpen = document.getElementById('eye-open');
+        const eyeClosed = document.getElementById('eye-closed');
+        const btn = document.getElementById('btn');
+        const msgbox = document.getElementById('msgbox');
+        const remCb = document.getElementById('remember');
+        const errEmail = document.getElementById('err-email');
+        const errPwd = document.getElementById('err-pwd');
+
+        /* demo credentials — replace with real API */
+        const CREDS = { email: 'admin@evaly.dz', password: 'evaly2025' };
+
+        /* restore remembered email */
+        const saved = localStorage.getItem('evaly_email');
+        if (saved) { emailEl.value = saved; remCb.checked = true; }
+
+        /* password toggle */
+        pwdToggle.addEventListener('click', () => {
+          const hidden = pwdEl.type === 'password';
+          pwdEl.type = hidden ? 'text' : 'password';
+          eyeOpen.classList.toggle('hidden', hidden);
+          eyeClosed.classList.toggle('hidden', !hidden);
+        });
+
+        /* clear errors on input */
+        emailEl.addEventListener('input', () => clearE(emailEl, errEmail));
+        pwdEl.addEventListener('input', () => clearE(pwdEl, errPwd));
+
+        /* ripple */
+        btn.addEventListener('click', e => {
+          const r = document.createElement('span');
+          const d = Math.max(btn.clientWidth, btn.clientHeight);
+          const rc = btn.getBoundingClientRect();
+          r.className = 'ripple';
+          r.style.cssText = `width:${d}px;height:${d}px;left:${e.clientX - rc.left - d / 2}px;top:${e.clientY - rc.top - d / 2}px`;
+          btn.appendChild(r);
+          setTimeout(() => r.remove(), 520);
+        });
+
+        /* form submit */
+        form.addEventListener('submit', async e => {
+          e.preventDefault();
+          hideMsg();
+
+          const email = emailEl.value.trim();
+          const pwd = pwdEl.value;
+          let ok = true;
+
+          if (!email) {
+            showE(emailEl, errEmail, 'L\'adresse email est requise.'); ok = false;
+          } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            showE(emailEl, errEmail, 'Format d\'email invalide.'); ok = false;
+          }
+
+          if (!pwd) {
+            showE(pwdEl, errPwd, 'Le mot de passe est requis.'); ok = false;
+          } else if (pwd.length < 6) {
+            showE(pwdEl, errPwd, 'Minimum 6 caractères requis.'); ok = false;
+          }
+
+          if (!ok) return;
+
+          setLoad(true);
+          await delay(1300);
+
+          if (email === CREDS.email && pwd === CREDS.password) {
+            remCb.checked
+              ? localStorage.setItem('evaly_email', email)
+              : localStorage.removeItem('evaly_email');
+            showMsg('Connexion réussie ! Redirection en cours…', 'success');
+            setTimeout(() => window.location.href = 'dashboard.html', 1500);
+          } else {
+            setLoad(false);
+            showMsg('Identifiants incorrects. Veuillez réessayer.', 'error');
+            showE(emailEl, errEmail, ' ');
+            showE(pwdEl, errPwd, ' ');
+            pwdEl.value = '';
+            pwdEl.focus();
+          }
+        });
+
+        /* helpers */
+        function setLoad(on) { btn.classList.toggle('loading', on); btn.disabled = on; }
+        function showMsg(t, type) {
+          msgbox.textContent = t;
+          msgbox.className = type === 'success'
+            ? 'mt-4 rounded-xl px-4 py-3 text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-300'
+            : 'mt-4 rounded-xl px-4 py-3 text-sm font-medium bg-red-50 text-red-800 border border-red-300';
+          msgbox.style.display = 'block';
+        }
+        function hideMsg() { msgbox.style.display = 'none'; msgbox.className = ''; }
+        function showE(inp, el, msg) {
+          inp.classList.add('border-red-500');
+          inp.classList.remove('border-gray-200');
+          el.textContent = msg;
+          el.classList.remove('hidden');
+        }
+        function clearE(inp, el) {
+          inp.classList.remove('border-red-500');
+          inp.classList.add('border-gray-200');
+          el.classList.add('hidden');
+        }
+        function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        /* Floating shapes generator */
+        const fc = document.getElementById('float-container');
+        if (fc) {
+          const colors = ['rgba(255,222,89,0.15)', 'rgba(255,255,255,0.08)', 'rgba(0,82,153,0.2)'];
+          for (let i = 0; i < 12; i++) {
+            const s = document.createElement('div');
+            s.className = 'float-shape';
+            const size = 6 + Math.random() * 18;
+            s.style.cssText = `width:${size}px;height:${size}px;left:${Math.random() * 100}%;bottom:-30px;background:${colors[i % 3]};animation-duration:${6 + Math.random() * 8}s;animation-delay:${Math.random() * 6}s;`;
+            fc.appendChild(s);
+          }
+        }
+
+      })();
+  </script>
+
+</body>
+
+</html>

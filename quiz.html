@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EvalY — Quizzes & Cours</title>
+  <title>EvalY — Quizzes & Courses</title>
   <!-- Only Poppins font as requested, no Libre Baskerville -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -60,8 +60,8 @@
         </div>
     </a>
     <div class="flex gap-1 bg-white/10 rounded-full p-1">
-      <button data-role="student" class="role-switch-btn px-4 py-1.5 text-xs font-semibold rounded-full transition-all text-white/70 data-[active=true]:bg-eval-yellow data-[active=true]:text-black data-[active=true]:shadow-md">Étudiant</button>
-      <button data-role="teacher" class="role-switch-btn px-4 py-1.5 text-xs font-semibold rounded-full transition-all text-white/70 data-[active=true]:bg-eval-yellow data-[active=true]:text-black data-[active=true]:shadow-md">Enseignant</button>
+      <button data-role="student" class="role-switch-btn px-4 py-1.5 text-xs font-semibold rounded-full transition-all text-white/70 data-[active=true]:bg-eval-yellow data-[active=true]:text-black data-[active=true]:shadow-md">Student</button>
+      <button data-role="teacher" class="role-switch-btn px-4 py-1.5 text-xs font-semibold rounded-full transition-all text-white/70 data-[active=true]:bg-eval-yellow data-[active=true]:text-black data-[active=true]:shadow-md">Teacher</button>
     </div>
     <div class="flex items-center gap-2 text-white/80 text-sm">
      <a href="evaly_homepage.html" class="text-white/80 text-sm no-underline hover:text-yellow transition-colors"> Home </a>
@@ -72,32 +72,32 @@
 
   <div class="pt-[62px] min-h-screen">
     <div id="student-view" class="view active-view">
-      <!--le top-->
+      <!-- top area -->
       <div id="quiz-list-screen">
         <div class="bg-eval-blue relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-20 px-6">
           <div class="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-eval-yellow/10 pointer-events-none"></div>
           <div class="absolute -bottom-10 left-1/3 w-44 h-44 rounded-full bg-eval-yellow/5 pointer-events-none"></div>
           <div class="max-w-5xl mx-auto relative">
-            <p class="text-eval-yellow text-xs font-bold uppercase tracking-wider mb-2">Bonjour, Étudiant !</p>
-            <h1 class="font-serif text-3xl md:text-4xl font-bold text-white">Vos Quizzes Disponibles</h1>
-            <p class="text-white/60 text-sm mt-1">Choisissez un quiz, révisez avec la vidéo, puis testez-vous</p>
+            <p class="text-eval-yellow text-xs font-bold uppercase tracking-wider mb-2">Hello, Student!</p>
+            <h1 class="font-serif text-3xl md:text-4xl font-bold text-white">Your Available Quizzes</h1>
+            <p class="text-white/60 text-sm mt-1">Choose a quiz, review with the video, then test yourself</p>
             <div class="flex flex-col sm:flex-row gap-3 mt-6 max-w-lg">
               <div class="relative flex-1">
                 <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                <input type="text" id="quiz-search" placeholder="Rechercher un quiz…" class="w-full py-2 pl-9 pr-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder:text-white/40 focus:border-eval-yellow focus:outline-none transition text-sm">
+                <input type="text" id="quiz-search" placeholder="Search for a quiz…" class="w-full py-2 pl-9 pr-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder:text-white/40 focus:border-eval-yellow focus:outline-none transition text-sm">
               </div>
               <select id="subject-filter" class="py-2 px-3 bg-white/10 border border-white/20 rounded-xl text-white text-sm focus:border-eval-yellow outline-none">
-                <option value="" class="text-black">Toutes matières</option>
-                <option value="Informatique" class="text-black">Informatique</option>
-                <option value="Mathématiques" class="text-black">Mathématiques</option>
-                <option value="Physique" class="text-black">Physique</option>
-                <option value="Langue" class="text-black">Langue</option>
+                <option value="" class="text-black">All subjects</option>
+                <option value="Computer Science" class="text-black">Computer Science</option>
+                <option value="Mathematics" class="text-black">Mathematics</option>
+                <option value="Physics" class="text-black">Physics</option>
+                <option value="Language" class="text-black">Language</option>
               </select>
             </div>
           </div>
         </div>
         <div class="max-w-6xl mx-auto mt-[-1.5rem] px-4 pb-12 relative z-10">
-          <p class="text-xs font-bold uppercase text-gray-500 tracking-wider mb-4" id="quiz-count-label">6 quizzes disponibles</p>
+          <p class="text-xs font-bold uppercase text-gray-500 tracking-wider mb-4" id="quiz-count-label">6 quizzes available</p>
           <div id="quiz-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
       </div>
@@ -106,14 +106,14 @@
       <div id="quiz-taking-screen" class="hidden max-w-3xl mx-auto px-4 py-8 md:py-12">
         <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
           <div>
-            <button id="back-to-list-btn" class="text-eval-blue text-sm mb-4 font-semibold flex items-center gap-1 hover:underline">← Retour</button>
+            <button id="back-to-list-btn" class="text-eval-blue text-sm mb-4 font-semibold flex items-center gap-1 hover:underline">← Back</button>
             <h2 class="font-serif text-xl font-bold text-eval-blue" id="active-quiz-title">Quiz Title</h2>
           </div>
           <div class="flex items-center gap-2 bg-white rounded-xl px-4 py-2 shadow-sm">
             <svg class="w-4 h-4 text-eval-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             <span id="timer-display" class="font-serif font-bold text-eval-blue min-w-[60px] text-center">10:00</span>
           </div>
-        </div> as
+        </div>
         <div class="mb-5">
           <div class="flex justify-between text-xs font-semibold text-gray-500 mb-1"><span id="q-counter">Question 1 / 5</span><span id="q-score-live">Score: 0</span></div>
           <div class="h-1.5 bg-gray-200 rounded-full overflow-hidden"><div id="progress-fill" class="h-full bg-gradient-to-r from-eval-blue to-eval-teal rounded-full w-0 transition-all duration-300"></div></div>
@@ -125,8 +125,8 @@
           </div>
           <div class="p-5 md:p-7 space-y-3" id="options-container"></div>
           <div class="px-5 pb-6 md:px-7 flex justify-between">
-            <button id="prev-question-btn" class="px-5 py-2 rounded-xl border-2 border-gray-200 bg-white text-gray-500 font-semibold text-sm disabled:opacity-40 hover:border-eval-blue hover:text-eval-blue transition">← Précédent</button>
-            <button id="next-question-btn" class="px-6 py-2 rounded-xl bg-eval-yellow font-bold text-sm hover:bg-[#f5d020] shadow-md transition transform hover:-translate-y-0.5">Suivant →</button>
+            <button id="prev-question-btn" class="px-5 py-2 rounded-xl border-2 border-gray-200 bg-white text-gray-500 font-semibold text-sm disabled:opacity-40 hover:border-eval-blue hover:text-eval-blue transition">← Previous</button>
+            <button id="next-question-btn" class="px-6 py-2 rounded-xl bg-eval-yellow font-bold text-sm hover:bg-[#f5d020] shadow-md transition transform hover:-translate-y-0.5">Next →</button>
           </div>
         </div>
       </div>
@@ -136,8 +136,8 @@
         <div class="bg-white rounded-3xl shadow-xl overflow-hidden animate-card-in">
           <div class="bg-eval-blue py-8 px-6">
             <div class="text-4xl mb-2" id="result-emoji"><svg class="w-10 h-10 mx-auto text-eval-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div>
-            <h2 class="font-serif text-2xl font-bold text-white" id="result-title">Excellent !</h2>
-            <p class="text-white/60 text-sm" id="result-subtitle">Quiz terminé</p>
+            <h2 class="font-serif text-2xl font-bold text-white" id="result-title">Excellent!</h2>
+            <p class="text-white/60 text-sm" id="result-subtitle">Quiz completed</p>
           </div>
           <div class="py-8 px-4 flex flex-col items-center gap-6">
             <div class="score-ring relative w-36 h-36">
@@ -145,14 +145,14 @@
               <div class="absolute inset-0 flex flex-col items-center justify-center"><span class="font-serif text-3xl font-bold text-eval-blue" id="ring-pct">0%</span><span class="text-[10px] text-gray-500 font-semibold">Score</span></div>
             </div>
             <div class="flex w-full border-t border-gray-100">
-              <div class="flex-1 py-3 text-center"><div class="font-serif text-2xl font-bold text-green-600" id="res-correct">0</div><div class="text-[11px] uppercase text-gray-400 tracking-wide">Correctes</div></div>
-              <div class="flex-1 py-3 text-center border-x border-gray-100"><div class="font-serif text-2xl font-bold text-red-500" id="res-wrong">0</div><div class="text-[11px] uppercase text-gray-400">Incorrectes</div></div>
-              <div class="flex-1 py-3 text-center"><div class="font-serif text-2xl font-bold text-gray-800" id="res-time">—</div><div class="text-[11px] uppercase text-gray-400">Temps</div></div>
+              <div class="flex-1 py-3 text-center"><div class="font-serif text-2xl font-bold text-green-600" id="res-correct">0</div><div class="text-[11px] uppercase text-gray-400 tracking-wide">Correct</div></div>
+              <div class="flex-1 py-3 text-center border-x border-gray-100"><div class="font-serif text-2xl font-bold text-red-500" id="res-wrong">0</div><div class="text-[11px] uppercase text-gray-400">Incorrect</div></div>
+              <div class="flex-1 py-3 text-center"><div class="font-serif text-2xl font-bold text-gray-800" id="res-time">—</div><div class="text-[11px] uppercase text-gray-400">Time</div></div>
             </div>
           </div>
           <div class="p-6 flex gap-3 justify-center flex-wrap">
-            <button id="retry-quiz-btn" class="px-6 py-2 rounded-xl border-2 border-eval-blue bg-white text-eval-blue font-semibold hover:bg-eval-blue hover:text-white transition">Réessayer</button>
-            <button id="home-from-results-btn" class="px-6 py-2 rounded-xl bg-eval-yellow font-bold hover:bg-[#f5d020] shadow-md transition">Accueil</button>
+            <button id="retry-quiz-btn" class="px-6 py-2 rounded-xl border-2 border-eval-blue bg-white text-eval-blue font-semibold hover:bg-eval-blue hover:text-white transition">Retry</button>
+            <button id="home-from-results-btn" class="px-6 py-2 rounded-xl bg-eval-yellow font-bold hover:bg-[#f5d020] shadow-md transition">Home</button>
           </div>
         </div>
       </div>
@@ -163,38 +163,38 @@
       <div class="flex flex-col md:flex-row min-h-[calc(100vh-62px)]">
         <aside class="md:w-64 bg-eval-dark text-white/70 p-4 md:p-5 shrink-0">
           <div class="text-[0.6rem] font-bold uppercase tracking-wider text-white/30 mt-2 mb-2">Navigation</div>
-          <button data-panel="overview" class="teacher-nav-btn flex items-center gap-3 w-full text-left py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-white/5 transition mb-1 data-[active=true]:bg-eval-yellow/10 data-[active=true]:text-white data-[active=true]:border-l-eval-yellow border-l-3 border-transparent"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Vue d'ensemble</button>
-          <button data-panel="quizzes" class="teacher-nav-btn flex items-center gap-3 w-full text-left py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-white/5 transition"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg> Mes Quizzes</button>
-          <button data-panel="results" class="teacher-nav-btn flex items-center gap-3 w-full text-left py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-white/5 transition"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Résultats</button>
-          <div class="text-[0.6rem] font-bold uppercase tracking-wider text-white/30 mt-6 mb-2">Compte</div>
-          <button data-role-switch="student" class="flex items-center gap-3 w-full text-left py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-white/5 transition"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Vue Étudiant</button>
+          <button data-panel="overview" class="teacher-nav-btn flex items-center gap-3 w-full text-left py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-white/5 transition mb-1 data-[active=true]:bg-eval-yellow/10 data-[active=true]:text-white data-[active=true]:border-l-eval-yellow border-l-3 border-transparent"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Overview</button>
+          <button data-panel="quizzes" class="teacher-nav-btn flex items-center gap-3 w-full text-left py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-white/5 transition"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg> My Quizzes</button>
+          <button data-panel="results" class="teacher-nav-btn flex items-center gap-3 w-full text-left py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-white/5 transition"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Results</button>
+          <div class="text-[0.6rem] font-bold uppercase tracking-wider text-white/30 mt-6 mb-2">Account</div>
+          <button data-role-switch="student" class="flex items-center gap-3 w-full text-left py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-white/5 transition"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Student View</button>
         </aside>
         <main class="flex-1 p-6 md:p-8 overflow-y-auto">
           <div id="teacher-overview-panel">
-            <h1 class="font-serif text-2xl font-bold text-eval-blue">Tableau de bord</h1>
-            <p class="text-gray-500 text-sm mb-6">Bienvenue, voici un aperçu de votre activité</p>
+            <h1 class="font-serif text-2xl font-bold text-eval-blue">Dashboard</h1>
+            <p class="text-gray-500 text-sm mb-6">Welcome, here is an overview of your activity</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-              <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-eval-blue"><div class="font-serif text-3xl font-bold">6</div><div class="text-xs text-gray-500 mt-1">Quizzes créés</div><div class="text-green-600 text-[11px] font-semibold">↑ +2 ce mois</div></div>
-              <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-eval-yellow"><div class="font-serif text-3xl font-bold">142</div><div class="text-xs text-gray-500">Tentatives totales</div><div class="text-green-600 text-[11px] font-semibold">↑ +18 cette semaine</div></div>
-              <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-green-500"><div class="font-serif text-3xl font-bold">73%</div><div class="text-xs text-gray-500">Taux de réussite moy.</div><div class="text-green-600 text-[11px] font-semibold">↑ +5% vs mois dernier</div></div>
-              <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-eval-teal"><div class="font-serif text-3xl font-bold">38</div><div class="text-xs text-gray-500">Étudiants actifs</div><div class="text-green-600 text-[11px] font-semibold">↑ +6 nouveaux</div></div>
+              <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-eval-blue"><div class="font-serif text-3xl font-bold">6</div><div class="text-xs text-gray-500 mt-1">Quizzes created</div><div class="text-green-600 text-[11px] font-semibold">↑ +2 this month</div></div>
+              <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-eval-yellow"><div class="font-serif text-3xl font-bold">142</div><div class="text-xs text-gray-500">Total attempts</div><div class="text-green-600 text-[11px] font-semibold">↑ +18 this week</div></div>
+              <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-green-500"><div class="font-serif text-3xl font-bold">73%</div><div class="text-xs text-gray-500">Avg. success rate</div><div class="text-green-600 text-[11px] font-semibold">↑ +5% vs last month</div></div>
+              <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-eval-teal"><div class="font-serif text-3xl font-bold">38</div><div class="text-xs text-gray-500">Active students</div><div class="text-green-600 text-[11px] font-semibold">↑ +6 new</div></div>
             </div>
  <div class="flex justify-between items-center mb-3">
-  <h2 class="font-serif font-bold text-xl">Performance par quiz</h2>
+  <h2 class="font-serif font-bold text-xl">Performance by quiz</h2>
 </div>
 <div class="bg-white rounded-xl shadow overflow-hidden">
   <table class="min-w-full">
     <thead class="bg-gray-50 text-gray-500 text-[11px] font-bold uppercase tracking-wider">
       <tr>
         <th class="px-5 py-3 text-left">Quiz</th>
-        <th class="px-5 py-3 text-left">Tentatives</th>
-        <th class="px-5 py-3 text-left">Taux réussite</th>
-        <th class="px-5 py-3 text-left">Statut</th>
+        <th class="px-5 py-3 text-left">Attempts</th>
+        <th class="px-5 py-3 text-left">Success rate</th>
+        <th class="px-5 py-3 text-left">Status</th>
       </tr>
     </thead>
     <tbody>
       <tr class="border-b">
-        <td class="px-5 py-3"><strong>Algorithmes & Complexité</strong></td>
+        <td class="px-5 py-3"><strong>Algorithms & Complexity</strong></td>
         <td class="px-5 py-3">38</td>
         <td class="px-5 py-3">
           <div class="flex items-center gap-2">
@@ -203,13 +203,13 @@
             </div>
             <span class="text-xs">82%</span>
           </div>
-        </td>
+         </td>
         <td class="px-5 py-3">
-          <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-800">Actif</span>
-        </td>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-800">Active</span>
+         </td>
       </tr>
       <tr class="border-b">
-        <td class="px-5 py-3"><strong>Bases de données SQL</strong></td>
+        <td class="px-5 py-3"><strong>SQL Databases</strong></td>
         <td class="px-5 py-3">27</td>
         <td class="px-5 py-3">
           <div class="flex items-center gap-2">
@@ -218,13 +218,13 @@
             </div>
             <span class="text-xs">68%</span>
           </div>
-        </td>
+         </td>
         <td class="px-5 py-3">
-          <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-800">Actif</span>
-        </td>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-800">Active</span>
+         </td>
       </tr>
       <tr class="border-b">
-        <td class="px-5 py-3"><strong>Dérivées & Intégrales</strong></td>
+        <td class="px-5 py-3"><strong>Derivatives & Integrals</strong></td>
         <td class="px-5 py-3">21</td>
         <td class="px-5 py-3">
           <div class="flex items-center gap-2">
@@ -233,24 +233,24 @@
             </div>
             <span class="text-xs">55%</span>
           </div>
-        </td>
+         </td>
         <td class="px-5 py-3">
-          <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-800">Actif</span>
-        </td>
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-800">Active</span>
+         </td>
       </tr>
     </tbody>
-  </table>
+   </table>
 </div>
           <div id="teacher-quizzes-panel" class="hidden">
-            <h1 class="font-serif text-2xl font-bold text-eval-blue">Mes Quizzes</h1>
-            <p class="text-gray-500 text-sm mb-4">Gérez, modifiez et publiez vos quizzes</p>
-            <div class="flex flex-col sm:flex-row justify-between gap-3 mb-5"><div><input type="text" id="teacher-quiz-search" placeholder="Rechercher…" class="border border-gray-200 rounded-xl py-2 px-4 w-64 bg-gray-50 text-sm focus:border-eval-blue outline-none"></div><button id="create-quiz-btn" class="flex items-center gap-1 bg-eval-yellow px-4 py-2 rounded-xl font-bold text-sm shadow-md hover:shadow-lg transition"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nouveau Quiz</button></div>
-            <div class="bg-white rounded-xl shadow overflow-x-auto"><table class="min-w-full"><thead class="bg-gray-50 text-gray-500 text-[11px] uppercase font-bold">运转<th class="px-5 py-3">Titre</th><th class="px-5 py-3">Matière</th><th class="px-5 py-3">Questions</th><th class="px-5 py-3">Durée</th><th class="px-5 py-3">Statut</th><th class="px-5 py-3">Actions</th></tr></thead><tbody id="teacher-quizzes-table-body"></tbody></table></div>
+            <h1 class="font-serif text-2xl font-bold text-eval-blue">My Quizzes</h1>
+            <p class="text-gray-500 text-sm mb-4">Manage, edit and publish your quizzes</p>
+            <div class="flex flex-col sm:flex-row justify-between gap-3 mb-5"><div><input type="text" id="teacher-quiz-search" placeholder="Search…" class="border border-gray-200 rounded-xl py-2 px-4 w-64 bg-gray-50 text-sm focus:border-eval-blue outline-none"></div><button id="create-quiz-btn" class="flex items-center gap-1 bg-eval-yellow px-4 py-2 rounded-xl font-bold text-sm shadow-md hover:shadow-lg transition"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New Quiz</button></div>
+            <div class="bg-white rounded-xl shadow overflow-x-auto"><table class="min-w-full"><thead class="bg-gray-50 text-gray-500 text-[11px] uppercase font-bold"> <tr><th class="px-5 py-3">Title</th><th class="px-5 py-3">Subject</th><th class="px-5 py-3">Questions</th><th class="px-5 py-3">Duration</th><th class="px-5 py-3">Status</th><th class="px-5 py-3">Actions</th></tr></thead><tbody id="teacher-quizzes-table-body"></tbody></table></div>
           </div>
           <div id="teacher-results-panel" class="hidden">
-            <h1 class="font-serif text-2xl font-bold text-eval-blue">Résultats des Étudiants</h1>
-            <p class="text-gray-500 text-sm mb-6">Consultez les performances individuelles</p>
-            <div class="bg-white rounded-xl shadow overflow-x-auto"><table class="min-w-full"><thead class="bg-gray-50 text-gray-500 text-[11px] uppercase">运转<th class="px-5 py-3">Étudiant</th><th class="px-5 py-3">Quiz</th><th class="px-5 py-3">Score</th><th class="px-5 py-3">Temps</th><th class="px-5 py-3">Date</th></tr></thead><tbody><tr class="border-b"><td class="px-5 py-3 font-medium">Sara M.</td><td class="px-5 py-3">Algorithmes & Complexité</td><td class="px-5 py-3 text-green-600 font-bold">90%</td><td class="px-5 py-3">8:42</td><td class="px-5 py-3 text-gray-500">Auj. 10:12</td></tr><tr class="border-b"><td class="px-5 py-3 font-medium">Karim B.</td><td class="px-5 py-3">Bases de données SQL</td><td class="px-5 py-3 text-green-600 font-bold">75%</td><td class="px-5 py-3">11:05</td><td class="px-5 py-3">Auj. 09:50</td></tr><tr class="border-b"><td class="px-5 py-3 font-medium">Amina L.</td><td class="px-5 py-3">Dérivées & Intégrales</td><td class="px-5 py-3 text-amber-600 font-bold">60%</td><td class="px-5 py-3">14:30</td><td class="px-5 py-3">Hier 16:22</td></tr></tbody></table></div>
+            <h1 class="font-serif text-2xl font-bold text-eval-blue">Student Results</h1>
+            <p class="text-gray-500 text-sm mb-6">View individual performances</p>
+            <div class="bg-white rounded-xl shadow overflow-x-auto"><table class="min-w-full"><thead class="bg-gray-50 text-gray-500 text-[11px] uppercase"> <tr><th class="px-5 py-3">Student</th><th class="px-5 py-3">Quiz</th><th class="px-5 py-3">Score</th><th class="px-5 py-3">Time</th><th class="px-5 py-3">Date</th></tr></thead><tbody><tr class="border-b"><td class="px-5 py-3 font-medium">Sara M.</td><td class="px-5 py-3">Algorithms & Complexity</td><td class="px-5 py-3 text-green-600 font-bold">90%</td><td class="px-5 py-3">8:42</td><td class="px-5 py-3 text-gray-500">Today 10:12</td></tr><tr class="border-b"><td class="px-5 py-3 font-medium">Karim B.</td><td class="px-5 py-3">SQL Databases</td><td class="px-5 py-3 text-green-600 font-bold">75%</td><td class="px-5 py-3">11:05</td><td class="px-5 py-3">Today 09:50</td></tr><tr class="border-b"><td class="px-5 py-3 font-medium">Amina L.</td><td class="px-5 py-3">Derivatives & Integrals</td><td class="px-5 py-3 text-amber-600 font-bold">60%</td><td class="px-5 py-3">14:30</td><td class="px-5 py-3">Yesterday 16:22</td></tr></tbody></table></div>
           </div>
         </main>
       </div>
@@ -259,27 +259,27 @@
 
   <div id="quiz-modal" class="modal-overlay fixed inset-0 z-[2000] bg-eval-dark/70 backdrop-blur-sm flex items-center justify-center px-4 opacity-0 pointer-events-none transition-all">
     <div class="modal bg-white w-full max-w-md rounded-2xl shadow-2xl" onclick="event.stopPropagation()">
-      <div class="bg-eval-blue px-6 py-4 flex justify-between items-center rounded-t-2xl"><h3 class="font-serif text-white font-bold">Créer un nouveau quiz</h3><button id="close-modal-btn" class="text-white/70 hover:text-white text-xl">✕</button></div>
+      <div class="bg-eval-blue px-6 py-4 flex justify-between items-center rounded-t-2xl"><h3 class="font-serif text-white font-bold">Create a new quiz</h3><button id="close-modal-btn" class="text-white/70 hover:text-white text-xl">✕</button></div>
       <div class="p-6 space-y-4">
-        <div><label class="text-[11px] font-bold uppercase text-gray-600">Titre</label><input id="modal-quiz-title" class="w-full border border-gray-200 rounded-lg p-2 text-sm mt-1"></div>
+        <div><label class="text-[11px] font-bold uppercase text-gray-600">Title</label><input id="modal-quiz-title" class="w-full border border-gray-200 rounded-lg p-2 text-sm mt-1"></div>
         <div><label class="text-[11px] font-bold uppercase text-gray-600">Description</label><textarea id="modal-quiz-desc" class="w-full border border-gray-200 rounded-lg p-2 text-sm mt-1" rows="2"></textarea></div>
-        <div class="grid grid-cols-2 gap-3"><div><label class="text-[11px] font-bold uppercase text-gray-600">Matière</label><select id="modal-subject" class="w-full border border-gray-200 rounded-lg p-2 text-sm"><option>Informatique</option><option>Mathématiques</option><option>Physique</option><option>Langue</option></select></div><div><label class="text-[11px] font-bold uppercase text-gray-600">Durée (min)</label><input type="number" id="modal-duration" class="w-full border border-gray-200 rounded-lg p-2 text-sm" value="10"></div></div>
-        <div class="grid grid-cols-2 gap-3"><div><label class="text-[11px] font-bold uppercase text-gray-600">Difficulté</label><select id="modal-difficulty" class="w-full border border-gray-200 rounded-lg p-2 text-sm"><option>Facile</option><option>Moyen</option><option>Difficile</option></select></div><div><label class="text-[11px] font-bold uppercase text-gray-600">Statut</label><select id="modal-status" class="w-full border border-gray-200 rounded-lg p-2 text-sm"><option>Brouillon</option><option>Actif</option></select></div></div>
+        <div class="grid grid-cols-2 gap-3"><div><label class="text-[11px] font-bold uppercase text-gray-600">Subject</label><select id="modal-subject" class="w-full border border-gray-200 rounded-lg p-2 text-sm"><option>Computer Science</option><option>Mathematics</option><option>Physics</option><option>Language</option></select></div><div><label class="text-[11px] font-bold uppercase text-gray-600">Duration (min)</label><input type="number" id="modal-duration" class="w-full border border-gray-200 rounded-lg p-2 text-sm" value="10"></div></div>
+        <div class="grid grid-cols-2 gap-3"><div><label class="text-[11px] font-bold uppercase text-gray-600">Difficulty</label><select id="modal-difficulty" class="w-full border border-gray-200 rounded-lg p-2 text-sm"><option>Easy</option><option>Medium</option><option>Hard</option></select></div><div><label class="text-[11px] font-bold uppercase text-gray-600">Status</label><select id="modal-status" class="w-full border border-gray-200 rounded-lg p-2 text-sm"><option>Draft</option><option>Active</option></select></div></div>
       </div>
-      <div class="px-6 pb-6 flex justify-end gap-3"><button id="cancel-modal-btn" class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-50">Annuler</button><button id="save-quiz-btn" class="px-5 py-2 bg-eval-yellow rounded-lg font-bold">Enregistrer</button></div>
+      <div class="px-6 pb-6 flex justify-end gap-3"><button id="cancel-modal-btn" class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-50">Cancel</button><button id="save-quiz-btn" class="px-5 py-2 bg-eval-yellow rounded-lg font-bold">Save</button></div>
     </div>
   </div>
 
   <script>
     const QUIZZES = [
-      {id:1, name:"Algorithmes & Complexité", subject:"Informatique", desc:"Testez vos connaissances sur la complexité algorithmique.", questions:10, duration:10, difficulty:"Moyen", color:"bg-eval-blue", youtubeId:"2tU2R8l_4AI", questions_data:[{q:"Quelle est la complexité du tri rapide (QuickSort) en moyenne ?",opts:["O(n)","O(n log n)","O(n²)","O(log n)"], ans:1},{q:"Un algorithme récursif qui se divise en deux sous-problèmes de taille n/2 a une complexité de :",opts:["O(n)","O(n²)","O(n log n)","O(log n)"], ans:2},{q:"Quelle structure de données utilise le principe LIFO ?",opts:["File (Queue)","Pile (Stack)","Tableau","Liste chaînée"], ans:1},{q:"La notation Big-O de O(1) signifie :",opts:["Linéaire","Quadratique","Constant","Logarithmique"], ans:2},{q:"Quel algorithme de tri est le plus efficace pour de grandes données ?",opts:["Tri à bulles","Tri par insertion","Tri fusion","Tri sélection"], ans:2}]},
-      {id:2, name:"Bases de données SQL", subject:"Informatique", desc:"Maîtrisez les requêtes SQL.", questions:8, duration:12, difficulty:"Facile", color:"bg-eval-teal", youtubeId:"HXV3zeQKqGY", questions_data:[{q:"Quelle commande SQL permet de récupérer des données ?",opts:["INSERT","UPDATE","SELECT","DELETE"], ans:2},{q:"Quel type de jointure retourne toutes les lignes des deux tables ?",opts:["INNER JOIN","LEFT JOIN","RIGHT JOIN","FULL OUTER JOIN"], ans:3},{q:"La clé primaire garantit :",opts:["L'unicité des valeurs","La relation entre tables","La suppression en cascade","Aucune contrainte"], ans:0},{q:"Quelle clause filtre les résultats d'un GROUP BY ?",opts:["WHERE","ORDER BY","HAVING","LIMIT"], ans:2},{q:"SQL signifie :",opts:["Structured Query Language","Simple Query Logic","System Query Layer","Structured Queue Logic"], ans:0}]},
-      {id:3, name:"Dérivées & Intégrales", subject:"Mathématiques", desc:"Calcul différentiel et intégral.", questions:6, duration:15, difficulty:"Difficile", color:"bg-eval-dark", youtubeId:"N2PpRnFqnqY", questions_data:[{q:"La dérivée de f(x) = x³ est :",opts:["3x","x²","3x²","2x³"], ans:2},{q:"∫ 2x dx = ?",opts:["x² + C","2x² + C","x + C","2 + C"], ans:0},{q:"La règle de la chaîne s'applique pour :",opts:["Dériver une somme","Dériver une fonction composée","Dériver un produit","Aucune des réponses"], ans:1},{q:"f'(x) = 0 signifie que f possède :",opts:["Un extremum potentiel","Un point d'inflexion","Une asymptote","Aucune propriété particulière"], ans:0},{q:"La dérivée de sin(x) est :",opts:["-sin(x)","cos(x)","-cos(x)","tan(x)"], ans:1}]},
-      {id:4, name:"Réseaux TCP/IP", subject:"Informatique", desc:"Modèle OSI, protocoles réseau.", questions:7, duration:10, difficulty:"Moyen", color:"bg-eval-blue", youtubeId:"OTwp5_8QOPs", questions_data:[{q:"Combien de couches compte le modèle OSI ?",opts:["4","5","7","9"], ans:2},{q:"TCP est un protocole :",opts:["Non fiable","Orienté connexion","Sans état","Sans accusé de réception"], ans:1},{q:"L'adresse IP 192.168.x.x est une adresse :",opts:["Publique","De bouclage","Privée","De broadcast"], ans:2},{q:"Le protocole HTTP utilise par défaut le port :",opts:["21","22","80","443"], ans:2},{q:"DNS traduit :",opts:["IP → MAC","Nom de domaine → IP","IP → Port","URL → HTML"], ans:1}]},
-      {id:5, name:"Physique Quantique", subject:"Physique", desc:"Introduction à la mécanique quantique.", questions:5, duration:8, difficulty:"Difficile", color:"bg-eval-yellow", youtubeId:"ZAcpMb_Hfis", questions_data:[{q:"Le principe d'incertitude d'Heisenberg concerne :",opts:["La masse et la charge","La position et la quantité de mouvement","L'énergie et la vitesse","La charge et le spin"], ans:1},{q:"La dualité onde-corpuscule a été proposée par :",opts:["Einstein","Bohr","De Broglie","Schrödinger"], ans:2},{q:"Un photon est :",opts:["Un électron","Un quanta de lumière","Un proton","Une onde sonore"], ans:1},{q:"L'équation de Schrödinger décrit :",opts:["La gravité","L'évolution d'un état quantique","La relativité","L'électromagnétisme"], ans:1},{q:"Le spin d'un électron peut prendre la valeur :",opts:["0 ou 1","−1 ou +1","−½ ou +½","1/3 ou 2/3"], ans:2}]},
-      {id:6, name:"Français — Grammaire", subject:"Langue", desc:"Accord des participes, conjugaison.", questions:8, duration:10, difficulty:"Facile", color:"bg-eval-teal", youtubeId:"NlP8kEtBpuI", questions_data:[{q:"Le participe passé s'accorde avec :",opts:["Le sujet toujours","Le COD si placé avant avec avoir","L'auxiliaire être uniquement","Le verbe principal"], ans:1},{q:"Quelle est la forme correcte ?",opts:["Les fleurs que j'ai cueilli","Les fleurs que j'ai cueillies","Les fleurs que j'ai cueilli.","Les fleurs qu'ai cueillies"], ans:1},{q:"Un complément d'objet indirect (COI) répond à la question :",opts:["Qui ? Quoi ?","À qui ? À quoi ?","Où ? Quand ?","Comment ?"], ans:1},{q:"Le subjonctif s'emploie après :",opts:["Je sais que…","Il est certain que…","Il faut que…","Je pense que…"], ans:2},{q:"La voix passive de 'Le chat mange la souris' est :",opts:["La souris est mangée par le chat","Le chat est mangé par la souris","La souris mange le chat","Aucune réponse"], ans:0}]}
+      {id:1, name:"Algorithms & Complexity", subject:"Computer Science", desc:"Test your knowledge on algorithmic complexity.", questions:10, duration:10, difficulty:"Medium", color:"bg-eval-blue", youtubeId:"2tU2R8l_4AI", questions_data:[{q:"What is the average time complexity of QuickSort?",opts:["O(n)","O(n log n)","O(n²)","O(log n)"], ans:1},{q:"A recursive algorithm that divides into two subproblems of size n/2 has complexity:",opts:["O(n)","O(n²)","O(n log n)","O(log n)"], ans:2},{q:"Which data structure uses LIFO principle?",opts:["Queue","Stack","Array","Linked List"], ans:1},{q:"Big-O notation O(1) means:",opts:["Linear","Quadratic","Constant","Logarithmic"], ans:2},{q:"Which sorting algorithm is most efficient for large data?",opts:["Bubble sort","Insertion sort","Merge sort","Selection sort"], ans:2}]},
+      {id:2, name:"SQL Databases", subject:"Computer Science", desc:"Master SQL queries.", questions:8, duration:12, difficulty:"Easy", color:"bg-eval-teal", youtubeId:"HXV3zeQKqGY", questions_data:[{q:"Which SQL command retrieves data?",opts:["INSERT","UPDATE","SELECT","DELETE"], ans:2},{q:"Which join returns all rows from both tables?",opts:["INNER JOIN","LEFT JOIN","RIGHT JOIN","FULL OUTER JOIN"], ans:3},{q:"A primary key guarantees:",opts:["Uniqueness of values","Relation between tables","Cascade delete","No constraint"], ans:0},{q:"Which clause filters results after GROUP BY?",opts:["WHERE","ORDER BY","HAVING","LIMIT"], ans:2},{q:"SQL stands for:",opts:["Structured Query Language","Simple Query Logic","System Query Layer","Structured Queue Logic"], ans:0}]},
+      {id:3, name:"Derivatives & Integrals", subject:"Mathematics", desc:"Differential and integral calculus.", questions:6, duration:15, difficulty:"Hard", color:"bg-eval-dark", youtubeId:"N2PpRnFqnqY", questions_data:[{q:"The derivative of f(x) = x³ is:",opts:["3x","x²","3x²","2x³"], ans:2},{q:"∫ 2x dx = ?",opts:["x² + C","2x² + C","x + C","2 + C"], ans:0},{q:"The chain rule applies to:",opts:["Derivative of a sum","Derivative of a composite function","Derivative of a product","None of the above"], ans:1},{q:"f'(x) = 0 means f has:",opts:["A potential extremum","An inflection point","An asymptote","No special property"], ans:0},{q:"The derivative of sin(x) is:",opts:["-sin(x)","cos(x)","-cos(x)","tan(x)"], ans:1}]},
+      {id:4, name:"TCP/IP Networks", subject:"Computer Science", desc:"OSI model, network protocols.", questions:7, duration:10, difficulty:"Medium", color:"bg-eval-blue", youtubeId:"OTwp5_8QOPs", questions_data:[{q:"How many layers does the OSI model have?",opts:["4","5","7","9"], ans:2},{q:"TCP is a protocol that is:",opts:["Unreliable","Connection-oriented","Stateless","No acknowledgment"], ans:1},{q:"The IP address 192.168.x.x is a:",opts:["Public address","Loopback address","Private address","Broadcast address"], ans:2},{q:"HTTP uses port number by default:",opts:["21","22","80","443"], ans:2},{q:"DNS translates:",opts:["IP → MAC","Domain name → IP","IP → Port","URL → HTML"], ans:1}]},
+      {id:5, name:"Quantum Physics", subject:"Physics", desc:"Introduction to quantum mechanics.", questions:5, duration:8, difficulty:"Hard", color:"bg-eval-yellow", youtubeId:"ZAcpMb_Hfis", questions_data:[{q:"Heisenberg's uncertainty principle concerns:",opts:["Mass and charge","Position and momentum","Energy and velocity","Charge and spin"], ans:1},{q:"The wave-particle duality was proposed by:",opts:["Einstein","Bohr","De Broglie","Schrödinger"], ans:2},{q:"A photon is:",opts:["An electron","A quantum of light","A proton","A sound wave"], ans:1},{q:"Schrödinger equation describes:",opts:["Gravity","Evolution of a quantum state","Relativity","Electromagnetism"], ans:1},{q:"The spin of an electron can be:",opts:["0 or 1","−1 or +1","−½ or +½","1/3 or 2/3"], ans:2}]},
+      {id:6, name:"French Grammar", subject:"Language", desc:"Past participle agreement, conjugation.", questions:8, duration:10, difficulty:"Easy", color:"bg-eval-teal", youtubeId:"NlP8kEtBpuI", questions_data:[{q:"The past participle agrees with:",opts:["Always the subject","The direct object if placed before with 'avoir'","Only the auxiliary 'être'","The main verb"], ans:1},{q:"Which is the correct form?",opts:["Les fleurs que j'ai cueilli","Les fleurs que j'ai cueillies","Les fleurs que j'ai cueilli.","Les fleurs qu'ai cueillies"], ans:1},{q:"An indirect object (COI) answers the question:",opts:["Who? What?","To whom? To what?","Where? When?","How?"], ans:1},{q:"The subjunctive is used after:",opts:["Je sais que…","Il est certain que…","Il faut que…","Je pense que…"], ans:2},{q:"The passive voice of 'Le chat mange la souris' is:",opts:["La souris est mangée par le chat","Le chat est mangé par la souris","La souris mange le chat","None of the above"], ans:0}]}
     ];
-    let teacherQuizzes = QUIZZES.map(q => ({ ...q, status: q.id % 3 === 0 ? 'Fermé' : q.id % 2 === 0 ? 'Brouillon' : 'Actif' }));
+    let teacherQuizzes = QUIZZES.map(q => ({ ...q, status: q.id % 3 === 0 ? 'Closed' : q.id % 2 === 0 ? 'Draft' : 'Active' }));
     let currentQuiz = null, currentIndex = 0, userAnswers = [], timerInterval = null, timeRemaining = 0, liveScore = 0, startTime = null;
 
     const studentView = document.getElementById('student-view');
@@ -308,7 +308,7 @@
       const searchTerm = searchInput.value.toLowerCase();
       const selectedSubject = subjectFilter.value;
       const filtered = QUIZZES.filter(q => (q.name.toLowerCase().includes(searchTerm) || q.subject.toLowerCase().includes(searchTerm)) && (selectedSubject === '' || q.subject === selectedSubject));
-      quizCountLabel.textContent = `${filtered.length} quiz${filtered.length !== 1 ? 'zes' : ''} disponible${filtered.length !== 1 ? 's' : ''}`;
+      quizCountLabel.textContent = `${filtered.length} quiz${filtered.length !== 1 ? 'zes' : ''} available`;
       quizGrid.innerHTML = filtered.map(q => {
         const thumbUrl = `https://img.youtube.com/vi/${q.youtubeId}/hqdefault.jpg`;
         const ytUrl = `https://www.youtube.com/watch?v=${q.youtubeId}`;
@@ -319,17 +319,17 @@
               <p class="text-[11px] font-bold uppercase text-eval-teal">${q.subject}</p>
               <h3 class="font-serif font-bold text-lg">${q.name}</h3>
               <p class="text-gray-500 text-xs mt-1 line-clamp-2">${q.desc}</p>
-              <img src="${thumbUrl}" class="w-full rounded-xl my-3 aspect-video object-cover hover:scale-[1.01] transition course-thumb" data-url="${ytUrl}" alt="Vidéo cours">
+              <img src="${thumbUrl}" class="w-full rounded-xl my-3 aspect-video object-cover hover:scale-[1.01] transition course-thumb" data-url="${ytUrl}" alt="Course video">
               <div class="flex gap-3 text-gray-500 text-[11px] font-semibold mt-1">
                 <span class="flex items-center gap-1"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${q.duration} min</span>
                 <span class="flex items-center gap-1"><svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>${q.questions} questions</span>
               </div>
             </div>
             <div class="border-t border-gray-100 px-4 py-3 flex justify-between items-center">
-              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${q.difficulty==='Facile'?'bg-green-100 text-green-800':q.difficulty==='Difficile'?'bg-red-100 text-red-800':'bg-amber-100 text-amber-800'}">${q.difficulty}</span>
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${q.difficulty==='Easy'?'bg-green-100 text-green-800':q.difficulty==='Hard'?'bg-red-100 text-red-800':'bg-amber-100 text-amber-800'}">${q.difficulty}</span>
               <div class="flex gap-2">
-                <button class="course-btn text-xs font-semibold bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg transition" data-url="${ytUrl}">Voir cours</button>
-                <button class="start-quiz-btn text-xs font-bold bg-eval-yellow px-3 py-1.5 rounded-lg shadow-sm hover:shadow" data-id="${q.id}">Commencer →</button>
+                <button class="course-btn text-xs font-semibold bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg transition" data-url="${ytUrl}">View course</button>
+                <button class="start-quiz-btn text-xs font-bold bg-eval-yellow px-3 py-1.5 rounded-lg shadow-sm hover:shadow" data-id="${q.id}">Start →</button>
               </div>
             </div>
           </div>
@@ -371,7 +371,7 @@
       document.getElementById('q-score-live').innerText = `Score: ${liveScore}`;
       document.getElementById('progress-fill').style.width = `${((currentIndex)/total)*100}%`;
       prevBtn.disabled = currentIndex === 0;
-      nextBtn.innerText = currentIndex === total-1 ? 'Terminer ✓' : 'Suivant →';
+      nextBtn.innerText = currentIndex === total-1 ? 'Finish ✓' : 'Next →';
       const letters = ['A','B','C','D'];
       optionsContainer.innerHTML = qd.opts.map((opt, i) => {
         let additionalClasses = 'border-2 border-gray-200 bg-gray-50';
@@ -427,7 +427,7 @@
       resultsScreen.style.display = 'block';
       const emojiContainer = document.getElementById('result-emoji');
       if(emojiContainer) emojiContainer.innerHTML = `<svg class="w-10 h-10 mx-auto text-eval-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>`;
-      document.getElementById('result-title').innerText = percent < 50 ? 'Pas de chance…' : percent < 70 ? 'Bon effort !' : percent < 90 ? 'Très bien !' : 'Excellent !';
+      document.getElementById('result-title').innerText = percent < 50 ? 'Bad luck…' : percent < 70 ? 'Good effort!' : percent < 90 ? 'Very good!' : 'Excellent!';
       document.getElementById('result-subtitle').innerText = currentQuiz.name;
       document.getElementById('res-correct').innerText = correct;
       document.getElementById('res-wrong').innerText = wrong;
@@ -451,12 +451,12 @@
 
     function renderTeacherQuizzesTable(filter = '') {
       const filtered = teacherQuizzes.filter(q => q.name.toLowerCase().includes(filter) || q.subject.toLowerCase().includes(filter));
-      const statusMap = { Actif: 'bg-green-100 text-green-800', Brouillon: 'bg-gray-100 text-gray-700', Fermé: 'bg-red-100 text-red-800' };
+      const statusMap = { Active: 'bg-green-100 text-green-800', Draft: 'bg-gray-100 text-gray-700', Closed: 'bg-red-100 text-red-800' };
       document.getElementById('teacher-quizzes-table-body').innerHTML = filtered.map(q => `
-        <tr class="border-b"><td class="px-5 py-3 font-medium">${q.name}</td><td class="px-5 py-3">${q.subject}</td><td class="px-5 py-3">${q.questions_data.length}</td><td class="px-5 py-3">${q.duration} min</td><td class="px-5 py-3"><span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${statusMap[q.status]}">${q.status}</span></td><td class="px-5 py-3"><div class="flex gap-2"><button class="edit-quiz-btn text-xs border rounded-lg px-2 py-1 hover:border-eval-blue" data-id="${q.id}">Modifier</button><button class="delete-quiz-btn text-xs border rounded-lg px-2 py-1 hover:border-red-500 hover:text-red-500" data-id="${q.id}">Supprimer</button></div></td></tr>
+        <tr class="border-b"><td class="px-5 py-3 font-medium">${q.name}</td><td class="px-5 py-3">${q.subject}</td><td class="px-5 py-3">${q.questions_data.length}</td><td class="px-5 py-3">${q.duration} min</td><td class="px-5 py-3"><span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${statusMap[q.status]}">${q.status}</span></td><td class="px-5 py-3"><div class="flex gap-2"><button class="edit-quiz-btn text-xs border rounded-lg px-2 py-1 hover:border-eval-blue" data-id="${q.id}">Edit</button><button class="delete-quiz-btn text-xs border rounded-lg px-2 py-1 hover:border-red-500 hover:text-red-500" data-id="${q.id}">Delete</button></div></td></tr>
       `).join('');
-      document.querySelectorAll('.edit-quiz-btn').forEach(btn => btn.addEventListener('click', () => alert(`Modifier: ${teacherQuizzes.find(q=>q.id==parseInt(btn.dataset.id))?.name}`)));
-      document.querySelectorAll('.delete-quiz-btn').forEach(btn => btn.addEventListener('click', () => { if(confirm('Supprimer ce quiz ?')) { teacherQuizzes = teacherQuizzes.filter(q => q.id !== parseInt(btn.dataset.id)); renderTeacherQuizzesTable(); } }));
+      document.querySelectorAll('.edit-quiz-btn').forEach(btn => btn.addEventListener('click', () => alert(`Edit: ${teacherQuizzes.find(q=>q.id==parseInt(btn.dataset.id))?.name}`)));
+      document.querySelectorAll('.delete-quiz-btn').forEach(btn => btn.addEventListener('click', () => { if(confirm('Delete this quiz?')) { teacherQuizzes = teacherQuizzes.filter(q => q.id !== parseInt(btn.dataset.id)); renderTeacherQuizzesTable(); } }));
     }
 
     function setActiveRole(role) {
@@ -475,7 +475,7 @@
 
     function openModal() { modal.classList.add('open'); }
     function closeModal() { modal.classList.remove('open'); }
-    function saveNewQuiz() { alert('Quiz enregistré (simulation). Connectez votre backend.'); closeModal(); }
+    function saveNewQuiz() { alert('Quiz saved (simulation). Connect your backend.'); closeModal(); }
 
     searchInput.addEventListener('input', renderQuizGrid);
     subjectFilter.addEventListener('change', renderQuizGrid);
