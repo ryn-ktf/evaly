@@ -3,7 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from auth import router as auth_router
 from quizzes import router as quizzes_router
 from contact import router as contact_router
+from fastapi.staticfiles import StaticFiles
 
+app.mount("/", StaticFiles(directory=".", html=True), name="static")
 app = FastAPI(title="Evaly API", version="1.0.0")
 
 app.add_middleware(
