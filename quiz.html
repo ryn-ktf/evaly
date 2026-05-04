@@ -53,19 +53,16 @@
 </head>
 
 <body class="font-sans bg-[#edeef2] antialiased">
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-eval-blue h-[62px] flex items-center justify-between px-6 md:px-10 shadow-md">
-    <a href="#" class="flex items-center hover:opacity-80 transition">
-        <div class="flex items-center" style="height:56px; overflow:visible;">
-      <img src="/images/4.png" alt="Evaly logo" style="height:160px; width:auto; object-fit:contain; margin-top:10px;" />
-        </div>
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white h-14 flex items-center justify-between px-6 md:px-10 shadow-sm">
+    <a href="evaly_homepage.html" class="flex items-center" style="height:56px; overflow:visible;">
+      <img src="images/1.png" alt="Evaly logo" style="height:110px; width:auto; object-fit:contain; margin-top:28px;" />
     </a>
-    <div class="flex gap-1 bg-white/10 rounded-full p-1">
-      <button data-role="student" class="role-switch-btn px-4 py-1.5 text-xs font-semibold rounded-full transition-all text-white/70 data-[active=true]:bg-eval-yellow data-[active=true]:text-black data-[active=true]:shadow-md">Étudiant</button>
-      <button data-role="teacher" class="role-switch-btn px-4 py-1.5 text-xs font-semibold rounded-full transition-all text-white/70 data-[active=true]:bg-eval-yellow data-[active=true]:text-black data-[active=true]:shadow-md">Enseignant</button>
+    <div class="hidden md:flex gap-6">
+      <a href="evaly_homepage.html" class="text-black/80 text-sm no-underline hover:text-[#ffde59] transition-colors">Home</a>
+      <a href="quiz.html" class="text-[#004b8d] text-sm font-semibold no-underline border-b-2 border-[#ffde59]">Quizzes</a>
+      <a href="login.html" class="text-black/80 text-sm no-underline hover:text-[#ffde59] transition-colors">For Teachers</a>
     </div>
-    <div class="flex items-center gap-2 text-white/80 text-sm">
-     <a href="evaly_homepage.html" class="text-white/80 text-sm no-underline hover:text-yellow transition-colors"> Home </a>
-    </div>
+    <a href="login.html" class="bg-[#ffde59] text-[#004b8d] font-semibold text-sm px-4 py-2 rounded-md no-underline">Teacher Login</a>
   </nav>
 
 
@@ -158,19 +155,9 @@
       </div>
     </div>
 
-    <!-- TEACHER VIEW -->
+    <!-- teacher view removed — now lives in teacher.html -->
     <div id="teacher-view" class="view hidden">
-      <div class="flex flex-col md:flex-row min-h-[calc(100vh-62px)]">
-        <aside class="md:w-64 bg-eval-dark text-white/70 p-4 md:p-5 shrink-0">
-          <div class="text-[0.6rem] font-bold uppercase tracking-wider text-white/30 mt-2 mb-2">Navigation</div>
-          <button data-panel="overview" class="teacher-nav-btn flex items-center gap-3 w-full text-left py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-white/5 transition mb-1 data-[active=true]:bg-eval-yellow/10 data-[active=true]:text-white data-[active=true]:border-l-eval-yellow border-l-3 border-transparent"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Vue d'ensemble</button>
-          <button data-panel="quizzes" class="teacher-nav-btn flex items-center gap-3 w-full text-left py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-white/5 transition"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg> Mes Quizzes</button>
-          <button data-panel="results" class="teacher-nav-btn flex items-center gap-3 w-full text-left py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-white/5 transition"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Résultats</button>
-          <div class="text-[0.6rem] font-bold uppercase tracking-wider text-white/30 mt-6 mb-2">Compte</div>
-          <button data-role-switch="student" class="flex items-center gap-3 w-full text-left py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-white/5 transition"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Vue Étudiant</button>
-        </aside>
-        <main class="flex-1 p-6 md:p-8 overflow-y-auto">
-          <div id="teacher-overview-panel">
+      <div id="teacher-overview-panel">
             <h1 class="font-serif text-2xl font-bold text-eval-blue">Tableau de bord</h1>
             <p class="text-gray-500 text-sm mb-6">Bienvenue, voici un aperçu de votre activité</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -257,19 +244,6 @@
     </div>
   </div>
 
-  <div id="quiz-modal" class="modal-overlay fixed inset-0 z-[2000] bg-eval-dark/70 backdrop-blur-sm flex items-center justify-center px-4 opacity-0 pointer-events-none transition-all">
-    <div class="modal bg-white w-full max-w-md rounded-2xl shadow-2xl" onclick="event.stopPropagation()">
-      <div class="bg-eval-blue px-6 py-4 flex justify-between items-center rounded-t-2xl"><h3 class="font-serif text-white font-bold">Créer un nouveau quiz</h3><button id="close-modal-btn" class="text-white/70 hover:text-white text-xl">✕</button></div>
-      <div class="p-6 space-y-4">
-        <div><label class="text-[11px] font-bold uppercase text-gray-600">Titre</label><input id="modal-quiz-title" class="w-full border border-gray-200 rounded-lg p-2 text-sm mt-1"></div>
-        <div><label class="text-[11px] font-bold uppercase text-gray-600">Description</label><textarea id="modal-quiz-desc" class="w-full border border-gray-200 rounded-lg p-2 text-sm mt-1" rows="2"></textarea></div>
-        <div class="grid grid-cols-2 gap-3"><div><label class="text-[11px] font-bold uppercase text-gray-600">Matière</label><select id="modal-subject" class="w-full border border-gray-200 rounded-lg p-2 text-sm"><option>Informatique</option><option>Mathématiques</option><option>Physique</option><option>Langue</option></select></div><div><label class="text-[11px] font-bold uppercase text-gray-600">Durée (min)</label><input type="number" id="modal-duration" class="w-full border border-gray-200 rounded-lg p-2 text-sm" value="10"></div></div>
-        <div class="grid grid-cols-2 gap-3"><div><label class="text-[11px] font-bold uppercase text-gray-600">Difficulté</label><select id="modal-difficulty" class="w-full border border-gray-200 rounded-lg p-2 text-sm"><option>Facile</option><option>Moyen</option><option>Difficile</option></select></div><div><label class="text-[11px] font-bold uppercase text-gray-600">Statut</label><select id="modal-status" class="w-full border border-gray-200 rounded-lg p-2 text-sm"><option>Brouillon</option><option>Actif</option></select></div></div>
-      </div>
-      <div class="px-6 pb-6 flex justify-end gap-3"><button id="cancel-modal-btn" class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-50">Annuler</button><button id="save-quiz-btn" class="px-5 py-2 bg-eval-yellow rounded-lg font-bold">Enregistrer</button></div>
-    </div>
-  </div>
-
   <!-- ── Student Name Modal (shown before quiz starts) ── -->
   <div id="name-modal" class="fixed inset-0 z-[3000] flex items-center justify-center px-4 opacity-0 pointer-events-none transition-all duration-300" style="background:rgba(0,48,90,0.72);backdrop-filter:blur(8px);">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden" onclick="event.stopPropagation()">
@@ -291,8 +265,8 @@
   </div>
 
   <script>
-    // ── API config — change this to your Render API URL once deployed ──────────
-const API_BASE = 'https://evaly-api.onrender.com/api';
+    const API_BASE = 'https://evaly-api.onrender.com/api';
+
     // ── State ─────────────────────────────────────────────────────────────────
     let QUIZZES = [];          // loaded from API
     let teacherQuizzes = [];   // loaded from API (teacher's own quizzes)
@@ -623,18 +597,7 @@ const API_BASE = 'https://evaly-api.onrender.com/api';
       }
     }
 
-    // ── patch renderTeacherQuizzesTable to use delete API ────────────────────
-    const _origRenderTable = renderTeacherQuizzesTable;
-    renderTeacherQuizzesTable = function(filter = '') {
-      _origRenderTable(filter);
-      // re-wire delete buttons to real API
-      document.querySelectorAll('.delete-quiz-btn').forEach(btn => {
-        btn.replaceWith(btn.cloneNode(true)); // remove old listener
-      });
-      document.querySelectorAll('.delete-quiz-btn').forEach(btn => {
-        btn.addEventListener('click', () => deleteQuiz(btn.dataset.id));
-      });
-    };
+    // ── patch renderTeacherQuizzesTable — not needed in student view ─────────
 
     // ── Name modal confirm ────────────────────────────────────────────────────
     document.getElementById('start-quiz-confirm-btn').addEventListener('click', () => {
@@ -644,15 +607,12 @@ const API_BASE = 'https://evaly-api.onrender.com/api';
         return;
       }
       student_name = val;
-      // close modal
       const nameModal = document.getElementById('name-modal');
       nameModal.style.opacity = '0';
       nameModal.style.pointerEvents = 'none';
-      // start the actual quiz
       actuallyStartQuiz(pending_quiz_id);
     });
 
-    // allow pressing Enter in name input
     document.getElementById('student-name-input').addEventListener('keydown', (e) => {
       if (e.key === 'Enter') document.getElementById('start-quiz-confirm-btn').click();
     });
@@ -661,29 +621,13 @@ const API_BASE = 'https://evaly-api.onrender.com/api';
     searchInput.addEventListener('input', renderQuizGrid);
     subjectFilter.addEventListener('change', renderQuizGrid);
     backToListBtn.addEventListener('click', backToQuizList);
-    retryBtn.addEventListener('click', () => startQuiz(currentQuiz.id)); // shows name modal again
+    retryBtn.addEventListener('click', () => startQuiz(currentQuiz.id));
     homeFromResultsBtn.addEventListener('click', backToQuizList);
     prevBtn.addEventListener('click', prevQuestion);
     nextBtn.addEventListener('click', nextQuestion);
-    createQuizBtn?.addEventListener('click', openModal);
-    closeModalBtn?.addEventListener('click', closeModal);
-    cancelModalBtn?.addEventListener('click', closeModal);
-    saveQuizBtn?.addEventListener('click', saveNewQuiz);
-    document.getElementById('teacher-quiz-search')?.addEventListener('input', (e) => renderTeacherQuizzesTable(e.target.value.toLowerCase()));
-    document.querySelectorAll('.teacher-nav-btn').forEach(btn => btn.addEventListener('click', () => {
-      showTeacherPanel(btn.dataset.panel);
-      if (btn.dataset.panel === 'quizzes') loadMyQuizzes();
-    }));
-    document.querySelector('[data-role-switch="student"]')?.addEventListener('click', () => setActiveRole('student'));
-    roleBtns.forEach(btn => btn.addEventListener('click', () => {
-      setActiveRole(btn.dataset.role);
-      if (btn.dataset.role === 'teacher') loadMyQuizzes();
-    }));
 
     // ── Init ──────────────────────────────────────────────────────────────────
-    loadQuizzes();   // fetch from API instead of hardcoded array
-    setActiveRole('student');
-    showTeacherPanel('overview');
+    loadQuizzes();
   </script>
 </body>
 </html>
