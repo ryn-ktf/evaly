@@ -479,9 +479,8 @@
         const errEmail = document.getElementById('err-email');
         const errPwd = document.getElementById('err-pwd');
 
-        /* demo credentials — replace with real API */
-        const CREDS = { email: 'admin@evaly.dz', password: 'evaly2025' };
-
+        // change this to your Render API URL once deployed
+const API_BASE = 'https://evaly-api.onrender.com/api';
         /* restore remembered email */
         const saved = localStorage.getItem('evaly_email');
         if (saved) { emailEl.value = saved; remCb.checked = true; }
@@ -533,21 +532,39 @@
           if (!ok) return;
 
           setLoad(true);
-          await delay(1300);
 
-          if (email === CREDS.email && pwd === CREDS.password) {
-            remCb.checked
-              ? localStorage.setItem('evaly_email', email)
-              : localStorage.removeItem('evaly_email');
-            showMsg('Connexion réussie ! Redirection en cours…', 'success');
-            setTimeout(() => window.location.href = 'dashboard.html', 1500);
-          } else {
+          try {
+            const res = await fetch(`${API_BASE}/auth/login`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, password: pwd }),
+            });
+            const data = await res.json();
+
+            if (res.ok) {
+              // save token for teacher dashboard use
+              localStorage.setItem('evaly_token', data.access_token);
+              localStorage.setItem('evaly_teacher_id', data.teacher_id);
+              if (remCb.checked) {
+                localStorage.setItem('evaly_email', email);
+              } else {
+                localStorage.removeItem('evaly_email');
+              }
+              showMsg('Connexion réussie ! Redirection en cours…', 'success');
+              setTimeout(() => window.location.href = 'quiz.html', 1500);
+            } else {
+              setLoad(false);
+              const err_msg = typeof data.detail === 'string' ? data.detail : 'Identifiants incorrects.';
+              showMsg(err_msg, 'error');
+              showE(emailEl, errEmail, ' ');
+              showE(pwdEl, errPwd, ' ');
+              pwdEl.value = '';
+              pwdEl.focus();
+            }
+          } catch (err) {
             setLoad(false);
-            showMsg('Identifiants incorrects. Veuillez réessayer.', 'error');
-            showE(emailEl, errEmail, ' ');
-            showE(pwdEl, errPwd, ' ');
-            pwdEl.value = '';
-            pwdEl.focus();
+            showMsg('Impossible de joindre le serveur. Réessayez plus tard.', 'error');
+            console.error(err);
           }
         });
 
