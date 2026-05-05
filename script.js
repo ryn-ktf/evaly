@@ -1,6 +1,6 @@
 // ── config ──────────────────────────────────────────────────────────────────
 // change this to your Render URL once deployed, e.g. https://evaly-api.onrender.com
-const API_BASE = 'https://evaly-api.onrender.com/';
+const API_BASE = 'https://evaly-api.onrender.com/api';
 // ── search ──────────────────────────────────────────────────────────────────
 const search_btn   = document.getElementById('search_btn');
 const search_input = document.getElementById('search_input');
