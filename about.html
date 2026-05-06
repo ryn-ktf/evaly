@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Evaly</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            yellow: '#ffde59',
+            navy: '#004b8d',
+            navyDark: '#00305a',
+            navyHover: '#005299',
+          },
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif'],
+            baskerville: ['Libre Baskerville', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .tech-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .tech-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,75,141,0.12);
+    }
+
+    .step-line::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      width: 2px;
+      height: 32px;
+      background: linear-gradient(to bottom, #004b8d44, transparent);
+      transform: translateX(-50%);
+    }
+    .step-line:last-child::after { display: none; }
+  </style>
+</head>
+<body class="bg-[#f4f6fa] text-black font-poppins">
+
+  <!-- nav -->
+  <nav class="bg-white px-5 sm:px-8 flex items-center justify-between h-14 relative z-10">
+    <div class="flex items-center" style="height:56px; overflow:visible;">
+      <img src="images/1.png" alt="Evaly logo" style="height:120px; width:auto; object-fit:contain; margin-top:30px;" />
+    </div>
+    <div class="hidden md:flex gap-6">
+      <a href="evaly_homepage.html" class="text-black/80 text-sm no-underline hover:text-yellow transition-colors">Home</a>
+      <a href="quiz.html" class="text-black/80 text-sm no-underline hover:text-yellow transition-colors">Quizzes</a>
+      <a href="about.html" class="text-navy text-sm no-underline font-semibold">About</a>
+    </div>
+    <a href="teacher.html" class="hidden md:inline-block bg-yellow text-navy font-semibold text-sm px-4 py-2 rounded-md border-none cursor-pointer no-underline">
+      For Teachers
+    </a>
+  </nav>
+
+  <!-- hero -->
+  <div class="bg-navy py-16 px-5 sm:px-8 relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-72 h-72 rounded-full opacity-10" style="background:radial-gradient(circle, #ffde59, transparent); transform: translate(30%, -30%);"></div>
+    <div class="absolute bottom-0 left-0 w-48 h-48 rounded-full opacity-20" style="background:radial-gradient(circle, #005299, transparent); transform: translate(-30%, 30%);"></div>
+    <div class="max-w-3xl mx-auto text-center relative z-10">
+      <div class="inline-block bg-yellow/15 text-yellow text-xs font-semibold tracking-widest uppercase px-4 py-1 rounded-full mb-4">
+        About Evaly
+      </div>
+      <h1 class="font-baskerville text-3xl sm:text-4xl text-white leading-tight mb-4">
+        Built to help students<br><em class="text-yellow not-italic">evaluate themselves</em> better.
+      </h1>
+      <p class="text-white/60 text-sm sm:text-base max-w-xl mx-auto">
+        Evaly is an online learning platform where students discover courses, take secure quizzes, and get instant feedback — all in one place.
+      </p>
+    </div>
+  </div>
+
+  <!-- what evaly offers -->
+  <div class="py-16 px-5 sm:px-8">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="font-baskerville text-2xl text-navy text-center mb-2 fade-in">What Evaly Offers</h2>
+      <p class="text-gray-400 text-sm text-center mb-10 fade-in">Everything a student or teacher needs, in one platform.</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <div class="bg-white rounded-xl p-6 border border-gray-100 tech-card fade-in">
+          <div class="text-2xl mb-3">📚</div>
+          <h3 class="font-baskerville text-base text-navy mb-2">Curated Courses</h3>
+          <p class="text-xs text-gray-500 leading-relaxed">Browse featured courses across Math, Science, and Technology — structured for beginner to intermediate learners.</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 border border-gray-100 tech-card fade-in">
+          <div class="text-2xl mb-3">✍️</div>
+          <h3 class="font-baskerville text-base text-navy mb-2">Secure Quizzes</h3>
+          <p class="text-xs text-gray-500 leading-relaxed">Take timed, structured quizzes with instant results. Designed to test real understanding, not just memorization.</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 border border-gray-100 tech-card fade-in">
+          <div class="text-2xl mb-3">⚡</div>
+          <h3 class="font-baskerville text-base text-navy mb-2">Instant Feedback</h3>
+          <p class="text-xs text-gray-500 leading-relaxed">Get your results immediately after every quiz — so you know exactly where you stand and what to improve.</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 border border-gray-100 tech-card fade-in">
+          <div class="text-2xl mb-3">🏫</div>
+          <h3 class="font-baskerville text-base text-navy mb-2">Teacher Tools</h3>
+          <p class="text-xs text-gray-500 leading-relaxed">Teachers can create and manage quizzes, track student progress, and share content with their classes easily.</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 border border-gray-100 tech-card fade-in">
+          <div class="text-2xl mb-3">🏆</div>
+          <h3 class="font-baskerville text-base text-navy mb-2">Leaderboard</h3>
+          <p class="text-xs text-gray-500 leading-relaxed">Friendly competition keeps students motivated. See how you rank among peers and push yourself to improve.</p>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 border border-gray-100 tech-card fade-in">
+          <div class="text-2xl mb-3">📬</div>
+          <h3 class="font-baskerville text-base text-navy mb-2">Direct Contact</h3>
+          <p class="text-xs text-gray-500 leading-relaxed">Have a question or feedback? Reach the Evaly team directly through the built-in contact form on the homepage.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- how to use -->
+  <div class="bg-white py-16 px-5 sm:px-8">
+    <div class="max-w-2xl mx-auto">
+      <h2 class="font-baskerville text-2xl text-navy text-center mb-2 fade-in">How It Works</h2>
+      <p class="text-gray-400 text-sm text-center mb-12 fade-in">Three simple steps to get started.</p>
+
+      <div class="flex flex-col gap-8">
+
+        <div class="flex items-start gap-5 fade-in relative step-line">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-navy text-white text-sm font-bold flex items-center justify-center">1</div>
+          <div>
+            <h3 class="font-semibold text-navy text-sm mb-1">Browse & Pick a Course</h3>
+            <p class="text-xs text-gray-500 leading-relaxed">Explore the course catalogue and pick a subject that interests you — from algebra to Python programming.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-5 fade-in relative step-line">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-navy text-white text-sm font-bold flex items-center justify-center">2</div>
+          <div>
+            <h3 class="font-semibold text-navy text-sm mb-1">Take a Quiz</h3>
+            <p class="text-xs text-gray-500 leading-relaxed">After going through the material, take a quiz to test what you've learned. Questions are timed and structured fairly.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-5 fade-in relative step-line">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-yellow text-navy text-sm font-bold flex items-center justify-center">3</div>
+          <div>
+            <h3 class="font-semibold text-navy text-sm mb-1">Get Your Results Instantly</h3>
+            <p class="text-xs text-gray-500 leading-relaxed">Your score appears the moment you finish. Review what you got wrong and come back to improve your ranking.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- tech stack -->
+  <div class="py-16 px-5 sm:px-8">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="font-baskerville text-2xl text-navy text-center mb-2 fade-in">Built With</h2>
+      <p class="text-gray-400 text-sm text-center mb-10 fade-in">A modern, reliable stack from front to back.</p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+
+        <div class="tech-card bg-white rounded-xl p-5 border border-gray-100 text-center fade-in">
+          <div class="text-3xl mb-2">🐍</div>
+          <div class="text-xs font-bold text-navy">Python</div>
+          <div class="text-xs text-gray-400 mt-0.5">Backend language</div>
+        </div>
+
+        <div class="tech-card bg-white rounded-xl p-5 border border-gray-100 text-center fade-in">
+          <div class="text-3xl mb-2">⚡</div>
+          <div class="text-xs font-bold text-navy">FastAPI</div>
+          <div class="text-xs text-gray-400 mt-0.5">REST API framework</div>
+        </div>
+
+        <div class="tech-card bg-white rounded-xl p-5 border border-gray-100 text-center fade-in">
+          <div class="text-3xl mb-2">🗄️</div>
+          <div class="text-xs font-bold text-navy">Supabase</div>
+          <div class="text-xs text-gray-400 mt-0.5">Database & auth</div>
+        </div>
+
+        <div class="tech-card bg-white rounded-xl p-5 border border-gray-100 text-center fade-in">
+          <div class="text-3xl mb-2">🎨</div>
+          <div class="text-xs font-bold text-navy">Tailwind CSS</div>
+          <div class="text-xs text-gray-400 mt-0.5">Styling</div>
+        </div>
+
+        <div class="tech-card bg-white rounded-xl p-5 border border-gray-100 text-center fade-in">
+          <div class="text-3xl mb-2">☁️</div>
+          <div class="text-xs font-bold text-navy">Render</div>
+          <div class="text-xs text-gray-400 mt-0.5">Cloud deployment</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="bg-navy py-14 px-5 sm:px-8 text-center">
+    <div class="max-w-xl mx-auto">
+      <h2 class="font-baskerville text-2xl text-white mb-3 fade-in">Ready to evaluate yourself?</h2>
+      <p class="text-white/60 text-sm mb-7 fade-in">Jump into a quiz or explore the courses — it only takes a minute to get started.</p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center fade-in">
+        <a href="quiz.html" class="bg-yellow text-navy font-bold text-sm px-6 py-3 rounded-lg no-underline hover:bg-[#f0ce00] transition-colors">
+          Browse Quizzes →
+        </a>
+        <a href="evaly_homepage.html" class="bg-white/10 text-white font-semibold text-sm px-6 py-3 rounded-lg no-underline hover:bg-white/20 transition-colors border border-white/20">
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <footer class="bg-[#edeef2] px-5 sm:px-8 pt-8 pb-5 border-t border-gray-200">
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-8 mb-6">
+      <div>
+        <img src="images/1.png" alt="Evaly logo" style="height:70px; width:auto; object-fit:contain;" />
+        <p class="text-xs text-gray-500 mt-2 max-w-48 font-poppins">Evaluate yourself — one quiz at a time. Built for curious students and passionate teachers.</p>
+      </div>
+      <div>
+        <h4 class="text-xs font-bold text-navy uppercase tracking-wider mb-2">Platform</h4>
+        <a href="#" class="block text-xs text-gray-500 mb-1 no-underline hover:text-navy">Browse Courses</a>
+        <a href="#" class="block text-xs text-gray-500 mb-1 no-underline hover:text-navy">Take a Quiz</a>
+        <a href="#" class="block text-xs text-gray-500 mb-1 no-underline hover:text-navy">For Teachers</a>
+        <a href="#" class="block text-xs text-gray-500 mb-1 no-underline hover:text-navy">Leaderboard</a>
+      </div>
+      <div>
+        <h4 class="text-xs font-bold text-navy uppercase tracking-wider mb-2">Support</h4>
+        <a href="evaly_homepage.html#contact" class="block text-xs text-gray-500 mb-1 no-underline hover:text-navy">Contact Us</a>
+        <a href="about.html" class="block text-xs text-gray-500 mb-1 no-underline hover:text-navy">About</a>
+      </div>
+    </div>
+    <div class="border-t border-gray-300 pt-4 flex justify-between items-center">
+      <p class="text-xs text-gray-400">© 2026 Evaly. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
