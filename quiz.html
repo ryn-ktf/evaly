@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EvalY — Quizzes & Cours</title>
   <!-- Only Poppins font as requested, no Libre Baskerville -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -38,69 +36,19 @@
   </script>
   <style>
     /* extra custom styles without emojis */
-    .score-ring circle.track {
-      fill: none;
-      stroke: #e5e7eb;
-      stroke-width: 10;
-    }
-
-    .score-ring circle.fill {
-      fill: none;
-      stroke: #004b8d;
-      stroke-width: 10;
-      stroke-linecap: round;
-      stroke-dasharray: 345;
-      stroke-dashoffset: 345;
-      transition: stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .score-ring circle.fill.green {
-      stroke: #10b981;
-    }
-
-    .score-ring circle.fill.orange {
-      stroke: #f59e0b;
-    }
-
-    .option-btn {
-      transition: border-color 0.18s, background 0.18s, transform 0.15s;
-    }
-
-    .option-btn:hover:not(:disabled) {
-      transform: translateX(4px);
-    }
-
-    .modal-overlay {
-      transition: opacity 0.25s;
-    }
-
-    .modal-overlay.open {
-      opacity: 1 !important;
-      pointer-events: all !important;
-    }
-
-    .modal {
-      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-      transform: scale(0.95) translateY(20px);
-    }
-
-    .modal-overlay.open .modal {
-      transform: scale(1) translateY(0) !important;
-    }
-
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
-      opacity: 0.5;
-    }
-
+    .score-ring circle.track { fill: none; stroke: #e5e7eb; stroke-width: 10; }
+    .score-ring circle.fill { fill: none; stroke: #004b8d; stroke-width: 10; stroke-linecap: round; stroke-dasharray: 345; stroke-dashoffset: 345; transition: stroke-dashoffset 1.2s cubic-bezier(0.22,1,0.36,1); }
+    .score-ring circle.fill.green { stroke: #10b981; }
+    .score-ring circle.fill.orange { stroke: #f59e0b; }
+    .option-btn { transition: border-color 0.18s, background 0.18s, transform 0.15s; }
+    .option-btn:hover:not(:disabled) { transform: translateX(4px); }
+    .modal-overlay { transition: opacity 0.25s; }
+    .modal-overlay.open { opacity: 1 !important; pointer-events: all !important; }
+    .modal { transition: transform 0.3s cubic-bezier(0.22,1,0.36,1); transform: scale(0.95) translateY(20px); }
+    .modal-overlay.open .modal { transform: scale(1) translateY(0) !important; }
+    input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { opacity: 0.5; }
     /* all fonts are Poppins */
-    body,
-    button,
-    input,
-    select,
-    textarea {
-      font-family: 'Poppins', sans-serif;
-    }
+    body, button, input, select, textarea { font-family: 'Poppins', sans-serif; }
   </style>
 </head>
 
@@ -110,15 +58,11 @@
       <img src="images/1.png" alt="Evaly logo" style="height:110px; width:auto; object-fit:contain; margin-top:28px;" />
     </a>
     <div class="hidden md:flex gap-6">
-      <a href="evaly_homepage.html"
-        class="text-black/80 text-sm no-underline hover:text-[#ffde59] transition-colors">Home</a>
-      <a href="quiz.html"
-        class="text-[#004b8d] text-sm font-semibold no-underline border-b-2 border-[#ffde59]">Quizzes</a>
-      <a href="login.html" class="text-black/80 text-sm no-underline hover:text-[#ffde59] transition-colors">For
-        Teachers</a>
+      <a href="evaly_homepage.html" class="text-black/80 text-sm no-underline hover:text-[#ffde59] transition-colors">Home</a>
+      <a href="quiz.html" class="text-[#004b8d] text-sm font-semibold no-underline border-b-2 border-[#ffde59]">Quizzes</a>
+      <a href="login.html" class="text-black/80 text-sm no-underline hover:text-[#ffde59] transition-colors">For Teachers</a>
     </div>
-    <a href="login.html"
-      class="bg-[#ffde59] text-[#004b8d] font-semibold text-sm px-4 py-2 rounded-md no-underline">Teacher Login</a>
+    <a href="login.html" class="bg-[#ffde59] text-[#004b8d] font-semibold text-sm px-4 py-2 rounded-md no-underline">Teacher Login</a>
   </nav>
 
 
@@ -136,16 +80,10 @@
             <p class="text-white/60 text-sm mt-1">Choisissez un quiz, révisez avec la vidéo, puis testez-vous</p>
             <div class="flex flex-col sm:flex-row gap-3 mt-6 max-w-lg">
               <div class="relative flex-1">
-                <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="11" cy="11" r="8" />
-                  <path d="M21 21l-4.35-4.35" />
-                </svg>
-                <input type="text" id="quiz-search" placeholder="Rechercher un quiz…"
-                  class="w-full py-2 pl-9 pr-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder:text-white/40 focus:border-eval-yellow focus:outline-none transition text-sm">
+                <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                <input type="text" id="quiz-search" placeholder="Rechercher un quiz…" class="w-full py-2 pl-9 pr-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder:text-white/40 focus:border-eval-yellow focus:outline-none transition text-sm">
               </div>
-              <select id="subject-filter"
-                class="py-2 px-3 bg-white/10 border border-white/20 rounded-xl text-white text-sm focus:border-eval-yellow outline-none">
+              <select id="subject-filter" class="py-2 px-3 bg-white/10 border border-white/20 rounded-xl text-white text-sm focus:border-eval-yellow outline-none">
                 <option value="" class="text-black">Toutes matières</option>
                 <option value="Informatique" class="text-black">Informatique</option>
                 <option value="Mathématiques" class="text-black">Mathématiques</option>
@@ -156,8 +94,7 @@
           </div>
         </div>
         <div class="max-w-6xl mx-auto mt-[-1.5rem] px-4 pb-12 relative z-10">
-          <p class="text-xs font-bold uppercase text-gray-500 tracking-wider mb-4" id="quiz-count-label">6 quizzes
-            disponibles</p>
+          <p class="text-xs font-bold uppercase text-gray-500 tracking-wider mb-4" id="quiz-count-label">6 quizzes disponibles</p>
           <div id="quiz-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
       </div>
@@ -166,27 +103,17 @@
       <div id="quiz-taking-screen" class="hidden max-w-3xl mx-auto px-4 py-8 md:py-12">
         <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
           <div>
-            <button id="back-to-list-btn"
-              class="text-eval-blue text-sm mb-4 font-semibold flex items-center gap-1 hover:underline">←
-              Retour</button>
+            <button id="back-to-list-btn" class="text-eval-blue text-sm mb-4 font-semibold flex items-center gap-1 hover:underline">← Retour</button>
             <h2 class="font-serif text-xl font-bold text-eval-blue" id="active-quiz-title">Quiz Title</h2>
           </div>
           <div class="flex items-center gap-2 bg-white rounded-xl px-4 py-2 shadow-sm">
-            <svg class="w-4 h-4 text-eval-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10" />
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
+            <svg class="w-4 h-4 text-eval-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             <span id="timer-display" class="font-serif font-bold text-eval-blue min-w-[60px] text-center">10:00</span>
           </div>
         </div> as
         <div class="mb-5">
-          <div class="flex justify-between text-xs font-semibold text-gray-500 mb-1"><span id="q-counter">Question 1 /
-              5</span><span id="q-score-live">Score: 0</span></div>
-          <div class="h-1.5 bg-gray-200 rounded-full overflow-hidden">
-            <div id="progress-fill"
-              class="h-full bg-gradient-to-r from-eval-blue to-eval-teal rounded-full w-0 transition-all duration-300">
-            </div>
-          </div>
+          <div class="flex justify-between text-xs font-semibold text-gray-500 mb-1"><span id="q-counter">Question 1 / 5</span><span id="q-score-live">Score: 0</span></div>
+          <div class="h-1.5 bg-gray-200 rounded-full overflow-hidden"><div id="progress-fill" class="h-full bg-gradient-to-r from-eval-blue to-eval-teal rounded-full w-0 transition-all duration-300"></div></div>
         </div>
         <div class="bg-white rounded-2xl shadow-lg overflow-hidden animate-slide-q">
           <div class="bg-eval-blue px-6 py-5 md:px-8">
@@ -195,12 +122,8 @@
           </div>
           <div class="p-5 md:p-7 space-y-3" id="options-container"></div>
           <div class="px-5 pb-6 md:px-7 flex justify-between">
-            <button id="prev-question-btn"
-              class="px-5 py-2 rounded-xl border-2 border-gray-200 bg-white text-gray-500 font-semibold text-sm disabled:opacity-40 hover:border-eval-blue hover:text-eval-blue transition">←
-              Précédent</button>
-            <button id="next-question-btn"
-              class="px-6 py-2 rounded-xl bg-eval-yellow font-bold text-sm hover:bg-[#f5d020] shadow-md transition transform hover:-translate-y-0.5">Suivant
-              →</button>
+            <button id="prev-question-btn" class="px-5 py-2 rounded-xl border-2 border-gray-200 bg-white text-gray-500 font-semibold text-sm disabled:opacity-40 hover:border-eval-blue hover:text-eval-blue transition">← Précédent</button>
+            <button id="next-question-btn" class="px-6 py-2 rounded-xl bg-eval-yellow font-bold text-sm hover:bg-[#f5d020] shadow-md transition transform hover:-translate-y-0.5">Suivant →</button>
           </div>
         </div>
       </div>
@@ -209,43 +132,24 @@
       <div id="results-screen" class="hidden max-w-2xl mx-auto px-4 py-12 text-center">
         <div class="bg-white rounded-3xl shadow-xl overflow-hidden animate-card-in">
           <div class="bg-eval-blue py-8 px-6">
-            <div class="text-4xl mb-2" id="result-emoji"><svg class="w-10 h-10 mx-auto text-eval-yellow" fill="none"
-                stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-              </svg></div>
+            <div class="text-4xl mb-2" id="result-emoji"><svg class="w-10 h-10 mx-auto text-eval-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></div>
             <h2 class="font-serif text-2xl font-bold text-white" id="result-title">Excellent !</h2>
             <p class="text-white/60 text-sm" id="result-subtitle">Quiz terminé</p>
           </div>
           <div class="py-8 px-4 flex flex-col items-center gap-6">
             <div class="score-ring relative w-36 h-36">
-              <svg width="140" height="140" viewBox="0 0 140 140">
-                <circle class="track" cx="70" cy="70" r="55" />
-                <circle class="fill" id="ring-fill" cx="70" cy="70" r="55" />
-              </svg>
-              <div class="absolute inset-0 flex flex-col items-center justify-center"><span
-                  class="font-serif text-3xl font-bold text-eval-blue" id="ring-pct">0%</span><span
-                  class="text-[10px] text-gray-500 font-semibold">Score</span></div>
+              <svg width="140" height="140" viewBox="0 0 140 140"><circle class="track" cx="70" cy="70" r="55"/><circle class="fill" id="ring-fill" cx="70" cy="70" r="55"/></svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center"><span class="font-serif text-3xl font-bold text-eval-blue" id="ring-pct">0%</span><span class="text-[10px] text-gray-500 font-semibold">Score</span></div>
             </div>
             <div class="flex w-full border-t border-gray-100">
-              <div class="flex-1 py-3 text-center">
-                <div class="font-serif text-2xl font-bold text-green-600" id="res-correct">0</div>
-                <div class="text-[11px] uppercase text-gray-400 tracking-wide">Correctes</div>
-              </div>
-              <div class="flex-1 py-3 text-center border-x border-gray-100">
-                <div class="font-serif text-2xl font-bold text-red-500" id="res-wrong">0</div>
-                <div class="text-[11px] uppercase text-gray-400">Incorrectes</div>
-              </div>
-              <div class="flex-1 py-3 text-center">
-                <div class="font-serif text-2xl font-bold text-gray-800" id="res-time">—</div>
-                <div class="text-[11px] uppercase text-gray-400">Temps</div>
-              </div>
+              <div class="flex-1 py-3 text-center"><div class="font-serif text-2xl font-bold text-green-600" id="res-correct">0</div><div class="text-[11px] uppercase text-gray-400 tracking-wide">Correctes</div></div>
+              <div class="flex-1 py-3 text-center border-x border-gray-100"><div class="font-serif text-2xl font-bold text-red-500" id="res-wrong">0</div><div class="text-[11px] uppercase text-gray-400">Incorrectes</div></div>
+              <div class="flex-1 py-3 text-center"><div class="font-serif text-2xl font-bold text-gray-800" id="res-time">—</div><div class="text-[11px] uppercase text-gray-400">Temps</div></div>
             </div>
           </div>
           <div class="p-6 flex gap-3 justify-center flex-wrap">
-            <button id="retry-quiz-btn"
-              class="px-6 py-2 rounded-xl border-2 border-eval-blue bg-white text-eval-blue font-semibold hover:bg-eval-blue hover:text-white transition">Réessayer</button>
-            <button id="home-from-results-btn"
-              class="px-6 py-2 rounded-xl bg-eval-yellow font-bold hover:bg-[#f5d020] shadow-md transition">Accueil</button>
+            <button id="retry-quiz-btn" class="px-6 py-2 rounded-xl border-2 border-eval-blue bg-white text-eval-blue font-semibold hover:bg-eval-blue hover:text-white transition">Réessayer</button>
+            <button id="home-from-results-btn" class="px-6 py-2 rounded-xl bg-eval-yellow font-bold hover:bg-[#f5d020] shadow-md transition">Accueil</button>
           </div>
         </div>
       </div>
@@ -254,166 +158,94 @@
     <!-- teacher view removed — now lives in teacher.html -->
     <div id="teacher-view" class="view hidden">
       <div id="teacher-overview-panel">
-        <h1 class="font-serif text-2xl font-bold text-eval-blue">Tableau de bord</h1>
-        <p class="text-gray-500 text-sm mb-6">Bienvenue, voici un aperçu de votre activité</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-eval-blue">
-            <div class="font-serif text-3xl font-bold">6</div>
-            <div class="text-xs text-gray-500 mt-1">Quizzes créés</div>
-            <div class="text-green-600 text-[11px] font-semibold">↑ +2 ce mois</div>
+            <h1 class="font-serif text-2xl font-bold text-eval-blue">Tableau de bord</h1>
+            <p class="text-gray-500 text-sm mb-6">Bienvenue, voici un aperçu de votre activité</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+              <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-eval-blue"><div class="font-serif text-3xl font-bold">6</div><div class="text-xs text-gray-500 mt-1">Quizzes créés</div><div class="text-green-600 text-[11px] font-semibold">↑ +2 ce mois</div></div>
+              <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-eval-yellow"><div class="font-serif text-3xl font-bold">142</div><div class="text-xs text-gray-500">Tentatives totales</div><div class="text-green-600 text-[11px] font-semibold">↑ +18 cette semaine</div></div>
+              <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-green-500"><div class="font-serif text-3xl font-bold">73%</div><div class="text-xs text-gray-500">Taux de réussite moy.</div><div class="text-green-600 text-[11px] font-semibold">↑ +5% vs mois dernier</div></div>
+              <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-eval-teal"><div class="font-serif text-3xl font-bold">38</div><div class="text-xs text-gray-500">Étudiants actifs</div><div class="text-green-600 text-[11px] font-semibold">↑ +6 nouveaux</div></div>
+            </div>
+ <div class="flex justify-between items-center mb-3">
+  <h2 class="font-serif font-bold text-xl">Performance par quiz</h2>
+</div>
+<div class="bg-white rounded-xl shadow overflow-hidden">
+  <table class="min-w-full">
+    <thead class="bg-gray-50 text-gray-500 text-[11px] font-bold uppercase tracking-wider">
+      <tr>
+        <th class="px-5 py-3 text-left">Quiz</th>
+        <th class="px-5 py-3 text-left">Tentatives</th>
+        <th class="px-5 py-3 text-left">Taux réussite</th>
+        <th class="px-5 py-3 text-left">Statut</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-b">
+        <td class="px-5 py-3"><strong>Algorithmes & Complexité</strong></td>
+        <td class="px-5 py-3">38</td>
+        <td class="px-5 py-3">
+          <div class="flex items-center gap-2">
+            <div class="flex-1 h-1.5 bg-gray-100 rounded-full">
+              <div class="h-full w-[82%] bg-eval-blue rounded-full"></div>
+            </div>
+            <span class="text-xs">82%</span>
           </div>
-          <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-eval-yellow">
-            <div class="font-serif text-3xl font-bold">142</div>
-            <div class="text-xs text-gray-500">Tentatives totales</div>
-            <div class="text-green-600 text-[11px] font-semibold">↑ +18 cette semaine</div>
+        </td>
+        <td class="px-5 py-3">
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-800">Actif</span>
+        </td>
+      </tr>
+      <tr class="border-b">
+        <td class="px-5 py-3"><strong>Bases de données SQL</strong></td>
+        <td class="px-5 py-3">27</td>
+        <td class="px-5 py-3">
+          <div class="flex items-center gap-2">
+            <div class="flex-1 h-1.5 bg-gray-100 rounded-full">
+              <div class="h-full w-[68%] bg-eval-blue rounded-full"></div>
+            </div>
+            <span class="text-xs">68%</span>
           </div>
-          <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-green-500">
-            <div class="font-serif text-3xl font-bold">73%</div>
-            <div class="text-xs text-gray-500">Taux de réussite moy.</div>
-            <div class="text-green-600 text-[11px] font-semibold">↑ +5% vs mois dernier</div>
+        </td>
+        <td class="px-5 py-3">
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-800">Actif</span>
+        </td>
+      </tr>
+      <tr class="border-b">
+        <td class="px-5 py-3"><strong>Dérivées & Intégrales</strong></td>
+        <td class="px-5 py-3">21</td>
+        <td class="px-5 py-3">
+          <div class="flex items-center gap-2">
+            <div class="flex-1 h-1.5 bg-gray-100 rounded-full">
+              <div class="h-full w-[55%] bg-eval-blue rounded-full"></div>
+            </div>
+            <span class="text-xs">55%</span>
           </div>
-          <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-eval-teal">
-            <div class="font-serif text-3xl font-bold">38</div>
-            <div class="text-xs text-gray-500">Étudiants actifs</div>
-            <div class="text-green-600 text-[11px] font-semibold">↑ +6 nouveaux</div>
+        </td>
+        <td class="px-5 py-3">
+          <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-800">Actif</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+          <div id="teacher-quizzes-panel" class="hidden">
+            <h1 class="font-serif text-2xl font-bold text-eval-blue">Mes Quizzes</h1>
+            <p class="text-gray-500 text-sm mb-4">Gérez, modifiez et publiez vos quizzes</p>
+            <div class="flex flex-col sm:flex-row justify-between gap-3 mb-5"><div><input type="text" id="teacher-quiz-search" placeholder="Rechercher…" class="border border-gray-200 rounded-xl py-2 px-4 w-64 bg-gray-50 text-sm focus:border-eval-blue outline-none"></div><button id="create-quiz-btn" class="flex items-center gap-1 bg-eval-yellow px-4 py-2 rounded-xl font-bold text-sm shadow-md hover:shadow-lg transition"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Nouveau Quiz</button></div>
+            <div class="bg-white rounded-xl shadow overflow-x-auto"><table class="min-w-full"><thead class="bg-gray-50 text-gray-500 text-[11px] uppercase font-bold">运转<th class="px-5 py-3">Titre</th><th class="px-5 py-3">Matière</th><th class="px-5 py-3">Questions</th><th class="px-5 py-3">Durée</th><th class="px-5 py-3">Statut</th><th class="px-5 py-3">Actions</th></tr></thead><tbody id="teacher-quizzes-table-body"></tbody></table></div>
           </div>
-        </div>
-        <div class="flex justify-between items-center mb-3">
-          <h2 class="font-serif font-bold text-xl">Performance par quiz</h2>
-        </div>
-        <div class="bg-white rounded-xl shadow overflow-hidden">
-          <table class="min-w-full">
-            <thead class="bg-gray-50 text-gray-500 text-[11px] font-bold uppercase tracking-wider">
-              <tr>
-                <th class="px-5 py-3 text-left">Quiz</th>
-                <th class="px-5 py-3 text-left">Tentatives</th>
-                <th class="px-5 py-3 text-left">Taux réussite</th>
-                <th class="px-5 py-3 text-left">Statut</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="border-b">
-                <td class="px-5 py-3"><strong>Algorithmes & Complexité</strong></td>
-                <td class="px-5 py-3">38</td>
-                <td class="px-5 py-3">
-                  <div class="flex items-center gap-2">
-                    <div class="flex-1 h-1.5 bg-gray-100 rounded-full">
-                      <div class="h-full w-[82%] bg-eval-blue rounded-full"></div>
-                    </div>
-                    <span class="text-xs">82%</span>
-                  </div>
-                </td>
-                <td class="px-5 py-3">
-                  <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-800">Actif</span>
-                </td>
-              </tr>
-              <tr class="border-b">
-                <td class="px-5 py-3"><strong>Bases de données SQL</strong></td>
-                <td class="px-5 py-3">27</td>
-                <td class="px-5 py-3">
-                  <div class="flex items-center gap-2">
-                    <div class="flex-1 h-1.5 bg-gray-100 rounded-full">
-                      <div class="h-full w-[68%] bg-eval-blue rounded-full"></div>
-                    </div>
-                    <span class="text-xs">68%</span>
-                  </div>
-                </td>
-                <td class="px-5 py-3">
-                  <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-800">Actif</span>
-                </td>
-              </tr>
-              <tr class="border-b">
-                <td class="px-5 py-3"><strong>Dérivées & Intégrales</strong></td>
-                <td class="px-5 py-3">21</td>
-                <td class="px-5 py-3">
-                  <div class="flex items-center gap-2">
-                    <div class="flex-1 h-1.5 bg-gray-100 rounded-full">
-                      <div class="h-full w-[55%] bg-eval-blue rounded-full"></div>
-                    </div>
-                    <span class="text-xs">55%</span>
-                  </div>
-                </td>
-                <td class="px-5 py-3">
-                  <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-green-100 text-green-800">Actif</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div id="teacher-quizzes-panel" class="hidden">
-          <h1 class="font-serif text-2xl font-bold text-eval-blue">Mes Quizzes</h1>
-          <p class="text-gray-500 text-sm mb-4">Gérez, modifiez et publiez vos quizzes</p>
-          <div class="flex flex-col sm:flex-row justify-between gap-3 mb-5">
-            <div><input type="text" id="teacher-quiz-search" placeholder="Rechercher…"
-                class="border border-gray-200 rounded-xl py-2 px-4 w-64 bg-gray-50 text-sm focus:border-eval-blue outline-none">
-            </div><button id="create-quiz-btn"
-              class="flex items-center gap-1 bg-eval-yellow px-4 py-2 rounded-xl font-bold text-sm shadow-md hover:shadow-lg transition"><svg
-                class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <line x1="12" y1="5" x2="12" y2="19" />
-                <line x1="5" y1="12" x2="19" y2="12" />
-              </svg> Nouveau Quiz</button>
+          <div id="teacher-results-panel" class="hidden">
+            <h1 class="font-serif text-2xl font-bold text-eval-blue">Résultats des Étudiants</h1>
+            <p class="text-gray-500 text-sm mb-6">Consultez les performances individuelles</p>
+            <div class="bg-white rounded-xl shadow overflow-x-auto"><table class="min-w-full"><thead class="bg-gray-50 text-gray-500 text-[11px] uppercase">运转<th class="px-5 py-3">Étudiant</th><th class="px-5 py-3">Quiz</th><th class="px-5 py-3">Score</th><th class="px-5 py-3">Temps</th><th class="px-5 py-3">Date</th></tr></thead><tbody><tr class="border-b"><td class="px-5 py-3 font-medium">Sara M.</td><td class="px-5 py-3">Algorithmes & Complexité</td><td class="px-5 py-3 text-green-600 font-bold">90%</td><td class="px-5 py-3">8:42</td><td class="px-5 py-3 text-gray-500">Auj. 10:12</td></tr><tr class="border-b"><td class="px-5 py-3 font-medium">Karim B.</td><td class="px-5 py-3">Bases de données SQL</td><td class="px-5 py-3 text-green-600 font-bold">75%</td><td class="px-5 py-3">11:05</td><td class="px-5 py-3">Auj. 09:50</td></tr><tr class="border-b"><td class="px-5 py-3 font-medium">Amina L.</td><td class="px-5 py-3">Dérivées & Intégrales</td><td class="px-5 py-3 text-amber-600 font-bold">60%</td><td class="px-5 py-3">14:30</td><td class="px-5 py-3">Hier 16:22</td></tr></tbody></table></div>
           </div>
-          <div class="bg-white rounded-xl shadow overflow-x-auto">
-            <table class="min-w-full">
-              <thead class="bg-gray-50 text-gray-500 text-[11px] uppercase font-bold">运转<th class="px-5 py-3">Titre</th>
-                <th class="px-5 py-3">Matière</th>
-                <th class="px-5 py-3">Questions</th>
-                <th class="px-5 py-3">Durée</th>
-                <th class="px-5 py-3">Statut</th>
-                <th class="px-5 py-3">Actions</th>
-                </tr>
-              </thead>
-              <tbody id="teacher-quizzes-table-body"></tbody>
-            </table>
-          </div>
-        </div>
-        <div id="teacher-results-panel" class="hidden">
-          <h1 class="font-serif text-2xl font-bold text-eval-blue">Résultats des Étudiants</h1>
-          <p class="text-gray-500 text-sm mb-6">Consultez les performances individuelles</p>
-          <div class="bg-white rounded-xl shadow overflow-x-auto">
-            <table class="min-w-full">
-              <thead class="bg-gray-50 text-gray-500 text-[11px] uppercase">运转<th class="px-5 py-3">Étudiant</th>
-                <th class="px-5 py-3">Quiz</th>
-                <th class="px-5 py-3">Score</th>
-                <th class="px-5 py-3">Temps</th>
-                <th class="px-5 py-3">Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr class="border-b">
-                  <td class="px-5 py-3 font-medium">Sara M.</td>
-                  <td class="px-5 py-3">Algorithmes & Complexité</td>
-                  <td class="px-5 py-3 text-green-600 font-bold">90%</td>
-                  <td class="px-5 py-3">8:42</td>
-                  <td class="px-5 py-3 text-gray-500">Auj. 10:12</td>
-                </tr>
-                <tr class="border-b">
-                  <td class="px-5 py-3 font-medium">Karim B.</td>
-                  <td class="px-5 py-3">Bases de données SQL</td>
-                  <td class="px-5 py-3 text-green-600 font-bold">75%</td>
-                  <td class="px-5 py-3">11:05</td>
-                  <td class="px-5 py-3">Auj. 09:50</td>
-                </tr>
-                <tr class="border-b">
-                  <td class="px-5 py-3 font-medium">Amina L.</td>
-                  <td class="px-5 py-3">Dérivées & Intégrales</td>
-                  <td class="px-5 py-3 text-amber-600 font-bold">60%</td>
-                  <td class="px-5 py-3">14:30</td>
-                  <td class="px-5 py-3">Hier 16:22</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
         </main>
       </div>
     </div>
   </div>
 
   <!-- ── Student Name Modal (shown before quiz starts) ── -->
-  <div id="name-modal"
-    class="fixed inset-0 z-[3000] flex items-center justify-center px-4 opacity-0 pointer-events-none transition-all duration-300"
-    style="background:rgba(0,48,90,0.72);backdrop-filter:blur(8px);">
+  <div id="name-modal" class="fixed inset-0 z-[3000] flex items-center justify-center px-4 opacity-0 pointer-events-none transition-all duration-300" style="background:rgba(0,48,90,0.72);backdrop-filter:blur(8px);">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden" onclick="event.stopPropagation()">
       <div class="bg-eval-blue px-6 py-5">
         <h3 class="font-serif text-white font-bold text-lg">Before you start</h3>
@@ -487,7 +319,7 @@
               </div>
             </div>
             <div class="border-t border-gray-100 px-4 py-3 flex justify-between items-center">
-              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${q.difficulty === 'Facile' ? 'bg-green-100 text-green-800' : q.difficulty === 'Difficile' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800'}">${q.difficulty}</span>
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${q.difficulty==='Facile'?'bg-green-100 text-green-800':q.difficulty==='Difficile'?'bg-red-100 text-red-800':'bg-amber-100 text-amber-800'}">${q.difficulty}</span>
               <div class="flex gap-2">
                 <button class="course-btn text-xs font-semibold bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg transition" data-url="${ytUrl}">Voir cours</button>
                 <button class="start-quiz-btn text-xs font-bold bg-eval-yellow px-3 py-1.5 rounded-lg shadow-sm hover:shadow" data-id="${q.id}">Commencer →</button>
@@ -500,10 +332,10 @@
         el.addEventListener('click', (e) => { e.stopPropagation(); window.open(el.dataset.url || el.getAttribute('data-url'), '_blank'); });
       });
       document.querySelectorAll('.start-quiz-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => { e.stopPropagation(); startQuiz(parseInt(btn.dataset.id)); });
+        btn.addEventListener('click', (e) => { e.stopPropagation(); startQuiz(btn.dataset.id); });
       });
       document.querySelectorAll('[data-quiz-id]').forEach(card => {
-        card.addEventListener('click', (e) => { if (!e.target.closest('.start-quiz-btn, .course-btn, .course-thumb')) startQuiz(parseInt(card.dataset.quizId)); });
+        card.addEventListener('click', (e) => { if(!e.target.closest('.start-quiz-btn, .course-btn, .course-thumb')) startQuiz(card.dataset.quizId); });
       });
     }
 
@@ -552,98 +384,98 @@
       document.getElementById('active-quiz-title').innerText = currentQuiz.name;
       renderCurrentQuestion();
       startTimer();
-      window.scrollTo(0, 0);
+      window.scrollTo(0,0);
     }
 
     function renderCurrentQuestion() {
       const total = currentQuiz.questions_data.length;
       const qd = currentQuiz.questions_data[currentIndex];
-      document.getElementById('q-num-label').innerText = `Question ${currentIndex + 1}`;
+      document.getElementById('q-num-label').innerText = `Question ${currentIndex+1}`;
       document.getElementById('q-text').innerText = qd.q;
-      document.getElementById('q-counter').innerText = `Question ${currentIndex + 1} / ${total}`;
+      document.getElementById('q-counter').innerText = `Question ${currentIndex+1} / ${total}`;
       document.getElementById('q-score-live').innerText = `Score: ${liveScore}`;
-      document.getElementById('progress-fill').style.width = `${((currentIndex) / total) * 100}%`;
+      document.getElementById('progress-fill').style.width = `${((currentIndex)/total)*100}%`;
       prevBtn.disabled = currentIndex === 0;
-      nextBtn.innerText = currentIndex === total - 1 ? 'Terminer ✓' : 'Suivant →';
-      const letters = ['A', 'B', 'C', 'D'];
+      nextBtn.innerText = currentIndex === total-1 ? 'Terminer ✓' : 'Suivant →';
+      const letters = ['A','B','C','D'];
       optionsContainer.innerHTML = qd.opts.map((opt, i) => {
         let additionalClasses = 'border-2 border-gray-200 bg-gray-50';
-        if (userAnswers[currentIndex] !== null) {
-          if (i === qd.ans) additionalClasses = 'border-green-500 bg-green-50 text-green-800';
-          else if (i === userAnswers[currentIndex]) additionalClasses = 'border-red-500 bg-red-50 text-red-800';
+        if(userAnswers[currentIndex] !== null) {
+          if(i === qd.ans) additionalClasses = 'border-green-500 bg-green-50 text-green-800';
+          else if(i === userAnswers[currentIndex]) additionalClasses = 'border-red-500 bg-red-50 text-red-800';
         }
         return `<button class="option-btn w-full text-left p-3 rounded-xl ${additionalClasses} font-medium flex items-center gap-3 transition-all disabled:opacity-70" data-opt-index="${i}" ${userAnswers[currentIndex] !== null ? 'disabled' : ''}><span class="w-7 h-7 rounded-lg bg-gray-200 flex items-center justify-center text-xs font-bold">${letters[i]}</span>${opt}</button>`;
       }).join('');
       document.querySelectorAll('.option-btn').forEach(btn => {
-        btn.addEventListener('click', () => { if (userAnswers[currentIndex] === null) selectAnswer(parseInt(btn.dataset.optIndex)); });
+        btn.addEventListener('click', () => { if(userAnswers[currentIndex] === null) selectAnswer(parseInt(btn.dataset.optIndex)); });
       });
     }
 
     function selectAnswer(idx) {
-      if (userAnswers[currentIndex] !== null) return;
+      if(userAnswers[currentIndex] !== null) return;
       userAnswers[currentIndex] = idx;
-      if (idx === currentQuiz.questions_data[currentIndex].ans) liveScore++;
+      if(idx === currentQuiz.questions_data[currentIndex].ans) liveScore++;
       renderCurrentQuestion();
     }
 
     function nextQuestion() {
-      if (currentIndex < currentQuiz.questions_data.length - 1) { currentIndex++; renderCurrentQuestion(); }
+      if(currentIndex < currentQuiz.questions_data.length - 1) { currentIndex++; renderCurrentQuestion(); }
       else finishQuiz();
     }
-    function prevQuestion() { if (currentIndex > 0) { currentIndex--; renderCurrentQuestion(); } }
+    function prevQuestion() { if(currentIndex > 0) { currentIndex--; renderCurrentQuestion(); } }
 
     function startTimer() {
-      if (timerInterval) clearInterval(timerInterval);
+      if(timerInterval) clearInterval(timerInterval);
       updateTimerDisplay();
       timerInterval = setInterval(() => {
         timeRemaining--;
         updateTimerDisplay();
-        if (timeRemaining <= 0) { clearInterval(timerInterval); finishQuiz(); }
+        if(timeRemaining <= 0) { clearInterval(timerInterval); finishQuiz(); }
       }, 1000);
     }
     function updateTimerDisplay() {
-      const mins = String(Math.floor(timeRemaining / 60)).padStart(2, '0');
-      const secs = String(timeRemaining % 60).padStart(2, '0');
+      const mins = String(Math.floor(timeRemaining / 60)).padStart(2,'0');
+      const secs = String(timeRemaining % 60).padStart(2,'0');
       const timerSpan = document.getElementById('timer-display');
       timerSpan.innerText = `${mins}:${secs}`;
-      if (timeRemaining <= 30) timerSpan.classList.add('text-red-500', 'animate-pulse');
+      if(timeRemaining <= 30) timerSpan.classList.add('text-red-500', 'animate-pulse');
       else timerSpan.classList.remove('text-red-500', 'animate-pulse');
     }
 
     function finishQuiz() {
       clearInterval(timerInterval);
       const total = currentQuiz.questions_data.length;
-      const correct = userAnswers.filter((a, i) => a === currentQuiz.questions_data[i].ans).length;
+      const correct = userAnswers.filter((a,i) => a === currentQuiz.questions_data[i].ans).length;
       const wrong = total - correct;
-      const percent = Math.round((correct / total) * 100);
+      const percent = Math.round((correct/total)*100);
       takingScreen.style.display = 'none';
       resultsScreen.style.display = 'block';
       const emojiContainer = document.getElementById('result-emoji');
-      if (emojiContainer) emojiContainer.innerHTML = `<svg class="w-10 h-10 mx-auto text-eval-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>`;
+      if(emojiContainer) emojiContainer.innerHTML = `<svg class="w-10 h-10 mx-auto text-eval-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>`;
       document.getElementById('result-title').innerText = percent < 50 ? 'Pas de chance…' : percent < 70 ? 'Bon effort !' : percent < 90 ? 'Très bien !' : 'Excellent !';
       // show quiz name + student name
       document.getElementById('result-subtitle').innerText = `${currentQuiz.name} · ${student_name}`;
       document.getElementById('res-correct').innerText = correct;
       document.getElementById('res-wrong').innerText = wrong;
       const timeUsed = Math.round((Date.now() - startTime) / 1000);
-      document.getElementById('res-time').innerText = `${String(Math.floor(timeUsed / 60)).padStart(2, '0')}:${String(timeUsed % 60).padStart(2, '0')}`;
-      document.getElementById('ring-pct').innerText = percent + '%';
+      document.getElementById('res-time').innerText = `${String(Math.floor(timeUsed/60)).padStart(2,'0')}:${String(timeUsed%60).padStart(2,'0')}`;
+      document.getElementById('ring-pct').innerText = percent+'%';
       const circumference = 2 * Math.PI * 55;
       const ringFill = document.getElementById('ring-fill');
       ringFill.classList.toggle('green', percent >= 70);
       ringFill.classList.toggle('orange', percent >= 50 && percent < 70);
-      setTimeout(() => { ringFill.style.strokeDashoffset = circumference * (1 - percent / 100); }, 50);
+      setTimeout(() => { ringFill.style.strokeDashoffset = circumference * (1 - percent/100); }, 50);
 
       // submit to API
       submitAttempt(currentQuiz.id, correct, total, userAnswers);
     }
 
     function backToQuizList() {
-      if (timerInterval) clearInterval(timerInterval);
+      if(timerInterval) clearInterval(timerInterval);
       takingScreen.style.display = 'none';
       resultsScreen.style.display = 'none';
       listScreen.style.display = 'block';
-      window.scrollTo(0, 0);
+      window.scrollTo(0,0);
     }
 
     function renderTeacherQuizzesTable(filter = '') {
@@ -652,8 +484,8 @@
       document.getElementById('teacher-quizzes-table-body').innerHTML = filtered.map(q => `
         <tr class="border-b"><td class="px-5 py-3 font-medium">${q.name}</td><td class="px-5 py-3">${q.subject}</td><td class="px-5 py-3">${q.questions_data.length}</td><td class="px-5 py-3">${q.duration} min</td><td class="px-5 py-3"><span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${statusMap[q.status]}">${q.status}</span></td><td class="px-5 py-3"><div class="flex gap-2"><button class="edit-quiz-btn text-xs border rounded-lg px-2 py-1 hover:border-eval-blue" data-id="${q.id}">Modifier</button><button class="delete-quiz-btn text-xs border rounded-lg px-2 py-1 hover:border-red-500 hover:text-red-500" data-id="${q.id}">Supprimer</button></div></td></tr>
       `).join('');
-      document.querySelectorAll('.edit-quiz-btn').forEach(btn => btn.addEventListener('click', () => alert(`Modifier: ${teacherQuizzes.find(q => q.id == parseInt(btn.dataset.id))?.name}`)));
-      document.querySelectorAll('.delete-quiz-btn').forEach(btn => btn.addEventListener('click', () => { if (confirm('Supprimer ce quiz ?')) { teacherQuizzes = teacherQuizzes.filter(q => q.id !== parseInt(btn.dataset.id)); renderTeacherQuizzesTable(); } }));
+      document.querySelectorAll('.edit-quiz-btn').forEach(btn => btn.addEventListener('click', () => alert(`Modifier: ${teacherQuizzes.find(q=>q.id==parseInt(btn.dataset.id))?.name}`)));
+      document.querySelectorAll('.delete-quiz-btn').forEach(btn => btn.addEventListener('click', () => { if(confirm('Supprimer ce quiz ?')) { teacherQuizzes = teacherQuizzes.filter(q => q.id !== parseInt(btn.dataset.id)); renderTeacherQuizzesTable(); } }));
     }
 
     function setActiveRole(role) {
@@ -661,7 +493,7 @@
       studentView.classList.toggle('hidden', !isStudent);
       teacherView.classList.toggle('hidden', isStudent);
       roleBtns.forEach(btn => { btn.setAttribute('data-active', btn.dataset.role === role ? 'true' : 'false'); });
-      if (!isStudent) renderTeacherQuizzesTable();
+      if(!isStudent) renderTeacherQuizzesTable();
     }
     function showTeacherPanel(panelId) {
       document.getElementById('teacher-overview-panel').classList.toggle('hidden', panelId !== 'overview');
@@ -733,11 +565,11 @@
         return;
       }
       const title = document.getElementById('modal-quiz-title').value.trim();
-      const desc = document.getElementById('modal-quiz-desc').value.trim();
-      const subj = document.getElementById('modal-subject').value;
-      const dur = parseInt(document.getElementById('modal-duration').value) || 10;
-      const diff = document.getElementById('modal-difficulty').value;
-      const pub = document.getElementById('modal-status').value === 'Actif';
+      const desc  = document.getElementById('modal-quiz-desc').value.trim();
+      const subj  = document.getElementById('modal-subject').value;
+      const dur   = parseInt(document.getElementById('modal-duration').value) || 10;
+      const diff  = document.getElementById('modal-difficulty').value;
+      const pub   = document.getElementById('modal-status').value === 'Actif';
 
       if (!title) { alert('Le titre est requis.'); return; }
 
@@ -819,5 +651,4 @@
     loadQuizzes();
   </script>
 </body>
-
 </html>
