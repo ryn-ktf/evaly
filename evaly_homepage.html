@@ -57,21 +57,58 @@
 </head>
 <body class="bg-[#f4f6fa] text-black font-poppins">
 
-  <!-- nav bar -->
   <nav class="bg-white px-5 sm:px-8 flex items-center justify-between h-14 relative z-10">
     <div class="flex items-center" style="height:56px; overflow:visible;">
       <img src="images/1.png" alt="Evaly logo" style="height:120px; width:auto; object-fit:contain; margin-top:30px;" />
     </div>
     <div class="hidden md:flex gap-6">
       <a href="evaly_homepage.html" class="text-black/80 text-sm no-underline hover:text-yellow transition-colors">Home</a>
-   
       <a href="quiz.html" class="text-black/80 text-sm no-underline hover:text-yellow transition-colors">Quizzes</a>
-       <a href="about.html" class="text-black/80 text-sm no-underline hover:text-yellow transition-colors">about</a>
+      <a href="about.html" class="text-black/80 text-sm no-underline hover:text-yellow transition-colors">About</a>
     </div>
-    <a href="teacher.html"
-   class="hidden md:inline-block bg-yellow text-navy font-semibold text-sm px-4 py-2 rounded-md border-none cursor-pointer no-underline">
-  for Teachers
-</a></nav>
+    <div class="flex items-center gap-3">
+      <a href="teacher.html" class="hidden md:inline-block bg-yellow text-navy font-semibold text-sm px-4 py-2 rounded-md border-none cursor-pointer no-underline">
+        For Teachers
+      </a>
+      <!-- Hamburger (mobile only) -->
+      <button id="hamburger_btn" class="md:hidden flex flex-col gap-1.5 p-2 rounded-lg hover:bg-gray-100 transition" aria-label="Open menu">
+        <span class="block w-5 h-0.5 bg-gray-700 rounded"></span>
+        <span class="block w-5 h-0.5 bg-gray-700 rounded"></span>
+        <span class="block w-5 h-0.5 bg-gray-700 rounded"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile overlay -->
+  <div id="mob_overlay" class="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 md:hidden"></div>
+  <!-- Mobile drawer -->
+  <div id="mob_drawer" class="fixed top-0 left-0 bottom-0 z-50 w-64 bg-navyDark text-white transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
+      <img src="images/1.png" alt="Evaly logo" style="height:50px; width:auto; object-fit:contain;" />
+      <button id="close_drawer_btn" class="text-white/60 hover:text-white p-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav class="flex-1 p-4 flex flex-col gap-1">
+      <a href="evaly_homepage.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-white/80 hover:bg-white/5 hover:text-white transition no-underline">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        Home
+      </a>
+      <a href="quiz.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-white/80 hover:bg-white/5 hover:text-white transition no-underline">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Quizzes
+      </a>
+      <a href="about.html" class="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-white/80 hover:bg-white/5 hover:text-white transition no-underline">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        About
+      </a>
+    </nav>
+    <div class="p-4 border-t border-white/10">
+      <a href="teacher.html" class="block w-full text-center bg-yellow text-navy font-bold text-sm px-4 py-3 rounded-lg no-underline hover:bg-[#f0ce00] transition">
+        For Teachers
+      </a>
+    </div>
+  </div>
 
 <div class="hero_section bg-navy py-12 sm:py-16 px-5 sm:px-8 relative overflow-hidden">
   
@@ -259,6 +296,5 @@
   </footer>
 
   <script src="script.js"></script>
-
 </body>
 </html>

@@ -1,6 +1,29 @@
 // ── config ──────────────────────────────────────────────────────────────────
 const API_BASE = 'https://evaly-api.onrender.com/api';
 
+// ── hamburger menu ───────────────────────────────────────────────────────────
+const hamburgerBtn  = document.getElementById('hamburger_btn');
+const closeDrawerBtn = document.getElementById('close_drawer_btn');
+const mobDrawer     = document.getElementById('mob_drawer');
+const mobOverlay    = document.getElementById('mob_overlay');
+
+function openDrawer() {
+  mobDrawer.classList.remove('-translate-x-full');
+  mobOverlay.classList.remove('opacity-0', 'pointer-events-none');
+  mobOverlay.classList.add('opacity-100');
+  document.body.style.overflow = 'hidden';
+}
+function closeDrawer() {
+  mobDrawer.classList.add('-translate-x-full');
+  mobOverlay.classList.add('opacity-0', 'pointer-events-none');
+  mobOverlay.classList.remove('opacity-100');
+  document.body.style.overflow = '';
+}
+
+if (hamburgerBtn)   hamburgerBtn.addEventListener('click', openDrawer);
+if (closeDrawerBtn) closeDrawerBtn.addEventListener('click', closeDrawer);
+if (mobOverlay)     mobOverlay.addEventListener('click', closeDrawer);
+
 // ── play buttons ─────────────────────────────────────────────────────────────
 document.querySelectorAll('.play_btn').forEach(btn => {
   btn.addEventListener('click', () => {
