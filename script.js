@@ -1,22 +1,5 @@
 // ── config ──────────────────────────────────────────────────────────────────
-// change this to your Render URL once deployed, e.g. https://evaly-api.onrender.com
 const API_BASE = 'https://evaly-api.onrender.com/api';
-// ── search ──────────────────────────────────────────────────────────────────
-const search_btn   = document.getElementById('search_btn');
-const search_input = document.getElementById('search_input');
-
-search_btn.addEventListener('click', () => {
-  const q = search_input.value.trim();
-  if (q) {
-    alert(`Searching for: "${q}"`);
-  } else {
-    search_input.focus();
-  }
-});
-
-search_input.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') search_btn.click();
-});
 
 // ── play buttons ─────────────────────────────────────────────────────────────
 document.querySelectorAll('.play_btn').forEach(btn => {
@@ -80,10 +63,9 @@ document.getElementById('fb_send_btn').addEventListener('click', async () => {
     send_btn.disabled = false;
     send_btn.textContent = 'Send message';
   }
-}); 
+});
 
-// ── stats count-up on scroll ─────────────────────────────────────────────────
-// ── stats count-up on scroll ─────────────────────────────────────────
+// ── stats count-up on scroll ──────────────────────────────────────────────────
 let stats_done = false;
 
 function doCountUp(el, target, suffix) {
@@ -109,7 +91,6 @@ function doCountUp(el, target, suffix) {
     } else {
       el.textContent = Math.floor(current) + suffix;
     }
-
   }, stepTime);
 }
 
@@ -117,18 +98,18 @@ function checkIfStatsVisible() {
   if (stats_done) return;
 
   const statsBox = document.getElementById('stats_section');
-  if (!statsBox) return; // safety
+  if (!statsBox) return;
 
   const rect = statsBox.getBoundingClientRect();
 
   if (rect.top < window.innerHeight - 100) {
     stats_done = true;
 
-    doCountUp(document.getElementById('stat_courses'), 2400, '+');
+    doCountUp(document.getElementById('stat_courses'),  2400,  '+');
     doCountUp(document.getElementById('stat_students'), 18000, '+');
-    doCountUp(document.getElementById('stat_teachers'), 340, '+');
+    doCountUp(document.getElementById('stat_teachers'), 340,   '+');
   }
 }
 
 window.addEventListener('scroll', checkIfStatsVisible);
-window.addEventListener('load', checkIfStatsVisible);
+window.addEventListener('load',   checkIfStatsVisible);
