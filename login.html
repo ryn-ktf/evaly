@@ -51,6 +51,19 @@
       font-family: 'Poppins', sans-serif;
     }
 
+    .logo {
+  display: flex;
+  align-items: center;
+  height: 300px;
+  padding: 0;
+  margin: 0;
+}
+
+.logo img {
+  height: 300px;
+  width: auto;
+  display: block;
+}
     /* Animated gradient left panel */
     .left-panel {
       background: linear-gradient(135deg, #001a3a 0%, #004b8d 40%, #005299 70%, #002f5e 100%);
@@ -282,10 +295,9 @@
     </div>
 
     <!-- Logo -->
-    <a href="index.html" class="flex items-center hover:opacity-80 transition relative z-10">
-      <img src="images/e.png" alt="Evaly logo" style="height:300px; width:auto; object-fit:contain;" />
+    <a href="index.html" class="logo">
+   <img src="images/e.png" alt="Evaly logo" />
     </a>
-
     <!-- Hero -->
     <div class="flex-1 flex flex-col justify-center relative z-10 py-10">
       <span
