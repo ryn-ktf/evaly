@@ -58,50 +58,69 @@
 <body class="bg-[#f4f6fa] text-black font-poppins">
 
   <!-- nav bar -->
-  <nav class="bg-white px-8 flex items-center justify-between h-14 relative z-10">
+  <nav class="bg-white px-5 sm:px-8 flex items-center justify-between h-14 relative z-10">
     <div class="flex items-center" style="height:56px; overflow:visible;">
       <img src="images/1.png" alt="Evaly logo" style="height:120px; width:auto; object-fit:contain; margin-top:30px;" />
     </div>
-    <div class="flex gap-6">
+    <div class="hidden md:flex gap-6">
       <a href="evaly_homepage.html" class="text-black/80 text-sm no-underline hover:text-yellow transition-colors">Home</a>
    
       <a href="quiz.html" class="text-black/80 text-sm no-underline hover:text-yellow transition-colors">Quizzes</a>
        <a href="about.html" class="text-black/80 text-sm no-underline hover:text-yellow transition-colors">about</a>
     </div>
-    <a href="teachers.html" class="bg-yellow text-navy font-semibold text-sm px-4 py-2 rounded-md border-none cursor-pointer no-underline">for Teachers </a>
-  </nav>
+    <a href="teachers.html"
+   class="hidden md:inline-block bg-yellow text-navy font-semibold text-sm px-4 py-2 rounded-md border-none cursor-pointer no-underline">
+  for Teachers
+</a></nav>
 
-  <!-- hero part -->
-  <div class="hero_section bg-navy py-16 px-8 text-center relative overflow-hidden">
-    <div class="inline-block bg-yellow/15 text-yellow text-xs font-semibold tracking-widest uppercase px-4 py-1 rounded-full mb-4">Evaluate Yourself</div>
-    <h1 class="font-baskerville text-4xl text-white leading-tight mb-3 relative z-10">
-      Learn smarter.<br><em class="text-yellow not-italic">Test yourself</em> better.
-    </h1>
-    <p class="text-white/70 text-base mb-8 relative z-10">Discover courses, take secure quizzes, and get instant results.</p>
-    <div class="flex max-w-xl mx-auto rounded-xl overflow-hidden shadow-2xl relative z-10">
-      <input type="text" id="search_input" placeholder="Search for courses, topics, or subjects..."
-        class="flex-1 px-5 py-3.5 text-sm border-none outline-none font-poppins bg-white text-black placeholder-gray-400" />
-      <button id="search_btn" class="bg-yellow text-navy font-bold text-sm px-6 border-none cursor-pointer whitespace-nowrap font-poppins">Search</button>
+<div class="hero_section bg-navy py-12 sm:py-16 px-5 sm:px-8 relative overflow-hidden">
+  
+  <div class="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-10">
+    
+    <!-- TEXT -->
+    <div class="text-center md:text-left md:w-1/2">
+      <div class="inline-block bg-yellow/15 text-yellow text-xs font-semibold tracking-widest uppercase px-4 py-1 rounded-full mb-4">
+        Evaluate Yourself
+      </div>
+
+      <h1 class="font-baskerville text-3xl sm:text-4xl text-white leading-tight mb-4">
+        Learn smarter.<br>
+        <em class="text-yellow not-italic">Test yourself</em> better.
+      </h1>
+
+      <p class="text-white/70 text-sm sm:text-base mb-6 max-w-md mx-auto md:mx-0">
+        Discover courses, take secure quizzes, and get instant results.
+      </p>
+
+      
     </div>
+
+    <!-- IMAGE -->
+    <div class="md:w-1/2 flex justify-center">
+      <img src="images/pic.png"
+        class="max-w-xs sm:max-w-sm md:max-w-md object-contain" />
+    </div>
+
   </div>
+</div>
 
   <!-- stats section (own section now, between hero and courses) -->
-  <div id="stats_section" class="bg-white py-12 px-8">
-    <div class="max-w-3xl mx-auto flex justify-center gap-16">
+  <div id="stats_section" class="bg-white py-12 px-5  sm:px-8">
+    <div class="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6">
 
-      <div class="stat_box text-center px-8 py-6 rounded-2xl" style="background: linear-gradient(135deg, #004b8d22 0%, #ffde5922 100%);">
+      <div class="stat_box text-center px-5 sm:px-8 py-6 rounded-2xl" style="background: linear-gradient(135deg, #004b8d22 0%, #ffde5922 100%);">
         <span class="block text-3xl font-bold text-navy" id="stat_courses" data-target="2400">0</span>
         <span class="block text-xs text-gray-500 mt-1">Courses</span>
         <span class="block text-lg">📚</span>
       </div>
 
-      <div class="stat_box text-center px-8 py-6 rounded-2xl" style="background: linear-gradient(135deg, #00b4d822 0%, #0077b622 100%);">
+      <div class="stat_box text-center px-5 sm:px-8 py-6 rounded-2xl" style="background: linear-gradient(135deg, #00b4d822 0%, #0077b622 100%);">
         <span class="block text-3xl font-bold text-[#0077b6]" id="stat_students" data-target="18000">0</span>
         <span class="block text-xs text-gray-500 mt-1">Students</span>
         <span class="block text-lg">🎓</span>
       </div>
 
-      <div class="stat_box text-center px-8 py-6 rounded-2xl" style="background: linear-gradient(135deg, #ffde5922 0%, #ff9f1c22 100%);">
+      <div class="stat_box text-center px-5 sm:px-8 py-6 rounded-2xl" style="background: linear-gradient(135deg, #ffde5922 0%, #ff9f1c22 100%);">
         <span class="block text-3xl font-bold text-[#e07b00]" id="stat_teachers" data-target="340">0</span>
         <span class="block text-xs text-gray-500 mt-1">Teachers</span>
         <span class="block text-lg">🏫</span>
@@ -111,13 +130,13 @@
   </div>
 
   <!-- courses section -->
-  <div class="py-14 px-8">
+  <div class="py-14 px-5 sm:px-8">
     <div class="flex justify-between items-baseline mb-8">
       <h2 class="font-baskerville text-2xl text-navy">Featured Courses</h2>
     </div>
 
     <!-- 3 cards in a flex row -->
-    <div class="flex gap-5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
       <!-- card 1 -->
       <div class="course_card bg-white rounded-xl overflow-hidden border border-gray-200 flex-1 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl">
@@ -180,19 +199,19 @@
 
     <!-- view all courses button below the cards -->
     <div class="flex justify-center mt-8">
-      <button id="view_all_btn" class="bg-navy text-white font-semibold text-sm px-8 py-3 rounded-lg border-none cursor-pointer hover:bg-navyDark transition-colors font-poppins">
+      <button id="view_all_btn" class="bg-navy text-white font-semibold text-sm px-5 sm:px-8 py-3 rounded-lg border-none cursor-pointer hover:bg-navyDark transition-colors font-poppins">
         View All Courses →
       </button>
     </div>
   </div>
 
   <!-- feedback / contact section -->
-  <div class="bg-navy py-14 px-8">
+  <div class="bg-navy py-14 px-5 sm:px-8">
     <div class="max-w-xl mx-auto">
       <h2 class="font-baskerville text-2xl text-white mb-1 text-center">Get in touch</h2>
       <p class="text-white/60 text-sm text-center mb-8">Have a question, idea, or feedback? We'd love to hear from you.</p>
       <div class="flex flex-col gap-3">
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <input type="text" id="fb_name" placeholder="Your name"
             class="px-3.5 py-2.5 rounded-lg border border-white/20 bg-white/10 text-white text-sm placeholder-white/40 outline-none focus:border-yellow font-poppins" />
           <input type="email" id="fb_email" placeholder="Email address"
@@ -202,7 +221,7 @@
           class="px-3.5 py-2.5 rounded-lg border border-white/20 bg-white/10 text-white text-sm placeholder-white/40 outline-none focus:border-yellow font-poppins" />
         <textarea id="fb_msg" placeholder="Your message or feedback..." rows="4"
           class="px-3.5 py-2.5 rounded-lg border border-white/20 bg-white/10 text-white text-sm placeholder-white/40 outline-none focus:border-yellow font-poppins resize-y"></textarea>
-        <button id="fb_send_btn" class="bg-yellow text-navy font-bold text-sm px-8 py-3 rounded-lg border-none cursor-pointer self-start hover:bg-[#f0ce00] transition-colors font-poppins">
+        <button id="fb_send_btn" class="bg-yellow text-navy font-bold text-sm px-5 sm:px-8 py-3 rounded-lg border-none cursor-pointer self-start hover:bg-[#f0ce00] transition-colors font-poppins">
           Send message
         </button>
       </div>
@@ -210,9 +229,8 @@
   </div>
 
   <!-- footer -->
-  <footer class="bg-[#edeef2] px-8 pt-8 pb-5 border-t border-gray-200">
-    <div class="flex justify-between items-start mb-6">
-      <!-- logo in footer (same logo) -->
+  <footer class="bg-[#edeef2] px-5 sm:px-8 pt-8 pb-5 border-t border-gray-200">
+<div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-8 mb-6">      <!-- logo in footer (same logo) -->
       <div>
         <img src="images/1.png" alt="Evaly logo" style="height:70px; width:auto; object-fit:contain;" />
         <p class="text-xs text-gray-500 mt-2 max-w-48 font-poppins">Evaluate yourself — one quiz at a time. Built for curious students and passionate teachers.</p>

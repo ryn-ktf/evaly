@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Evaly — Teacher Dashboard</title>
+  <title>Evaly — Teacher Dashboard | Full Quiz Builder</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -17,19 +17,27 @@
             'eval-yellow': '#ffde59',
           },
           fontFamily: {
-            'serif': ['Poppins', 'sans-serif'],
-            'sans':  ['Poppins', 'sans-serif'],
+            'sans': ['Poppins', 'sans-serif'],
           }
         }
       }
     }
   </script>
   <style>
-    body, button, input, select, textarea { font-family: 'Poppins', sans-serif; }
+    body { font-family: 'Poppins', sans-serif; }
     .modal-overlay { transition: opacity 0.25s; }
     .modal-overlay.open { opacity: 1 !important; pointer-events: all !important; }
     .modal { transition: transform 0.3s cubic-bezier(0.22,1,0.36,1); transform: scale(0.95) translateY(20px); }
     .modal-overlay.open .modal { transform: scale(1) translateY(0) !important; }
+    .question-card {
+      transition: all 0.2s;
+    }
+    .option-input {
+      transition: border 0.15s;
+    }
+    .question-card:hover {
+      background-color: #faf9ff;
+    }
   </style>
 </head>
 <body class="font-sans bg-[#edeef2] antialiased">
@@ -50,7 +58,6 @@
   </nav>
 
   <div class="pt-14 flex min-h-screen">
-
     <!-- SIDEBAR -->
     <aside class="w-56 bg-eval-dark text-white/70 p-4 shrink-0 hidden md:block fixed top-14 bottom-0">
       <div class="text-[0.6rem] font-bold uppercase tracking-wider text-white/30 mt-4 mb-2">Navigation</div>
@@ -70,7 +77,6 @@
 
     <!-- MAIN CONTENT -->
     <main class="flex-1 md:ml-56 p-6 md:p-8 overflow-y-auto">
-
       <!-- OVERVIEW PANEL -->
       <div id="panel_overview">
         <h1 class="font-serif text-2xl font-bold text-eval-blue">Dashboard</h1>
@@ -89,7 +95,7 @@
             <div class="text-xs text-gray-500">Drafts</div>
           </div>
           <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border-eval-teal">
-            <div class="font-serif text-3xl font-bold">—</div>
+            <div class="font-serif text-3xl font-bold" id="ov_total_attempts">0</div>
             <div class="text-xs text-gray-500">Total attempts</div>
           </div>
         </div>
@@ -99,7 +105,7 @@
           <div class="flex gap-3 flex-wrap">
             <button onclick="showPanel('quizzes')" class="bg-eval-yellow text-eval-blue font-bold px-5 py-2.5 rounded-xl text-sm shadow hover:shadow-md transition">+ Create Quiz</button>
             <button onclick="showPanel('results')" class="border border-eval-blue text-eval-blue font-semibold px-5 py-2.5 rounded-xl text-sm hover:bg-eval-blue hover:text-white transition">View Results</button>
-            <a href="quiz.html" class="border border-gray-200 text-gray-600 font-semibold px-5 py-2.5 rounded-xl text-sm hover:bg-gray-50 transition no-underline">Student View →</a>
+            <button id="studentViewDemoBtn" class="border border-gray-200 text-gray-600 font-semibold px-5 py-2.5 rounded-xl text-sm hover:bg-gray-50 transition">📖 Student Quiz Preview</button>
           </div>
         </div>
       </div>
@@ -109,7 +115,7 @@
         <div class="flex justify-between items-center mb-4">
           <div>
             <h1 class="font-serif text-2xl font-bold text-eval-blue">My Quizzes</h1>
-            <p class="text-gray-500 text-sm">Manage, edit and publish your quizzes</p>
+            <p class="text-gray-500 text-sm">Manage, edit questions & publish</p>
           </div>
           <button id="create_quiz_btn" class="flex items-center gap-1 bg-eval-yellow px-4 py-2 rounded-xl font-bold text-sm shadow hover:shadow-md transition">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -117,24 +123,14 @@
           </button>
         </div>
         <div class="mb-4">
-          <input type="text" id="quiz_search" placeholder="Search quizzes…"
-            class="border border-gray-200 rounded-xl py-2 px-4 w-64 bg-white text-sm focus:border-eval-blue outline-none" />
+          <input type="text" id="quiz_search" placeholder="Search quizzes…" class="border border-gray-200 rounded-xl py-2 px-4 w-64 bg-white text-sm focus:border-eval-blue outline-none" />
         </div>
         <div class="bg-white rounded-xl shadow overflow-x-auto">
           <table class="min-w-full">
             <thead class="bg-gray-50 text-gray-500 text-[11px] uppercase font-bold">
-              <tr>
-                <th class="px-5 py-3 text-left">Title</th>
-                <th class="px-5 py-3 text-left">Subject</th>
-                <th class="px-5 py-3 text-left">Questions</th>
-                <th class="px-5 py-3 text-left">Duration</th>
-                <th class="px-5 py-3 text-left">Status</th>
-                <th class="px-5 py-3 text-left">Actions</th>
-              </tr>
+              <tr><th class="px-5 py-3 text-left">Title</th><th class="px-5 py-3 text-left">Subject</th><th class="px-5 py-3 text-left">Questions</th><th class="px-5 py-3 text-left">Duration</th><th class="px-5 py-3 text-left">Status</th><th class="px-5 py-3 text-left">Actions</th></tr>
             </thead>
-            <tbody id="quizzes_table_body">
-              <tr><td colspan="6" class="text-center py-10 text-gray-400">Loading quizzes…</td></tr>
-            </tbody>
+            <tbody id="quizzes_table_body"><tr><td colspan="6" class="text-center py-10 text-gray-400">Loading quizzes…</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -142,336 +138,233 @@
       <!-- RESULTS PANEL -->
       <div id="panel_results" class="hidden">
         <h1 class="font-serif text-2xl font-bold text-eval-blue mb-1">Student Results</h1>
-        <p class="text-gray-500 text-sm mb-4">Select a quiz to view its attempts</p>
+        <p class="text-gray-500 text-sm mb-4">Select a quiz to view attempts</p>
         <div class="mb-4">
           <select id="results_quiz_select" class="border border-gray-200 rounded-xl py-2 px-4 bg-white text-sm focus:border-eval-blue outline-none w-72">
             <option value="">— Select a quiz —</option>
           </select>
         </div>
         <div class="bg-white rounded-xl shadow overflow-x-auto">
-          <table class="min-w-full">
-            <thead class="bg-gray-50 text-gray-500 text-[11px] uppercase font-bold">
-              <tr>
-                <th class="px-5 py-3 text-left">Student</th>
-                <th class="px-5 py-3 text-left">Score</th>
-                <th class="px-5 py-3 text-left">Total</th>
-                <th class="px-5 py-3 text-left">%</th>
-                <th class="px-5 py-3 text-left">Date</th>
-              </tr>
-            </thead>
-            <tbody id="results_table_body">
-              <tr><td colspan="5" class="text-center py-10 text-gray-400">Select a quiz above to see results</td></tr>
-            </tbody>
-          </table>
+          <table class="min-w-full"><thead class="bg-gray-50"><tr><th class="px-5 py-3 text-left">Student</th><th class="px-5 py-3 text-left">Score</th><th class="px-5 py-3 text-left">Total</th><th class="px-5 py-3 text-left">%</th><th class="px-5 py-3 text-left">Date</th></tr></thead>
+          <tbody id="results_table_body"><tr><td colspan="5" class="text-center py-10 text-gray-400">Select a quiz above</td></tr></tbody></table>
         </div>
       </div>
-
     </main>
   </div>
 
   <!-- CREATE QUIZ MODAL -->
   <div id="quiz_modal" class="modal-overlay fixed inset-0 z-[2000] bg-eval-dark/70 backdrop-blur-sm flex items-center justify-center px-4 opacity-0 pointer-events-none">
     <div class="modal bg-white w-full max-w-md rounded-2xl shadow-2xl" onclick="event.stopPropagation()">
-      <div class="bg-eval-blue px-6 py-4 flex justify-between items-center rounded-t-2xl">
-        <h3 class="text-white font-bold">Create New Quiz</h3>
-        <button id="close_modal_btn" class="text-white/70 hover:text-white text-xl border-none bg-transparent cursor-pointer">✕</button>
-      </div>
+      <div class="bg-eval-blue px-6 py-4 flex justify-between items-center rounded-t-2xl"><h3 class="text-white font-bold">Create New Quiz</h3><button id="close_modal_btn" class="text-white/70 hover:text-white text-xl border-none bg-transparent cursor-pointer">✕</button></div>
       <div class="p-6 space-y-4">
-        <div>
-          <label class="text-[11px] font-bold uppercase text-gray-600">Title *</label>
-          <input id="m_title" class="w-full border border-gray-200 rounded-lg p-2 text-sm mt-1 focus:border-eval-blue outline-none" placeholder="e.g. Introduction to Algebra" />
-        </div>
-        <div>
-          <label class="text-[11px] font-bold uppercase text-gray-600">Description</label>
-          <textarea id="m_desc" class="w-full border border-gray-200 rounded-lg p-2 text-sm mt-1 focus:border-eval-blue outline-none" rows="2" placeholder="Short description…"></textarea>
-        </div>
-        <div>
-          <label class="text-[11px] font-bold uppercase text-gray-600">YouTube URL (optional)</label>
-          <input id="m_yt" class="w-full border border-gray-200 rounded-lg p-2 text-sm mt-1 focus:border-eval-blue outline-none" placeholder="https://youtube.com/watch?v=..." />
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="text-[11px] font-bold uppercase text-gray-600">Subject</label>
-            <select id="m_subject" class="w-full border border-gray-200 rounded-lg p-2 text-sm mt-1 focus:border-eval-blue outline-none">
-              <option>Informatique</option>
-              <option>Mathématiques</option>
-              <option>Physique</option>
-              <option>Langue</option>
-            </select>
-          </div>
-          <div>
-            <label class="text-[11px] font-bold uppercase text-gray-600">Duration (min)</label>
-            <input type="number" id="m_duration" class="w-full border border-gray-200 rounded-lg p-2 text-sm mt-1 focus:border-eval-blue outline-none" value="10" min="1" />
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="text-[11px] font-bold uppercase text-gray-600">Difficulty</label>
-            <select id="m_difficulty" class="w-full border border-gray-200 rounded-lg p-2 text-sm mt-1 focus:border-eval-blue outline-none">
-              <option>Facile</option>
-              <option>Moyen</option>
-              <option>Difficile</option>
-            </select>
-          </div>
-          <div>
-            <label class="text-[11px] font-bold uppercase text-gray-600">Status</label>
-            <select id="m_status" class="w-full border border-gray-200 rounded-lg p-2 text-sm mt-1 focus:border-eval-blue outline-none">
-              <option value="false">Draft</option>
-              <option value="true">Published</option>
-            </select>
-          </div>
-        </div>
+        <div><label class="text-[11px] font-bold uppercase text-gray-600">Title *</label><input id="m_title" class="w-full border rounded-lg p-2 text-sm mt-1" placeholder="e.g. Algebra Fundamentals" /></div>
+        <div><label class="text-[11px] font-bold uppercase text-gray-600">Description</label><textarea id="m_desc" rows="2" class="w-full border rounded-lg p-2 text-sm mt-1" placeholder="Short description…"></textarea></div>
+        <div><label class="text-[11px] font-bold uppercase text-gray-600">YouTube URL (optional)</label><input id="m_yt" class="w-full border rounded-lg p-2 text-sm mt-1" placeholder="https://youtube.com/watch?v=..." /></div>
+        <div class="grid grid-cols-2 gap-3"><div><label class="text-[11px] font-bold uppercase text-gray-600">Subject</label><select id="m_subject"><option>Informatique</option><option>Mathématiques</option><option>Physique</option><option>Langue</option></select></div><div><label class="text-[11px] font-bold uppercase text-gray-600">Duration (min)</label><input type="number" id="m_duration" value="10" min="1" /></div></div>
+        <div class="grid grid-cols-2 gap-3"><div><label class="text-[11px] font-bold uppercase text-gray-600">Difficulty</label><select id="m_difficulty"><option>Facile</option><option>Moyen</option><option>Difficile</option></select></div><div><label class="text-[11px] font-bold uppercase text-gray-600">Status</label><select id="m_status"><option value="false">Draft</option><option value="true">Published</option></select></div></div>
       </div>
-      <div class="px-6 pb-6 flex justify-end gap-3">
-        <button id="cancel_modal_btn" class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-50 cursor-pointer">Cancel</button>
-        <button id="save_quiz_btn" class="px-5 py-2 bg-eval-yellow rounded-lg font-bold cursor-pointer hover:bg-[#f5d020] transition">Save Quiz</button>
+      <div class="px-6 pb-6 flex justify-end gap-3"><button id="cancel_modal_btn" class="px-4 py-2 border rounded-lg hover:bg-gray-50">Cancel</button><button id="save_quiz_btn" class="px-5 py-2 bg-eval-yellow rounded-lg font-bold">Save Quiz</button></div>
+    </div>
+  </div>
+
+  <!-- QUESTION BUILDER MODAL (MANAGE QUESTIONS) -->
+  <div id="question_builder_modal" class="modal-overlay fixed inset-0 z-[2000] bg-eval-dark/80 backdrop-blur-sm flex items-center justify-center px-4 opacity-0 pointer-events-none overflow-auto py-8">
+    <div class="modal bg-white w-full max-w-3xl rounded-2xl shadow-2xl my-8 max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+      <div class="sticky top-0 bg-eval-blue px-6 py-4 flex justify-between items-center rounded-t-2xl z-10">
+        <h3 class="text-white font-bold text-lg"><span id="qb_quiz_title">Quiz</span> — Manage Questions</h3>
+        <button id="close_qb_btn" class="text-white/70 hover:text-white text-xl border-none bg-transparent cursor-pointer">✕</button>
+      </div>
+      <div class="p-6">
+        <div class="mb-5 flex justify-between items-center flex-wrap gap-2 border-b pb-3">
+          <div><span class="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded-full" id="qb_question_count">0 questions</span></div>
+          <button id="add_new_question_btn" class="bg-eval-blue text-white text-sm px-4 py-2 rounded-lg shadow flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg> Add Question</button>
+        </div>
+        <div id="questions_list_container" class="space-y-4"></div>
+        <div class="mt-6 flex justify-end gap-3 pt-4 border-t">
+          <button id="cancel_qb_close" class="px-5 py-2 border rounded-lg text-gray-600 hover:bg-gray-50">Cancel</button>
+          <button id="save_all_questions_btn" class="px-6 py-2 bg-eval-yellow text-eval-blue font-bold rounded-lg shadow hover:shadow-md">Save All Questions</button>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
     const API_BASE = 'https://evaly-api.onrender.com/api';
-
-    // ── Auth guard — redirect to login if no token ────────────────────────────
     const auth_token = localStorage.getItem('evaly_token');
     if (!auth_token) window.location.href = 'login.html';
 
     let my_quizzes = [];
+    let currentEditingQuizId = null;
+    let currentQuestionsCache = []; // array of question objects
 
-    // ── Panel switching ───────────────────────────────────────────────────────
+    // ---- UI Helpers ----
     function showPanel(name) {
-      ['overview', 'quizzes', 'results'].forEach(p => {
-        document.getElementById(`panel_${p}`).classList.toggle('hidden', p !== name);
-      });
-      document.querySelectorAll('.t_nav_btn').forEach(btn => {
-        const active = btn.dataset.panel === name;
-        btn.classList.toggle('bg-eval-yellow/10', active);
-        btn.classList.toggle('text-white', active);
-      });
+      ['overview', 'quizzes', 'results'].forEach(p => document.getElementById(`panel_${p}`).classList.toggle('hidden', p !== name));
+      document.querySelectorAll('.t_nav_btn').forEach(btn => { const active = btn.dataset.panel === name; btn.classList.toggle('bg-eval-yellow/10', active); btn.classList.toggle('text-white', active); });
       if (name === 'quizzes') loadMyQuizzes();
-      if (name === 'results') loadResultsQuizSelect();
+      if (name === 'results') { loadResultsQuizSelect(); updateTotalAttempts(); }
     }
+    document.querySelectorAll('.t_nav_btn').forEach(btn => btn.addEventListener('click', () => showPanel(btn.dataset.panel)));
 
-    document.querySelectorAll('.t_nav_btn').forEach(btn => {
-      btn.addEventListener('click', () => showPanel(btn.dataset.panel));
-    });
-
-    // ── Load my quizzes ───────────────────────────────────────────────────────
+    // ---- Load quizzes ----
     async function loadMyQuizzes() {
-      document.getElementById('quizzes_table_body').innerHTML =
-        '<tr><td colspan="6" class="text-center py-10 text-gray-400">Loading…</td></tr>';
+      document.getElementById('quizzes_table_body').innerHTML = '<tr><td colspan="6" class="text-center py-10 text-gray-400">Loading…</td></tr>';
       try {
-        const res = await fetch(`${API_BASE}/quizzes/mine`, {
-          headers: { 'Authorization': `Bearer ${auth_token}` }
-        });
+        const res = await fetch(`${API_BASE}/quizzes/mine`, { headers: { 'Authorization': `Bearer ${auth_token}` } });
         if (res.status === 401) { localStorage.clear(); window.location.href = 'login.html'; return; }
         my_quizzes = await res.json();
         renderQuizzesTable();
         updateOverviewStats();
         populateResultsSelect();
-      } catch (err) {
-        document.getElementById('quizzes_table_body').innerHTML =
-          '<tr><td colspan="6" class="text-center py-10 text-red-400">Failed to load quizzes.</td></tr>';
-      }
+        updateTotalAttempts();
+      } catch (err) { document.getElementById('quizzes_table_body').innerHTML = '<tr><td colspan="6" class="text-center py-10 text-red-400">Failed to load.</td></tr>'; }
     }
 
     function renderQuizzesTable(filter = '') {
-      const filtered = my_quizzes.filter(q =>
-        q.name.toLowerCase().includes(filter) || (q.subject || '').toLowerCase().includes(filter)
-      );
-      if (!filtered.length) {
-        document.getElementById('quizzes_table_body').innerHTML =
-          '<tr><td colspan="6" class="text-center py-10 text-gray-400">No quizzes found. Create your first one!</td></tr>';
-        return;
-      }
+      const filtered = my_quizzes.filter(q => q.name.toLowerCase().includes(filter) || (q.subject || '').toLowerCase().includes(filter));
+      if (!filtered.length) { document.getElementById('quizzes_table_body').innerHTML = '<tr><td colspan="6" class="text-center py-10 text-gray-400">No quizzes found.</td></tr>'; return; }
       document.getElementById('quizzes_table_body').innerHTML = filtered.map(q => `
-        <tr class="border-b hover:bg-gray-50 transition">
-          <td class="px-5 py-3 font-medium">${q.name}</td>
+        <tr class="border-b hover:bg-gray-50">
+          <td class="px-5 py-3 font-medium">${escapeHtml(q.name)}</td>
           <td class="px-5 py-3 text-gray-500">${q.subject || '—'}</td>
-          <td class="px-5 py-3">${q.questions || 0}</td>
+          <td class="px-5 py-3">${q.questions || q.questions_count || (q.questions_data?.length || 0)}</td>
           <td class="px-5 py-3">${q.duration || 10} min</td>
-          <td class="px-5 py-3">
-            <span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${q.is_published ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}">
-              ${q.is_published ? 'Published' : 'Draft'}
-            </span>
-          </td>
-          <td class="px-5 py-3">
-            <div class="flex gap-2">
-              <button class="toggle_pub_btn text-xs border rounded-lg px-2 py-1 hover:border-eval-blue hover:text-eval-blue transition" data-id="${q.id}" data-pub="${q.is_published}">
-                ${q.is_published ? 'Unpublish' : 'Publish'}
-              </button>
-              <button class="del_quiz_btn text-xs border rounded-lg px-2 py-1 hover:border-red-500 hover:text-red-500 transition" data-id="${q.id}">
-                Delete
-              </button>
-            </div>
-          </td>
+          <td class="px-5 py-3"><span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${q.is_published ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}">${q.is_published ? 'Published' : 'Draft'}</span></td>
+          <td class="px-5 py-3"><div class="flex gap-2 flex-wrap">
+            <button class="manage_qs_btn text-xs bg-blue-50 text-eval-blue border border-blue-200 rounded-lg px-2 py-1 hover:bg-blue-100" data-id="${q.id}">📋 Questions</button>
+            <button class="toggle_pub_btn text-xs border rounded-lg px-2 py-1" data-id="${q.id}" data-pub="${q.is_published}">${q.is_published ? 'Unpublish' : 'Publish'}</button>
+            <button class="del_quiz_btn text-xs border rounded-lg px-2 py-1 hover:border-red-500 hover:text-red-500" data-id="${q.id}">Delete</button>
+          </div></td>
         </tr>
       `).join('');
-
-      document.querySelectorAll('.del_quiz_btn').forEach(btn => {
-        btn.addEventListener('click', () => deleteQuiz(btn.dataset.id));
-      });
-      document.querySelectorAll('.toggle_pub_btn').forEach(btn => {
-        btn.addEventListener('click', () => togglePublish(btn.dataset.id, btn.dataset.pub === 'true'));
-      });
+      document.querySelectorAll('.manage_qs_btn').forEach(btn => btn.addEventListener('click', () => openQuestionManager(btn.dataset.id)));
+      document.querySelectorAll('.del_quiz_btn').forEach(btn => btn.addEventListener('click', () => deleteQuiz(btn.dataset.id)));
+      document.querySelectorAll('.toggle_pub_btn').forEach(btn => btn.addEventListener('click', () => togglePublish(btn.dataset.id, btn.dataset.pub === 'true')));
     }
 
-    function updateOverviewStats() {
-      document.getElementById('ov_total_quizzes').textContent = my_quizzes.length;
-      document.getElementById('ov_published').textContent = my_quizzes.filter(q => q.is_published).length;
-      document.getElementById('ov_drafts').textContent = my_quizzes.filter(q => !q.is_published).length;
-    }
-
-    // ── Toggle publish ────────────────────────────────────────────────────────
     async function togglePublish(quiz_id, currently_published) {
       const quiz = my_quizzes.find(q => q.id === quiz_id);
       if (!quiz) return;
+      let fullQuiz = null;
+      try { const res = await fetch(`${API_BASE}/quizzes/${quiz_id}`, { headers: { 'Authorization': `Bearer ${auth_token}` } }); fullQuiz = await res.json(); } catch(e) { alert("Error fetching details"); return; }
+      const payload = { title: fullQuiz.name || quiz.name, description: fullQuiz.description || "", youtube_url: fullQuiz.youtube_url || "", subject: fullQuiz.subject, duration: fullQuiz.duration, difficulty: fullQuiz.difficulty, is_published: !currently_published, questions: fullQuiz.questions_data || fullQuiz.questions || [] };
       try {
-        const res = await fetch(`${API_BASE}/quizzes/${quiz_id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${auth_token}` },
-          body: JSON.stringify({
-            title: quiz.name, description: quiz.desc, youtube_url: quiz.youtube_url,
-            subject: quiz.subject, duration: quiz.duration, difficulty: quiz.difficulty,
-            color: quiz.color, questions: quiz.questions_data || [], is_published: !currently_published
-          })
-        });
-        if (res.ok) loadMyQuizzes();
-        else alert('Failed to update quiz.');
+        const res = await fetch(`${API_BASE}/quizzes/${quiz_id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${auth_token}` }, body: JSON.stringify(payload) });
+        if (res.ok) loadMyQuizzes(); else alert('Update failed.');
       } catch (err) { alert('Server error.'); }
     }
 
-    // ── Delete quiz ───────────────────────────────────────────────────────────
-    async function deleteQuiz(quiz_id) {
-      if (!confirm('Delete this quiz permanently?')) return;
+    async function deleteQuiz(quiz_id) { if (!confirm('Permanently delete quiz?')) return; try { await fetch(`${API_BASE}/quizzes/${quiz_id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${auth_token}` } }); loadMyQuizzes(); } catch (err) { alert('Error'); } }
+
+    function updateOverviewStats() { document.getElementById('ov_total_quizzes').textContent = my_quizzes.length; document.getElementById('ov_published').textContent = my_quizzes.filter(q => q.is_published).length; document.getElementById('ov_drafts').textContent = my_quizzes.filter(q => !q.is_published).length; }
+    
+    async function updateTotalAttempts() { let total = 0; for (let quiz of my_quizzes) { try { const res = await fetch(`${API_BASE}/quizzes/${quiz.id}/attempts`, { headers: { 'Authorization': `Bearer ${auth_token}` } }); const arr = await res.json(); total += arr.length; } catch(e){} } document.getElementById('ov_total_attempts').textContent = total; }
+
+    // ---- QUESTION MANAGER (Core feature) ----
+    async function openQuestionManager(quizId) {
+      currentEditingQuizId = quizId;
+      const quiz = my_quizzes.find(q => q.id == quizId);
+      if (!quiz) return;
+      document.getElementById('qb_quiz_title').innerText = quiz.name;
+      // fetch full quiz data (with questions)
       try {
-        await fetch(`${API_BASE}/quizzes/${quiz_id}`, {
-          method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${auth_token}` }
-        });
-        loadMyQuizzes();
-      } catch (err) { alert('Error deleting quiz.'); }
+        const res = await fetch(`${API_BASE}/quizzes/${quizId}`, { headers: { 'Authorization': `Bearer ${auth_token}` } });
+        const full = await res.json();
+        currentQuestionsCache = full.questions_data || full.questions || [];
+        renderQuestionsList();
+        document.getElementById('question_builder_modal').classList.add('open');
+        document.getElementById('qb_question_count').innerText = `${currentQuestionsCache.length} question(s)`;
+      } catch (err) { alert("Could not load questions."); }
     }
 
-    // ── Results ───────────────────────────────────────────────────────────────
-    function populateResultsSelect() {
-      const sel = document.getElementById('results_quiz_select');
-      sel.innerHTML = '<option value="">— Select a quiz —</option>' +
-        my_quizzes.map(q => `<option value="${q.id}">${q.name}</option>`).join('');
+    function renderQuestionsList() {
+      const container = document.getElementById('questions_list_container');
+      if (!currentQuestionsCache.length) { container.innerHTML = '<div class="text-center py-8 text-gray-400 bg-gray-50 rounded-xl">No questions yet. Click "Add Question" to start building your quiz.</div>'; return; }
+      container.innerHTML = currentQuestionsCache.map((q, idx) => `
+        <div class="question-card border rounded-xl p-4 bg-white shadow-sm" data-qidx="${idx}">
+          <div class="flex justify-between items-start mb-2"><div class="font-bold text-eval-blue text-sm">Question ${idx+1}</div><button class="delete_question_btn text-red-500 text-xs border border-red-200 px-2 py-0.5 rounded hover:bg-red-50" data-idx="${idx}">Remove</button></div>
+          <input class="w-full border border-gray-200 rounded-lg p-2 text-sm mb-3 question-text" value="${escapeHtml(q.text || '')}" placeholder="Question text" data-idx="${idx}">
+          <div class="grid grid-cols-1 gap-2 mt-2"><label class="text-xs font-semibold text-gray-500">Options (Multiple Choice)</label>
+            ${[0,1,2,3].map(optIdx => `<div class="flex items-center gap-2 mb-1"><input type="radio" name="correct_${idx}" value="${optIdx}" class="correct-radio" data-qidx="${idx}" ${q.correct_option == optIdx ? 'checked' : ''}><input class="flex-1 border rounded-md p-1.5 text-sm option-input" placeholder="Option ${String.fromCharCode(65+optIdx)}" value="${escapeHtml(q.options?.[optIdx] || '')}" data-qidx="${idx}" data-optidx="${optIdx}"></div>`).join('')}
+          </div>
+        </div>
+      `).join('');
+      // attach event listeners for dynamic updates
+      document.querySelectorAll('.question-text').forEach(inp => inp.addEventListener('change', (e) => { const idx = parseInt(e.target.dataset.idx); if (!isNaN(idx)) currentQuestionsCache[idx].text = e.target.value; }));
+      document.querySelectorAll('.option-input').forEach(inp => inp.addEventListener('change', (e) => { const qidx = parseInt(e.target.dataset.qidx); const optidx = parseInt(e.target.dataset.optidx); if (!isNaN(qidx) && !isNaN(optidx)) { if (!currentQuestionsCache[qidx].options) currentQuestionsCache[qidx].options = ["","","",""]; currentQuestionsCache[qidx].options[optidx] = e.target.value; } }));
+      document.querySelectorAll('.correct-radio').forEach(radio => radio.addEventListener('change', (e) => { if (e.target.checked) { const qidx = parseInt(e.target.dataset.qidx); const val = parseInt(e.target.value); if (!isNaN(qidx)) currentQuestionsCache[qidx].correct_option = val; } }));
+      document.querySelectorAll('.delete_question_btn').forEach(btn => btn.addEventListener('click', (e) => { const idx = parseInt(btn.dataset.idx); if (!isNaN(idx)) { currentQuestionsCache.splice(idx, 1); renderQuestionsList(); document.getElementById('qb_question_count').innerText = `${currentQuestionsCache.length} question(s)`; } }));
     }
 
-    function loadResultsQuizSelect() {
-      if (my_quizzes.length) populateResultsSelect();
-      else loadMyQuizzes();
-    }
-
-    document.getElementById('results_quiz_select').addEventListener('change', async (e) => {
-      const quiz_id = e.target.value;
-      if (!quiz_id) return;
-      document.getElementById('results_table_body').innerHTML =
-        '<tr><td colspan="5" class="text-center py-10 text-gray-400">Loading…</td></tr>';
-      try {
-        const res = await fetch(`${API_BASE}/quizzes/${quiz_id}/attempts`, {
-          headers: { 'Authorization': `Bearer ${auth_token}` }
-        });
-        const data = await res.json();
-        if (!data.length) {
-          document.getElementById('results_table_body').innerHTML =
-            '<tr><td colspan="5" class="text-center py-10 text-gray-400">No attempts yet for this quiz.</td></tr>';
-          return;
-        }
-        document.getElementById('results_table_body').innerHTML = data.map(a => {
-          const pct = Math.round((a.score / a.total_questions) * 100);
-          const date = new Date(a.submitted_at).toLocaleString();
-          return `
-            <tr class="border-b hover:bg-gray-50">
-              <td class="px-5 py-3 font-medium">${a.student_name}</td>
-              <td class="px-5 py-3">${a.score}</td>
-              <td class="px-5 py-3">${a.total_questions}</td>
-              <td class="px-5 py-3">
-                <span class="font-bold ${pct >= 70 ? 'text-green-600' : pct >= 50 ? 'text-amber-600' : 'text-red-500'}">${pct}%</span>
-              </td>
-              <td class="px-5 py-3 text-gray-400 text-xs">${date}</td>
-            </tr>
-          `;
-        }).join('');
-      } catch (err) {
-        document.getElementById('results_table_body').innerHTML =
-          '<tr><td colspan="5" class="text-center py-10 text-red-400">Failed to load results.</td></tr>';
+    async function saveAllQuestionsToQuiz() {
+      if (!currentEditingQuizId) return;
+      // validate each question: require text and at least options & correct option
+      for (let i=0; i<currentQuestionsCache.length; i++) {
+        const q = currentQuestionsCache[i];
+        if (!q.text || q.text.trim() === "") { alert(`Question ${i+1} text is empty.`); return; }
+        if (!q.options || q.options.some(opt => !opt || opt.trim() === "")) { alert(`Please fill all 4 options for question ${i+1}.`); return; }
+        if (q.correct_option === undefined || q.correct_option === null || q.correct_option < 0 || q.correct_option > 3) { alert(`Please select the correct answer for question ${i+1}.`); return; }
       }
+      const quiz = my_quizzes.find(q => q.id == currentEditingQuizId);
+      if (!quiz) return;
+      const fullRes = await fetch(`${API_BASE}/quizzes/${currentEditingQuizId}`, { headers: { 'Authorization': `Bearer ${auth_token}` } });
+      const fullData = await fullRes.json();
+      const updatePayload = {
+        title: fullData.name || quiz.name,
+        description: fullData.description || "",
+        youtube_url: fullData.youtube_url || "",
+        subject: fullData.subject,
+        duration: fullData.duration,
+        difficulty: fullData.difficulty,
+        is_published: fullData.is_published,
+        questions: currentQuestionsCache.map(q => ({ text: q.text, options: q.options, correct_option: q.correct_option }))
+      };
+      try {
+        const resp = await fetch(`${API_BASE}/quizzes/${currentEditingQuizId}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${auth_token}` }, body: JSON.stringify(updatePayload) });
+        if (resp.ok) { alert("Questions saved successfully! Students can now take this quiz."); document.getElementById('question_builder_modal').classList.remove('open'); loadMyQuizzes(); }
+        else { alert("Failed to save questions."); }
+      } catch (err) { alert("Server error while saving."); }
+    }
+
+    // --- Results & attempts ---
+    function populateResultsSelect() { const sel = document.getElementById('results_quiz_select'); sel.innerHTML = '<option value="">— Select a quiz —</option>' + my_quizzes.map(q => `<option value="${q.id}">${escapeHtml(q.name)}</option>`).join(''); }
+    function loadResultsQuizSelect() { if (my_quizzes.length) populateResultsSelect(); else loadMyQuizzes(); }
+    document.getElementById('results_quiz_select').addEventListener('change', async (e) => {
+      const quiz_id = e.target.value; if (!quiz_id) return;
+      document.getElementById('results_table_body').innerHTML = '<tr><td colspan="5" class="text-center py-10 text-gray-400">Loading attempts...</td></tr>';
+      try {
+        const res = await fetch(`${API_BASE}/quizzes/${quiz_id}/attempts`, { headers: { 'Authorization': `Bearer ${auth_token}` } });
+        const data = await res.json();
+        if (!data.length) { document.getElementById('results_table_body').innerHTML = '<tr><td colspan="5" class="text-center py-10 text-gray-400">No attempts yet</td></tr>'; return; }
+        document.getElementById('results_table_body').innerHTML = data.map(a => { const pct = Math.round((a.score / a.total_questions) * 100); return `<tr class="border-b"><td class="px-5 py-3 font-medium">${escapeHtml(a.student_name)}</td><td>${a.score}</td><td>${a.total_questions}</td><td class="font-bold ${pct>=70?'text-green-600':pct>=50?'text-amber-600':'text-red-500'}">${pct}%</td><td class="text-gray-400 text-xs">${new Date(a.submitted_at).toLocaleString()}</td></tr>`; }).join('');
+      } catch(err) { document.getElementById('results_table_body').innerHTML = '<tr><td colspan="5" class="text-center py-10 text-red-400">Error loading</td></tr>'; }
     });
 
-    // ── Create quiz modal ─────────────────────────────────────────────────────
+    // --- Create quiz modal ---
     const quiz_modal = document.getElementById('quiz_modal');
-    document.getElementById('create_quiz_btn').addEventListener('click', () => {
-      quiz_modal.classList.add('open');
-    });
+    document.getElementById('create_quiz_btn').addEventListener('click', () => { quiz_modal.classList.add('open'); });
     document.getElementById('close_modal_btn').addEventListener('click', () => quiz_modal.classList.remove('open'));
     document.getElementById('cancel_modal_btn').addEventListener('click', () => quiz_modal.classList.remove('open'));
-
-    document.getElementById('save_quiz_btn').addEventListener('click', async () => {
-      const title = document.getElementById('m_title').value.trim();
-      if (!title) { alert('Title is required.'); return; }
-
-      const save_btn = document.getElementById('save_quiz_btn');
-      save_btn.disabled = true;
-      save_btn.textContent = 'Saving…';
-
-      try {
-        const res = await fetch(`${API_BASE}/quizzes/`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${auth_token}` },
-          body: JSON.stringify({
-            title,
-            description: document.getElementById('m_desc').value.trim(),
-            youtube_url: document.getElementById('m_yt').value.trim(),
-            subject: document.getElementById('m_subject').value,
-            duration: parseInt(document.getElementById('m_duration').value) || 10,
-            difficulty: document.getElementById('m_difficulty').value,
-            is_published: document.getElementById('m_status').value === 'true',
-            questions: []
-          })
-        });
-        const data = await res.json();
-        if (res.ok) {
-          quiz_modal.classList.remove('open');
-          document.getElementById('m_title').value = '';
-          document.getElementById('m_desc').value = '';
-          document.getElementById('m_yt').value = '';
-          loadMyQuizzes();
-        } else {
-          alert(typeof data.detail === 'string' ? data.detail : 'Error creating quiz.');
-        }
-      } catch (err) {
-        alert('Server error. Please try again.');
-      } finally {
-        save_btn.disabled = false;
-        save_btn.textContent = 'Save Quiz';
-      }
+    document.getElementById('save_quiz_btn').addEventListener('click', async () => { const title = document.getElementById('m_title').value.trim(); if (!title) { alert('Title required'); return; }
+      const saveBtn = document.getElementById('save_quiz_btn'); saveBtn.disabled = true; saveBtn.textContent = 'Saving...';
+      try { const res = await fetch(`${API_BASE}/quizzes/`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${auth_token}` }, body: JSON.stringify({ title, description: document.getElementById('m_desc').value, youtube_url: document.getElementById('m_yt').value, subject: document.getElementById('m_subject').value, duration: parseInt(document.getElementById('m_duration').value) || 10, difficulty: document.getElementById('m_difficulty').value, is_published: document.getElementById('m_status').value === 'true', questions: [] }) });
+        if (res.ok) { quiz_modal.classList.remove('open'); document.getElementById('m_title').value = ''; loadMyQuizzes(); } else alert('Creation failed');
+      } catch(e) { alert('Error'); } finally { saveBtn.disabled = false; saveBtn.textContent = 'Save Quiz'; }
     });
 
-    // ── Quiz search ───────────────────────────────────────────────────────────
-    document.getElementById('quiz_search').addEventListener('input', (e) => {
-      renderQuizzesTable(e.target.value.toLowerCase());
-    });
+    document.getElementById('quiz_search').addEventListener('input', (e) => renderQuizzesTable(e.target.value.toLowerCase()));
+    document.getElementById('logout_btn').addEventListener('click', async () => { try { await fetch(`${API_BASE}/auth/logout`, { method: 'POST', headers: { 'Authorization': `Bearer ${auth_token}` } }); } catch(_){} localStorage.clear(); window.location.href = 'login.html'; });
+    document.getElementById('studentViewDemoBtn').addEventListener('click', () => { alert("📌 Student quiz page (quiz.html) is ready. Build questions in any quiz, then use 'Student View →' or open quiz.html?id=XYZ with student token. Teacher-added questions will appear instantly."); window.open('quiz.html', '_blank'); });
 
-    // ── Logout ────────────────────────────────────────────────────────────────
-    document.getElementById('logout_btn').addEventListener('click', async () => {
-      try {
-        await fetch(`${API_BASE}/auth/logout`, {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${auth_token}` }
-        });
-      } catch (_) {}
-      localStorage.removeItem('evaly_token');
-      localStorage.removeItem('evaly_teacher_id');
-      window.location.href = 'login.html';
-    });
+    // close question builder modal
+    document.getElementById('close_qb_btn').addEventListener('click', () => { document.getElementById('question_builder_modal').classList.remove('open'); });
+    document.getElementById('cancel_qb_close').addEventListener('click', () => { document.getElementById('question_builder_modal').classList.remove('open'); });
+    document.getElementById('save_all_questions_btn').addEventListener('click', saveAllQuestionsToQuiz);
+    document.getElementById('add_new_question_btn').addEventListener('click', () => { currentQuestionsCache.push({ text: "", options: ["","","",""], correct_option: 0 }); renderQuestionsList(); document.getElementById('qb_question_count').innerText = `${currentQuestionsCache.length} question(s)`; });
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){ if(m === '&') return '&amp;'; if(m === '<') return '&lt;'; if(m === '>') return '&gt;'; return m;}); }
 
-    // ── Init ──────────────────────────────────────────────────────────────────
     showPanel('overview');
     loadMyQuizzes();
   </script>
-
 </body>
 </html>
