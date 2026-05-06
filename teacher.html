@@ -52,10 +52,44 @@
       <a href="quiz.html" class="text-black/80 text-sm no-underline hover:text-[#ffde59] transition-colors">Quizzes</a>
       <span class="text-[#004b8d] text-sm font-semibold border-b-2 border-[#ffde59]">Dashboard</span>
     </div>
-    <button id="logout_btn" class="bg-red-50 text-red-600 border border-red-200 font-semibold text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-red-100 transition">
-      Logout
-    </button>
+    <div class="flex items-center gap-3">
+      <button id="logout_btn" class="bg-red-50 text-red-600 border border-red-200 font-semibold text-sm px-4 py-2 rounded-md cursor-pointer hover:bg-red-100 transition">
+        Logout
+      </button>
+      <!-- Hamburger button (mobile only) -->
+      <button id="hamburger_btn" class="md:hidden flex flex-col gap-1.5 p-2 rounded-lg hover:bg-gray-100 transition" aria-label="Open menu">
+        <span class="block w-5 h-0.5 bg-gray-700 rounded transition-all"></span>
+        <span class="block w-5 h-0.5 bg-gray-700 rounded transition-all"></span>
+        <span class="block w-5 h-0.5 bg-gray-700 rounded transition-all"></span>
+      </button>
+    </div>
   </nav>
+
+  <!-- Mobile drawer overlay -->
+  <div id="mobile_drawer_overlay" class="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 md:hidden"></div>
+  <!-- Mobile drawer -->
+  <div id="mobile_drawer" class="fixed top-0 left-0 bottom-0 z-50 w-64 bg-eval-dark text-white transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden flex flex-col">
+    <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
+      <span class="font-bold text-white text-sm">Navigation</span>
+      <button id="close_drawer_btn" class="text-white/60 hover:text-white p-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <nav class="flex-1 p-4 space-y-1">
+      <button data-panel="overview" class="t_nav_btn mobile_nav_btn flex items-center gap-3 w-full text-left py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-white/5 transition text-white/70">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Overview
+      </button>
+      <button data-panel="quizzes" class="t_nav_btn mobile_nav_btn flex items-center gap-3 w-full text-left py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-white/5 transition text-white/70">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
+        My Quizzes
+      </button>
+      <button data-panel="results" class="t_nav_btn mobile_nav_btn flex items-center gap-3 w-full text-left py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-white/5 transition text-white/70">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Results
+      </button>
+    </nav>
+  </div>
 
   <div class="pt-14 flex min-h-screen">
     <!-- SIDEBAR -->
@@ -280,19 +314,66 @@
     function renderQuestionsList() {
       const container = document.getElementById('questions_list_container');
       if (!currentQuestionsCache.length) { container.innerHTML = '<div class="text-center py-8 text-gray-400 bg-gray-50 rounded-xl">No questions yet. Click "Add Question" to start building your quiz.</div>'; return; }
-      container.innerHTML = currentQuestionsCache.map((q, idx) => `
+      container.innerHTML = currentQuestionsCache.map((q, idx) => {
+        const isMulti = q.type === 'multiple';
+        const correctArr = isMulti ? (Array.isArray(q.ans) ? q.ans : [q.ans].filter(x => x !== undefined && x !== null)) : [];
+        const correctSingle = !isMulti ? q.ans : null;
+        return `
         <div class="question-card border rounded-xl p-4 bg-white shadow-sm" data-qidx="${idx}">
-          <div class="flex justify-between items-start mb-2"><div class="font-bold text-eval-blue text-sm">Question ${idx+1}</div><button class="delete_question_btn text-red-500 text-xs border border-red-200 px-2 py-0.5 rounded hover:bg-red-50" data-idx="${idx}">Remove</button></div>
+          <div class="flex justify-between items-start mb-2">
+            <div class="font-bold text-eval-blue text-sm">Question ${idx+1}</div>
+            <div class="flex items-center gap-3">
+              <label class="flex items-center gap-1.5 text-xs font-semibold text-gray-500 cursor-pointer">
+                <span>Single choice</span>
+                <div class="relative inline-flex items-center">
+                  <input type="checkbox" class="type-toggle sr-only" data-idx="${idx}" ${isMulti ? 'checked' : ''}>
+                  <div class="type-toggle-track w-9 h-5 rounded-full transition-colors ${isMulti ? 'bg-eval-blue' : 'bg-gray-300'}"></div>
+                  <div class="type-toggle-thumb absolute left-0.5 top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${isMulti ? 'translate-x-4' : 'translate-x-0'}"></div>
+                </div>
+                <span>Multiple</span>
+              </label>
+              <button class="delete_question_btn text-red-500 text-xs border border-red-200 px-2 py-0.5 rounded hover:bg-red-50" data-idx="${idx}">Remove</button>
+            </div>
+          </div>
           <input class="w-full border border-gray-200 rounded-lg p-2 text-sm mb-3 question-text" value="${escapeHtml(q.q || '')}" placeholder="Question text" data-idx="${idx}">
-          <div class="grid grid-cols-1 gap-2 mt-2"><label class="text-xs font-semibold text-gray-500">Options (Multiple Choice)</label>
-            ${[0,1,2,3].map(optIdx => `<div class="flex items-center gap-2 mb-1"><input type="radio" name="correct_${idx}" value="${optIdx}" class="correct-radio" data-qidx="${idx}" ${q.ans == optIdx ? 'checked' : ''}><input class="flex-1 border rounded-md p-1.5 text-sm option-input" placeholder="Option ${String.fromCharCode(65+optIdx)}" value="${escapeHtml(q.opts?.[optIdx] || '')}" data-qidx="${idx}" data-optidx="${optIdx}"></div>`).join('')}
+          <div class="grid grid-cols-1 gap-2 mt-2">
+            <label class="text-xs font-semibold text-gray-500">${isMulti ? 'Options (check all correct answers)' : 'Options (select the correct answer)'}</label>
+            ${[0,1,2,3].map(optIdx => `
+              <div class="flex items-center gap-2 mb-1">
+                ${isMulti
+                  ? `<input type="checkbox" class="correct-checkbox w-4 h-4 accent-eval-blue" data-qidx="${idx}" value="${optIdx}" ${correctArr.includes(optIdx) ? 'checked' : ''}>`
+                  : `<input type="radio" name="correct_${idx}" value="${optIdx}" class="correct-radio w-4 h-4 accent-eval-blue" data-qidx="${idx}" ${correctSingle == optIdx ? 'checked' : ''}>`
+                }
+                <input class="flex-1 border rounded-md p-1.5 text-sm option-input" placeholder="Option ${String.fromCharCode(65+optIdx)}" value="${escapeHtml(q.opts?.[optIdx] || '')}" data-qidx="${idx}" data-optidx="${optIdx}">
+              </div>`).join('')}
           </div>
         </div>
-      `).join('');
-      // attach event listeners for dynamic updates
+      `}).join('');
+      // question text
       document.querySelectorAll('.question-text').forEach(inp => inp.addEventListener('change', (e) => { const idx = parseInt(e.target.dataset.idx); if (!isNaN(idx)) currentQuestionsCache[idx].q = e.target.value; }));
+      // option inputs
       document.querySelectorAll('.option-input').forEach(inp => inp.addEventListener('change', (e) => { const qidx = parseInt(e.target.dataset.qidx); const optidx = parseInt(e.target.dataset.optidx); if (!isNaN(qidx) && !isNaN(optidx)) { if (!currentQuestionsCache[qidx].opts) currentQuestionsCache[qidx].opts = ["","","",""]; currentQuestionsCache[qidx].opts[optidx] = e.target.value; } }));
-      document.querySelectorAll('.correct-radio').forEach(radio => radio.addEventListener('change', (e) => { if (e.target.checked) { const qidx = parseInt(e.target.dataset.qidx); const val = parseInt(e.target.value); if (!isNaN(qidx)) currentQuestionsCache[qidx].ans = val; } }));
+      // single-choice radios
+      document.querySelectorAll('.correct-radio').forEach(radio => radio.addEventListener('change', (e) => { if (e.target.checked) { const qidx = parseInt(e.target.dataset.qidx); if (!isNaN(qidx)) currentQuestionsCache[qidx].ans = parseInt(e.target.value); } }));
+      // multiple-choice checkboxes
+      document.querySelectorAll('.correct-checkbox').forEach(cb => cb.addEventListener('change', (e) => {
+        const qidx = parseInt(e.target.dataset.qidx); const val = parseInt(e.target.value);
+        if (!isNaN(qidx)) {
+          if (!Array.isArray(currentQuestionsCache[qidx].ans)) currentQuestionsCache[qidx].ans = [];
+          if (e.target.checked) { if (!currentQuestionsCache[qidx].ans.includes(val)) currentQuestionsCache[qidx].ans.push(val); }
+          else { currentQuestionsCache[qidx].ans = currentQuestionsCache[qidx].ans.filter(v => v !== val); }
+        }
+      }));
+      // type toggle
+      document.querySelectorAll('.type-toggle').forEach(toggle => toggle.addEventListener('change', (e) => {
+        const idx = parseInt(e.target.dataset.idx);
+        if (!isNaN(idx)) {
+          currentQuestionsCache[idx].type = e.target.checked ? 'multiple' : 'single';
+          currentQuestionsCache[idx].ans = e.target.checked ? [] : null;
+          renderQuestionsList();
+        }
+      }));
+      // delete buttons
       document.querySelectorAll('.delete_question_btn').forEach(btn => btn.addEventListener('click', (e) => { const idx = parseInt(btn.dataset.idx); if (!isNaN(idx)) { currentQuestionsCache.splice(idx, 1); renderQuestionsList(); document.getElementById('qb_question_count').innerText = `${currentQuestionsCache.length} question(s)`; } }));
     }
 
@@ -303,7 +384,11 @@
         const q = currentQuestionsCache[i];
         if (!q.q || q.q.trim() === "") { alert(`Question ${i+1} text is empty.`); return; }
         if (!q.opts || q.opts.some(opt => !opt || opt.trim() === "")) { alert(`Please fill all 4 options for question ${i+1}.`); return; }
-        if (q.ans === undefined || q.ans === null || q.ans < 0 || q.ans > 3) { alert(`Please select the correct answer for question ${i+1}.`); return; }
+        if (q.type === 'multiple') {
+          if (!Array.isArray(q.ans) || q.ans.length === 0) { alert(`Please select at least one correct answer for question ${i+1}.`); return; }
+        } else {
+          if (q.ans === undefined || q.ans === null || q.ans < 0 || q.ans > 3) { alert(`Please select the correct answer for question ${i+1}.`); return; }
+        }
       }
       const quiz = my_quizzes.find(q => q.id == currentEditingQuizId);
       if (!quiz) return;
@@ -360,8 +445,32 @@
     document.getElementById('close_qb_btn').addEventListener('click', () => { document.getElementById('question_builder_modal').classList.remove('open'); });
     document.getElementById('cancel_qb_close').addEventListener('click', () => { document.getElementById('question_builder_modal').classList.remove('open'); });
     document.getElementById('save_all_questions_btn').addEventListener('click', saveAllQuestionsToQuiz);
-    document.getElementById('add_new_question_btn').addEventListener('click', () => { currentQuestionsCache.push({ q: "", opts: ["","","",""], ans: 0 }); renderQuestionsList(); document.getElementById('qb_question_count').innerText = `${currentQuestionsCache.length} question(s)`; });
+    document.getElementById('add_new_question_btn').addEventListener('click', () => { currentQuestionsCache.push({ q: "", opts: ["","","",""], ans: null, type: 'single' }); renderQuestionsList(); document.getElementById('qb_question_count').innerText = `${currentQuestionsCache.length} question(s)`; });
     function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){ if(m === '&') return '&amp;'; if(m === '<') return '&lt;'; if(m === '>') return '&gt;'; return m;}); }
+
+    // ---- Mobile hamburger drawer ----
+    const hamburgerBtn = document.getElementById('hamburger_btn');
+    const closeDrawerBtn = document.getElementById('close_drawer_btn');
+    const mobileDrawer = document.getElementById('mobile_drawer');
+    const mobileOverlay = document.getElementById('mobile_drawer_overlay');
+
+    function openDrawer() {
+      mobileDrawer.classList.remove('-translate-x-full');
+      mobileOverlay.classList.remove('opacity-0', 'pointer-events-none');
+      mobileOverlay.classList.add('opacity-100');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer() {
+      mobileDrawer.classList.add('-translate-x-full');
+      mobileOverlay.classList.add('opacity-0', 'pointer-events-none');
+      mobileOverlay.classList.remove('opacity-100');
+      document.body.style.overflow = '';
+    }
+
+    hamburgerBtn.addEventListener('click', openDrawer);
+    closeDrawerBtn.addEventListener('click', closeDrawer);
+    mobileOverlay.addEventListener('click', closeDrawer);
+    document.querySelectorAll('.mobile_nav_btn').forEach(btn => btn.addEventListener('click', closeDrawer));
 
     showPanel('overview');
     loadMyQuizzes();
