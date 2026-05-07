@@ -3,14 +3,21 @@
 
 <head>
   <meta charset="UTF-8">
+  <!--responsive design -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EvalY — Login</title>
-  <!-- Only Poppins font as requested, no Libre Baskerville -->
+  <!-- Poppins font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
+
+  <!--load Tailwind CSS library -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!--customizing TAILWIND clrs we can use em directly instead of hex codes -->
   <script>
+    // Sets the global Tailwind configuration 
     tailwind.config = {
+      // Defines the theme object for customization
       theme: {
         extend: {
           colors: {
@@ -20,58 +27,79 @@
             'eval-yellow': '#ffde59',
           },
           fontFamily: {
-            // Poppins used for all text (including headings)
+            // Poppins used for all text 
             'serif': ['Poppins', 'sans-serif'],
+            // Sets sans font to Poppins
             'sans': ['Poppins', 'sans-serif'],
           },
+          // Adds custom animations
           animation: {
+            // this makes the card slide in moves upward and appears smoothly
             'card-in': 'cardIn 0.5s cubic-bezier(0.22,1,0.36,1) both',
+            // Animation tae les inputs smoothly 
             'slide-q': 'slideQ 0.35s cubic-bezier(0.22,1,0.36,1) both',
           },
+           //this defines kifh the animation moves
           keyframes: {
+            // Keyframes for cardIn animation
             cardIn: { from: { opacity: 0, transform: 'translateY(20px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
+            // Keyframes for slideQ animation
             slideQ: { from: { opacity: 0, transform: 'translateX(20px)' }, to: { opacity: 1, transform: 'translateX(0)' } }
           }
         }
       }
     }
   </script>
+  <!--custom css styles-->
   <style>
+    /* Applies box-sizing to all elements for consistent sizing */
     *,
     *::before,
     *::after {
-      box-sizing: border-box;
-    }
-
+      box-sizing: border-box; /* used border box to make sure padding and borders are included in the total width and height of elements */
+    } 
+    /* poppins everywhere */
     body,
     button,
     input,
     select,
     textarea {
+      /* Sets the font family to Poppins for these elements */
       font-family: 'Poppins', sans-serif;
     }
 
     .logo {
-  display: flex;
-  align-items: center;
-  height: 300px;
+  /* Displays the logo as a flex container */
+  display: flex; 
+  /* Centers items vertically */
+  align-items: center; /* center vertically */
+  /* Sets the height of the logo */
+  height: 120px;
+  /* Removes padding */
   padding: 0;
+  /* Removes margin */
   margin: 0;
 }
 
 .logo img {
-  height: 300px;
+  /* Sets the height of the logo image */
+  height: 120px;
+  /* Sets width to auto to maintain aspect ratio */
   width: auto;
+  /* Displays the image as a block element */
   display: block;
 }
     /* Animated gradient left panel */
     .left-panel {
+      /* Sets a linear gradient background for the left panel */
       background: linear-gradient(135deg, #001a3a 0%, #004b8d 40%, #005299 70%, #002f5e 100%);
+      /* Sets the background size for animation */
       background-size: 300% 300%;
-      animation: gradientShift 8s ease infinite;
+      /* Applies the gradient shift animation */
+      animation: gradientShift 8s ease infinite;/*defines movement of the animated gradient for 8s infinite loop */
     }
 
-    @keyframes gradientShift {
+    @keyframes gradientShift { 
 
       0%,
       100% {
@@ -85,24 +113,28 @@
 
     /* Floating shapes */
     .float-shape {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      opacity: 0;
-      animation: floatUp linear infinite;
+      position: absolute; /* moves freely anywhere in the container */
+      border-radius: 50%; /* makes them in perfect circle */
+      pointer-events: none;/* mn9droch we click on em so clicks pass through em */
+      opacity: 0; /* start invisible for smooth fade-in effect */
+      animation: floatUp linear infinite; /* moves up in constant speed(linear) and loops infinitely */
     }
 
-    @keyframes floatUp {
-      0% {
+    @keyframes floatUp { /* defines the movement of the floating shapes*/
+      0% { /* start of animation from bottom invisible */
+        
         opacity: 0;
+        
         transform: translateY(100px) scale(0.5) rotate(0deg);
       }
 
-      10% {
+      10% { 
+        
         opacity: 1;
       }
 
       90% {
+      
         opacity: 1;
       }
 
@@ -112,29 +144,30 @@
       }
     }
 
-    /* Glassmorphism card */
+    /* bch card twli tban glassy using glassmorphism effect*/
     .glass-card {
       background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 8px 32px rgba(0, 75, 141, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
-      transition: box-shadow 0.4s, transform 0.4s;
+      -webkit-backdrop-filter: blur(20px); /* for Safari support */
+      backdrop-filter: blur(20px); /*blurs whats behind the card*/
+      border: 1px solid rgba(255, 255, 255, 0.6);/* soft transparent border around card*/
+      box-shadow: 0 8px 32px rgba(0, 75, 141, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06); /*adds shadow under card*/
+      transition: box-shadow 0.4s, transform 0.4s; /*smooth transition for hover effects */
     }
 
-    .glass-card:hover {
-      box-shadow: 0 16px 48px rgba(0, 75, 141, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08);
-      transform: translateY(-2px);
+    .glass-card:hover { /*when mouse enters the card*/
+      box-shadow: 0 16px 48px rgba(0, 75, 141, 0.18), 0 4px 12px rgba(0, 0, 0, 0.08); /*card pops out ktr*/
+      transform: translateY(-2px);/* card moves up chui bch yban aktr interactive */
     }
 
-    /* Animated gradient border */
+    /* gradient border */
     .glow-bar {
       height: 3px;
       background: linear-gradient(90deg, #004b8d, #ffde59, #005299, #ffde59, #004b8d);
       background-size: 400% 100%;
-      animation: glowSlide 3s linear infinite;
+      animation: glowSlide 3s linear infinite; /*runs the moving animation*/
     }
 
-    @keyframes glowSlide {
+    @keyframes glowSlide { /*moves horizontally start left 0% tO right 100% */
       0% {
         background-position: 0% 0;
       }
@@ -186,7 +219,7 @@
       box-shadow: none;
     }
 
-    /* Ripple */
+    /* Ripple effect like a wave like android btns */
     .ripple {
       position: absolute;
       border-radius: 50%;
@@ -281,27 +314,34 @@
     <!-- Floating animated shapes -->
     <div id="float-container" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
     <!-- Decorative circles -->
+    <!-- First decorative circle with absolute positioning, size, and background -->
     <div
       class="absolute -top-[120px] -right-[140px] w-[420px] h-[420px] rounded-full bg-eval-yellow/10 pointer-events-none">
     </div>
+    <!-- Second decorative circle-->
     <div
       class="absolute -bottom-[70px] -left-[80px] w-[260px] h-[260px] rounded-full bg-eval-yellow/[0.08] pointer-events-none">
     </div>
+    <!-- Third -->
     <div
       class="absolute -top-[140px] -right-[200px] w-[560px] h-[560px] rounded-full border-[1.5px] border-eval-yellow/[0.12] pointer-events-none">
     </div>
+    <!-- Fourth decorative circle with border -->
     <div
       class="absolute bottom-[180px] right-[50px] w-[160px] h-[160px] rounded-full border-[1.5px] border-eval-yellow/[0.12] pointer-events-none">
     </div>
 
     <!-- Logo -->
     <a href="index.html" class="logo">
+    <!-- Image of the Evaly logo -->
    <img src="images/e.png" alt="Evaly logo" />
     </a>
-    <!-- Hero -->
+    <!-- top main section container with flex layout -->
     <div class="flex-1 flex flex-col justify-center relative z-10 py-10">
+      <!-- Badge indicating the platform is secured -->
       <span
         class="inline-flex items-center gap-2 bg-eval-yellow/[0.14] border border-eval-yellow/[0.32] rounded-full px-3.5 py-1.5 text-[0.68rem] font-bold text-eval-yellow uppercase tracking-wider w-fit mb-7">
+        <!-- Small dot icon -->
         <span class="w-[7px] h-[7px] rounded-full bg-eval-yellow"></span>
         Secured Platform
       </span>
@@ -316,9 +356,13 @@
         EvalY allows teachers to create interactive tests and students to take them with instant and secure evaluation.
       </p>
 
+      <!-- Container for the list of features -->
       <div class="flex flex-col gap-3 mt-9">
+        <!-- Feature item for secure and anti-cheat exams -->
         <div class="feature-row flex items-center gap-2.5 text-sm text-white/70">
+          <!-- Icon container for the lock icon -->
           <span class="w-8 h-8 bg-eval-yellow/[0.18] rounded-lg flex items-center justify-center shrink-0">
+            <!-- Lock icon SVG -->
             <svg class="w-4 h-4 text-eval-yellow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2">
               <rect x="3" y="11" width="18" height="11" rx="2" />
@@ -327,8 +371,11 @@
           </span>
           Secure &amp; anti-cheat exams
         </div>
+        <!-- Feature item for automatic instant evaluation -->
         <div class="feature-row flex items-center gap-2.5 text-sm text-white/70">
+          <!-- Icon container for the lightning icon -->
           <span class="w-8 h-8 bg-eval-yellow/[0.18] rounded-lg flex items-center justify-center shrink-0">
+            <!-- Lightning bolt icon SVG -->
             <svg class="w-4 h-4 text-eval-yellow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2">
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
@@ -336,8 +383,11 @@
           </span>
           Automatic instant evaluation
         </div>
+        <!-- Feature item for complete analytical dashboard -->
         <div class="feature-row flex items-center gap-2.5 text-sm text-white/70">
+          <!-- Icon container for the bar chart icon -->
           <span class="w-8 h-8 bg-eval-yellow/[0.18] rounded-lg flex items-center justify-center shrink-0">
+            <!-- Bar chart icon SVG -->
             <svg class="w-4 h-4 text-eval-yellow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2">
               <path d="M18 20V10" />
@@ -352,16 +402,25 @@
 
     <!-- Stats -->
     <div class="flex gap-10 relative z-10">
+      <!-- Stat item for number of students -->
       <div class="stat-item cursor-default">
+        <!-- Number display -->
         <div class="font-serif text-3xl font-bold text-eval-yellow leading-none">2k+</div>
+        <!-- Label for students -->
         <div class="text-[0.68rem] text-white/[0.45] uppercase tracking-wide mt-1">Students</div>
       </div>
+      <!-- Stat item for number of teachers -->
       <div class="stat-item cursor-default">
+        <!-- Number display -->
         <div class="font-serif text-3xl font-bold text-eval-yellow leading-none">150+</div>
+        <!-- Label for teachers -->
         <div class="text-[0.68rem] text-white/[0.45] uppercase tracking-wide mt-1">Teachers</div>
       </div>
+      <!-- Stat item for satisfaction percentage -->
       <div class="stat-item cursor-default">
+        <!-- Number display -->
         <div class="font-serif text-3xl font-bold text-eval-yellow leading-none">98%</div>
+        <!-- Label for satisfaction -->
         <div class="text-[0.68rem] text-white/[0.45] uppercase tracking-wide mt-1">Satisfaction</div>
       </div>
     </div>
@@ -467,23 +526,36 @@
 
   <!-- ══════════════ JS ══════════════ -->
   <script>
+      // Immediately invoked function expression to create a local scope
       (function () {
+        // Enables strict mode for better error checking
         'use strict';
 
         /* refs */
+        // Reference to the login form element
         const form = document.getElementById('login-form');
+        // Reference to the email input element
         const emailEl = document.getElementById('email');
+        // Reference to the password input element
         const pwdEl = document.getElementById('password');
+        // Reference to the password toggle button
         const pwdToggle = document.getElementById('pwd-toggle');
+        // Reference to the eye open icon
         const eyeOpen = document.getElementById('eye-open');
+        // Reference to the eye closed icon
         const eyeClosed = document.getElementById('eye-closed');
+        // Reference to the submit button
         const btn = document.getElementById('btn');
+        // Reference to the message box
         const msgbox = document.getElementById('msgbox');
+        // Reference to the remember checkbox
         const remCb = document.getElementById('remember');
+        // Reference to the email error message element
         const errEmail = document.getElementById('err-email');
+        // Reference to the password error message element
         const errPwd = document.getElementById('err-pwd');
 
-        // change this to your Render API URL once deployed
+        // Base URL for the API endpoints  
         const API_BASE = 'https://evaly-api.onrender.com/api';
 
         /* restore remembered email */
@@ -609,9 +681,13 @@
           }
         }
 
+      // Closes the immediately invoked function expression
       })();
+  <!-- Closes the script tag -->
   </script>
 
+<!-- Closes the body tag -->
 </body>
 
+<!-- Closes the html tag -->
 </html>

@@ -1,21 +1,20 @@
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr #for email validation
 from supabase_client import supabase
 
-router = APIRouter(prefix="/auth", tags=["auth"])
+router = APIRouter(prefix="/auth", tags=["auth"]) 
 bearer = HTTPBearer()
 
 
-# ── Schémas ───────────────────────────────────────────────────────────────────
 
+ #request ykon fih both hedo 
 class LoginBody(BaseModel):
     email: EmailStr
     password: str
 
 
-# ── Dépendance : vérifie le JWT et retourne l'utilisateur ────────────────────
-
+#extract token mn request w tvaldi maa supabase w traja3 user details ila token sahih w valid, w ila token invalid traja3 error 401
 def get_current_teacher(creds: HTTPAuthorizationCredentials = Depends(bearer)):
     try:
         user = supabase.auth.get_user(creds.credentials)
@@ -26,8 +25,7 @@ def get_current_teacher(creds: HTTPAuthorizationCredentials = Depends(bearer)):
         raise HTTPException(status_code=401, detail="Non autorisé.")
 
 
-# ── POST /auth/login ──────────────────────────────────────────────────────────
-
+#ndiro login  wycheki lpassword w email w nraj3o token ila credentials sahihin, w ila ghalta nraj3o error 401
 @router.post("/login")
 def login(body: LoginBody):
     try:
@@ -48,8 +46,7 @@ def login(body: LoginBody):
     }
 
 
-# ── POST /auth/logout ─────────────────────────────────────────────────────────
-
+#simply ndiro logout w nsignout mn supabase w nraj3o success true,
 @router.post("/logout")
 def logout(current_user=Depends(get_current_teacher)):
     supabase.auth.sign_out()

@@ -1,9 +1,12 @@
 import os
-from supabase import create_client, Client
+from supabase import create_client, Client #buillds connection to supabase
 from dotenv import load_dotenv
-
+ 
+ #load env var mn .env file
 load_dotenv()
-
+ 
+ 
+ #get env var mn .env w buildi connection m3a supabase, w ila kayn chi env var manquants nthrowi error, w ila kolchi sahih nbuildi connection w nexporti supabase client li rah yest3mlou auth.py w contact.py w quizzes.py
 SUPABASE_URL: str = os.environ.get("SUPABASE_URL")
 SUPABASE_ANON_KEY: str = os.environ.get("SUPABASE_ANON_KEY")
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EvalY — Quizzes & Courses</title>
-  <!-- Only Poppins font as requested, no Libre Baskerville -->
+  <!-- only poppins font as requested, no libre baskerville -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -18,7 +18,7 @@
             'eval-yellow': '#ffde59',
           },
           fontFamily: {
-            // Poppins used for all text (including headings)
+            // poppins used for all text (including headings)
             'serif': ['Poppins', 'sans-serif'],
             'sans': ['Poppins', 'sans-serif'],
           },
@@ -35,7 +35,6 @@
     }
   </script>
   <style>
-    /* extra custom styles without emojis */
     .score-ring circle.track { fill: none; stroke: #e5e7eb; stroke-width: 10; }
     .score-ring circle.fill { fill: none; stroke: #004b8d; stroke-width: 10; stroke-linecap: round; stroke-dasharray: 345; stroke-dashoffset: 345; transition: stroke-dashoffset 1.2s cubic-bezier(0.22,1,0.36,1); }
     .score-ring circle.fill.green { stroke: #10b981; }
@@ -47,7 +46,7 @@
     .modal { transition: transform 0.3s cubic-bezier(0.22,1,0.36,1); transform: scale(0.95) translateY(20px); }
     .modal-overlay.open .modal { transform: scale(1) translateY(0) !important; }
     input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { opacity: 0.5; }
-    /* all fonts are Poppins */
+    /* all fonts are poppins */
     body, button, input, select, textarea { font-family: 'Poppins', sans-serif; }
   </style>
 </head>
@@ -99,7 +98,7 @@
         </div>
       </div>
 
-      <!-- Quiz Taking Screen -->
+      <!-- quiz taking screen -->
       <div id="quiz-taking-screen" class="hidden max-w-3xl mx-auto px-4 py-8 md:py-12">
         <div class="flex flex-wrap justify-between items-center gap-3 mb-6">
           <div>
@@ -128,7 +127,7 @@
         </div>
       </div>
 
-      <!-- Results Screen -->
+      <!-- results screen -->
       <div id="results-screen" class="hidden max-w-2xl mx-auto px-4 py-12 text-center">
         <div class="bg-white rounded-3xl shadow-xl overflow-hidden animate-card-in">
           <div class="bg-eval-blue py-8 px-6">
@@ -157,7 +156,7 @@
 
   </div>
 
-  <!-- ── Student Name Modal (shown before quiz starts) ── -->
+  <!-- student name modal (shown before quiz starts) -->
   <div id="name-modal" class="fixed inset-0 z-[3000] flex items-center justify-center px-4 opacity-0 pointer-events-none transition-all duration-300" style="background:rgba(0,48,90,0.72);backdrop-filter:blur(8px);">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden" onclick="event.stopPropagation()">
       <div class="bg-eval-blue px-6 py-5">
@@ -178,15 +177,22 @@
   </div>
 
   <script>
+// base url for all api calls
     const API_BASE = 'https://evaly-api.onrender.com/api';
 
-    // ── State ─────────────────────────────────────────────────────────────────
-    let QUIZZES = [];          // loaded from API
-    let teacherQuizzes = [];   // loaded from API (teacher's own quizzes)
+    // ── state ─────────────────────────────────────────────────────────────────
+// stores all quizzes fetched from server
+    let QUIZZES = [];
+// not used in student view but kept for teacher panel
+    let teacherQuizzes = [];
+// authentication token from localstorage (if teacher logged in)
     let auth_token = localStorage.getItem('evaly_token') || null;
+// current quiz object, current question index, user answers array, timer id, remaining seconds, live score, start timestamp
     let currentQuiz = null, currentIndex = 0, userAnswers = [], timerInterval = null, timeRemaining = 0, liveScore = 0, startTime = null;
-    let student_name = '';     // set from name modal
-    let pending_quiz_id = null; // quiz to start after name is confirmed
+// student name collected from modal
+    let student_name = '';
+// quiz id that will start after name is provided
+    let pending_quiz_id = null;
 
     const studentView = document.getElementById('student-view');
     const teacherView = document.getElementById('teacher-view');
@@ -210,6 +216,7 @@
     const cancelModalBtn = document.getElementById('cancel-modal-btn');
     const saveQuizBtn = document.getElementById('save-quiz-btn');
 
+// renders all quiz cards, applies search and subject filter, attaches start/course events
     function renderQuizGrid() {
       const searchTerm = searchInput.value.toLowerCase();
       const selectedSubject = subjectFilter.value;
@@ -252,18 +259,18 @@
       });
     }
 
+// shows the name modal before quiz starts, stores the selected quiz id
     function startQuiz(quizId) {
-      // show name modal first, store quiz id to start after
       pending_quiz_id = quizId;
       const nameModal = document.getElementById('name-modal');
-      document.getElementById('student-name-input').value = student_name; // pre-fill if already set
+      document.getElementById('student-name-input').value = student_name;
       document.getElementById('name-error').classList.add('hidden');
       nameModal.style.opacity = '1';
       nameModal.style.pointerEvents = 'all';
       setTimeout(() => document.getElementById('student-name-input').focus(), 100);
     }
 
-    // Fisher-Yates shuffle — returns a new shuffled array
+// fisher-yates shuffle — returns a new shuffled array
     function shuffleArray(arr) {
       const a = [...arr];
       for (let i = a.length - 1; i > 0; i--) {
@@ -273,19 +280,18 @@
       return a;
     }
 
+// number of random questions to pick from each quiz
     const RANDOM_QUESTION_COUNT = 5;
 
+// actual quiz initialization after name is confirmed
     function actuallyStartQuiz(quizId) {
       const baseQuiz = QUIZZES.find(q => q.id === quizId);
-
-      // Pick a random subset of questions (up to RANDOM_QUESTION_COUNT)
+      // pick a random subset of questions (up to random_question_count)
       const allQuestions = baseQuiz.questions_data || [];
       const shuffled = shuffleArray(allQuestions);
       const selectedQuestions = shuffled.slice(0, Math.min(RANDOM_QUESTION_COUNT, shuffled.length));
-
-      // Work on a copy so the original QUIZZES array is never mutated
+      // work on a copy so the original quizzes array is never mutated
       currentQuiz = { ...baseQuiz, questions_data: selectedQuestions };
-
       currentIndex = 0;
       userAnswers = new Array(currentQuiz.questions_data.length).fill(null);
       liveScore = 0;
@@ -300,6 +306,7 @@
       window.scrollTo(0,0);
     }
 
+// renders the current question (supports single and multiple choice)
     function renderCurrentQuestion() {
       const total = currentQuiz.questions_data.length;
       const qd = currentQuiz.questions_data[currentIndex];
@@ -313,14 +320,11 @@
       nextBtn.innerText = currentIndex === total-1 ? 'Finish ✓' : 'Next →';
       const letters = ['A','B','C','D'];
       const answered = userAnswers[currentIndex] !== null;
-
-      // type badge
       const typeBadge = isMulti
         ? `<span class="inline-block mb-3 text-[10px] font-bold uppercase tracking-wider bg-eval-yellow/20 text-eval-blue px-2 py-0.5 rounded-full">Select all that apply</span>`
         : `<span class="inline-block mb-3 text-[10px] font-bold uppercase tracking-wider bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Single choice</span>`;
 
       if (isMulti) {
-        // multiple choice — checkboxes
         const correctArr = Array.isArray(qd.ans) ? qd.ans : [qd.ans];
         const selectedArr = answered ? (Array.isArray(userAnswers[currentIndex]) ? userAnswers[currentIndex] : []) : [];
         optionsContainer.innerHTML = typeBadge + qd.opts.map((opt, i) => {
@@ -339,7 +343,6 @@
           </label>`;
         }).join('');
         if (!answered) {
-          // confirm button for multi
           optionsContainer.innerHTML += `<button id="multi-confirm-btn" class="mt-2 w-full py-2 rounded-xl bg-eval-blue text-white font-bold text-sm hover:bg-eval-dark transition">Confirm selection</button>`;
           document.getElementById('multi-confirm-btn').addEventListener('click', () => {
             const checked = [...optionsContainer.querySelectorAll('.multi-cb:checked')].map(cb => parseInt(cb.value));
@@ -348,7 +351,6 @@
           });
         }
       } else {
-        // single choice — radio buttons
         optionsContainer.innerHTML = typeBadge + qd.opts.map((opt, i) => {
           let cls = 'border-2 border-gray-200 bg-gray-50';
           if (answered) {
@@ -363,6 +365,7 @@
       }
     }
 
+// handles single answer selection and updates score
     function selectAnswer(idx) {
       if(userAnswers[currentIndex] !== null) return;
       userAnswers[currentIndex] = idx;
@@ -370,6 +373,7 @@
       renderCurrentQuestion();
     }
 
+// handles multiple answer selection (checkbox group)
     function selectAnswerMulti(selectedArr) {
       if(userAnswers[currentIndex] !== null) return;
       userAnswers[currentIndex] = selectedArr;
@@ -386,6 +390,7 @@
     }
     function prevQuestion() { if(currentIndex > 0) { currentIndex--; renderCurrentQuestion(); } }
 
+// starts the countdown timer, auto‑finishes when time reaches zero
     function startTimer() {
       if(timerInterval) clearInterval(timerInterval);
       updateTimerDisplay();
@@ -404,6 +409,7 @@
       else timerSpan.classList.remove('text-red-500', 'animate-pulse');
     }
 
+// computes final score, shows results screen with animated ring, sends attempt to api
     function finishQuiz() {
       clearInterval(timerInterval);
       const total = currentQuiz.questions_data.length;
@@ -423,7 +429,6 @@
       const emojiContainer = document.getElementById('result-emoji');
       if(emojiContainer) emojiContainer.innerHTML = `<svg class="w-10 h-10 mx-auto text-eval-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>`;
       document.getElementById('result-title').innerText = percent < 50 ? 'Better luck next time…' : percent < 70 ? 'Good effort!' : percent < 90 ? 'Well done!' : 'Excellent!';
-      // show quiz name + student name
       document.getElementById('result-subtitle').innerText = `${currentQuiz.name} · ${student_name}`;
       document.getElementById('res-correct').innerText = correct;
       document.getElementById('res-wrong').innerText = wrong;
@@ -435,11 +440,10 @@
       ringFill.classList.toggle('green', percent >= 70);
       ringFill.classList.toggle('orange', percent >= 50 && percent < 70);
       setTimeout(() => { ringFill.style.strokeDashoffset = circumference * (1 - percent/100); }, 50);
-
-      // submit to API
       submitAttempt(currentQuiz.id, correct, total, userAnswers);
     }
 
+// returns to quiz list screen, stops timer
     function backToQuizList() {
       if(timerInterval) clearInterval(timerInterval);
       takingScreen.style.display = 'none';
@@ -448,6 +452,7 @@
       window.scrollTo(0,0);
     }
 
+// renders teacher's own quizzes table (not used in student view, kept for completeness)
     function renderTeacherQuizzesTable(filter = '') {
       const filtered = teacherQuizzes.filter(q => q.name.toLowerCase().includes(filter) || q.subject.toLowerCase().includes(filter));
       const statusMap = { Active: 'bg-green-100 text-green-800', Draft: 'bg-gray-100 text-gray-700', Closed: 'bg-red-100 text-red-800' };
@@ -458,6 +463,7 @@
       document.querySelectorAll('.delete-quiz-btn').forEach(btn => btn.addEventListener('click', () => { if(confirm('Delete this quiz?')) { teacherQuizzes = teacherQuizzes.filter(q => q.id !== parseInt(btn.dataset.id)); renderTeacherQuizzesTable(); } }));
     }
 
+// not used in student mode / role switching logic
     function setActiveRole(role) {
       const isStudent = role === 'student';
       studentView.classList.toggle('hidden', !isStudent);
@@ -475,7 +481,7 @@
     function openModal() { modal.classList.add('open'); }
     function closeModal() { modal.classList.remove('open'); }
 
-    // ── API: load published quizzes for students ───────────────────────────────
+//load published quizzes for students 
     async function loadQuizzes() {
       quizGrid.innerHTML = `<div class="col-span-3 text-center py-16 text-gray-400">Loading quizzes…</div>`;
       try {
@@ -489,7 +495,7 @@
       }
     }
 
-    // ── API: load teacher's own quizzes ───────────────────────────────────────
+//load teacher's own quizzes 
     async function loadMyQuizzes() {
       if (!auth_token) return;
       try {
@@ -508,7 +514,7 @@
       }
     }
 
-    // ── API: submit quiz attempt ───────────────────────────────────────────────
+//submit quiz attempt /saves student result 
     async function submitAttempt(quiz_id, score, total, answers_arr) {
       try {
         const res = await fetch(`${API_BASE}/quizzes/${quiz_id}/attempt`, {
@@ -528,7 +534,7 @@
       }
     }
 
-    // ── API: create new quiz (teacher) ────────────────────────────────────────
+// create new quiz 
     async function saveNewQuiz() {
       if (!auth_token) {
         alert('You must be logged in to create a quiz.');
@@ -573,7 +579,7 @@
       }
     }
 
-    // ── API: delete quiz (teacher) ────────────────────────────────────────────
+// delete quiz (teacher brk)
     async function deleteQuiz(quiz_id) {
       if (!auth_token) return;
       if (!confirm('Permanently delete this quiz?')) return;
@@ -588,9 +594,7 @@
       }
     }
 
-    // ── patch renderTeacherQuizzesTable — not needed in student view ─────────
-
-    // ── Name modal confirm ────────────────────────────────────────────────────
+// name modal confirm 
     document.getElementById('start-quiz-confirm-btn').addEventListener('click', () => {
       const val = document.getElementById('student-name-input').value.trim();
       if (!val) {
@@ -608,7 +612,7 @@
       if (e.key === 'Enter') document.getElementById('start-quiz-confirm-btn').click();
     });
 
-    // ── Event listeners ───────────────────────────────────────────────────────
+// event listeners 
     searchInput.addEventListener('input', renderQuizGrid);
     subjectFilter.addEventListener('change', renderQuizGrid);
     backToListBtn.addEventListener('click', backToQuizList);
@@ -617,8 +621,7 @@
     prevBtn.addEventListener('click', prevQuestion);
     nextBtn.addEventListener('click', nextQuestion);
 
-    // ── Init ──────────────────────────────────────────────────────────────────
-    loadQuizzes();
+//load all quizzes from api
   </script>
 </body>
 </html>

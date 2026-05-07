@@ -8,12 +8,6 @@ from auth import get_current_teacher
 router = APIRouter(prefix="/quizzes", tags=["quizzes"])
 
 
-# ── Schemas ───────────────────────────────────────────────────────────────────
-
-# Stored format in DB: { "q": "...", "opts": ["A","B","C","D"], "ans": 0 }
-# Teacher UI sends:    { "text": "...", "options": ["A","B","C","D"], "correct_option": 0 }
-# We accept both and normalise to the stored format.
-
 class QuestionItem(BaseModel):
     # Accept both naming conventions — only one set needs to be provided
     q: Optional[str] = None
@@ -152,8 +146,7 @@ def fmt_quiz(row: dict) -> dict:
     }
 
 
-# ── GET /quizzes — all published quizzes (students) ──────────────────────────
-
+#GET /quizzes
 @router.get("/")
 def list_published_quizzes():
     res = (
@@ -166,8 +159,7 @@ def list_published_quizzes():
     return [fmt_quiz(row) for row in res.data]
 
 
-# ── GET /quizzes/mine — quizzes belonging to logged-in teacher ────────────────
-
+# GET /quizzes/mine  belonging to teacher
 @router.get("/mine")
 def list_my_quizzes(current_user=Depends(get_current_teacher)):
     res = (
@@ -180,10 +172,10 @@ def list_my_quizzes(current_user=Depends(get_current_teacher)):
     return [fmt_quiz(row) for row in res.data]
 
 
-# ── GET /quizzes/{id} — single quiz detail ────────────────────────────────────
-
+# GET /quizzes/id ->>> single quiz detail 
 @router.get("/{quiz_id}")
 def get_quiz(quiz_id: UUID):
+    #fetch one quiz by its uuid, return 404 if missing
     res = (
         supabase.table("quizzes")
         .select("*")
@@ -196,10 +188,10 @@ def get_quiz(quiz_id: UUID):
     return fmt_quiz(res.data)
 
 
-# ── POST /quizzes — create a quiz (teacher only) ──────────────────────────────
-
+#POST /quizzes —>> create a quiz
 @router.post("/", status_code=201)
 def create_quiz(body: QuizBody, current_user=Depends(get_current_teacher)):
+    #convert each question to db format before insertion
     questions_list = [q.to_db() for q in body.questions]
 
     res = (
@@ -223,10 +215,10 @@ def create_quiz(body: QuizBody, current_user=Depends(get_current_teacher)):
     return fmt_quiz(res.data[0])
 
 
-# ── PUT /quizzes/{id} — update a quiz ────────────────────────────────────────
-
+# PUT /quizzes/id  update a quiz 
 @router.put("/{quiz_id}")
 def update_quiz(quiz_id: UUID, body: QuizBody, current_user=Depends(get_current_teacher)):
+    #verify ownership before allowing update
     existing = (
         supabase.table("quizzes")
         .select("teacher_id")
@@ -260,10 +252,10 @@ def update_quiz(quiz_id: UUID, body: QuizBody, current_user=Depends(get_current_
     return fmt_quiz(res.data[0])
 
 
-# ── DELETE /quizzes/{id} ──────────────────────────────────────────────────────
-
+#DELETE /quizzes/id 
 @router.delete("/{quiz_id}", status_code=204)
 def delete_quiz(quiz_id: UUID, current_user=Depends(get_current_teacher)):
+    #check existence and ownership before deletion
     existing = (
         supabase.table("quizzes")
         .select("teacher_id")
@@ -279,10 +271,10 @@ def delete_quiz(quiz_id: UUID, current_user=Depends(get_current_teacher)):
     supabase.table("quizzes").delete().eq("id", str(quiz_id)).execute()
 
 
-# ── POST /quizzes/{id}/attempt — student submits answers ─────────────────────
-
+#POST /quizzes/id/attempt student submits answers 
 @router.post("/{quiz_id}/attempt", status_code=201)
 def submit_attempt(quiz_id: UUID, body: AttemptBody):
+    #ensure quiz exists and is published before recording attempt
     quiz = (
         supabase.table("quizzes")
         .select("id, is_published")
@@ -314,10 +306,10 @@ def submit_attempt(quiz_id: UUID, body: AttemptBody):
     }
 
 
-# ── GET /quizzes/{id}/attempts — teacher sees results ────────────────────────
-
+#GET /quizzes/id/attempts  teacher sees results 
 @router.get("/{quiz_id}/attempts")
 def get_attempts(quiz_id: UUID, current_user=Depends(get_current_teacher)):
+    #only the quiz owner can view attempt history
     quiz = (
         supabase.table("quizzes")
         .select("teacher_id")

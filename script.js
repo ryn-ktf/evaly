@@ -36,7 +36,7 @@ document.getElementById('view_all_btn').addEventListener('click', () => {
   window.location.href = 'quiz.html';
 });
 
-// ── contact form → POST /api/contact/ ────────────────────────────────────────
+// ── contact form → POST /api/contact/ 
 document.getElementById('fb_send_btn').addEventListener('click', async () => {
   const n   = document.getElementById('fb_name').value.trim();
   const em  = document.getElementById('fb_email').value.trim();
@@ -47,7 +47,7 @@ document.getElementById('fb_send_btn').addEventListener('click', async () => {
     alert('Please fill in all fields before sending.');
     return;
   }
-
+ 
   const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailCheck.test(em)) {
     alert('Please enter a valid email address.');
@@ -78,7 +78,7 @@ document.getElementById('fb_send_btn').addEventListener('click', async () => {
         ? data.detail
         : data.detail?.[0]?.msg ?? 'Something went wrong.';
       alert(`Error: ${err_msg}`);
-    }
+    } // type of error handling depends on how the backend sends error responses; adjust as needed
   } catch (err) {
     alert('Could not reach the server. Please try again later.');
     console.error(err);
@@ -88,9 +88,8 @@ document.getElementById('fb_send_btn').addEventListener('click', async () => {
   }
 });
 
-// ── stats count-up on scroll ──────────────────────────────────────────────────
 let stats_done = false;
-
+//count up te3 stats numbers when they become visible in viewport, w nformatihom b k ila kbar mn 1000
 function doCountUp(el, target, suffix) {
   let current = 0;
   const stepTime = 16;
@@ -109,14 +108,14 @@ function doCountUp(el, target, suffix) {
     if (target >= 1000) {
       el.textContent =
         (current >= 1000
-          ? (current / 1000).toFixed(1) + 'k'
+          ? (current / 1000).toFixed(1) + 'k' //te3 10k 1k ... 
           : Math.floor(current)) + suffix;
     } else {
       el.textContent = Math.floor(current) + suffix;
     }
   }, stepTime);
 }
-
+//m3nah simply ki stt yt3l fi screen bch ybda yhsb mch assoon as we run lcode ttl3 hedi wsafi 
 function checkIfStatsVisible() {
   if (stats_done) return;
 
@@ -134,5 +133,7 @@ function checkIfStatsVisible() {
   }
 }
 
+
+//whd incase scroll for phones wela ki tkon stats mch byna w load incase pc wtkhrj maa lowl tol 
 window.addEventListener('scroll', checkIfStatsVisible);
 window.addEventListener('load',   checkIfStatsVisible);
