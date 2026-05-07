@@ -16,7 +16,7 @@ class ContactBody(BaseModel):
     @classmethod
     def not_empty(cls, v):
         if not v.strip():
-            raise ValueError("Ce champ ne peut pas être vide.")
+            raise ValueError("This value cannot be empty.")
         return v.strip()
 
 # Route pour envoyer un message de contact
@@ -34,13 +34,13 @@ def send_message(body: ContactBody):
             .execute()
         )
         if not res.data:
-            raise HTTPException(status_code=500, detail="Message non sauvegardé.")
+            raise HTTPException(status_code=500, detail="message not saved.")
         return {
             "success": True,
-            "message": f"Merci {body.name}, votre message a bien été envoyé !",
+            "message": f"Thank you {body.name}, your message has been sent!",
         }
     except HTTPException:
         raise
     except Exception as e:
         print("CONTACT ERROR:", traceback.format_exc())
-        raise HTTPException(status_code=500, detail=f"Erreur: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
